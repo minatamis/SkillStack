@@ -3,57 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script type="module" src="../js/firebaseauth.js"></script>
-    <title>Login/Register</title>
-
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Skill Stack</title>
+    <link rel="icon" href="images/Logo.png" type="image/png">
+    <link rel="stylesheet" href="CSS/home.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </head>
 <body>
-    <h1>register</h1>
-    <form method="post" action="">
-        <div id="signUpMessage" class="messageDiv" style="display:none;"></div>
-        <div class="input-group">
-           <i class="fas fa-user"></i>
-           <input type="text"  id="fName" placeholder="First Name" required>
-           <label for="fname">First Name</label>
+    <header>
+        
+        <div class="logo">
+            <img src="images/Logo.png" alt="Skill Stack Logo">
+            <span>Coding Tutorial Website</span>
         </div>
-        <div class="input-group">
-            <i class="fas fa-user"></i>
-            <input type="text"  id="lName" placeholder="Last Name" required>
-            <label for="lName">Last Name</label>
-        </div>
-        <div class="input-group">
-            <i class="fas fa-envelope"></i>
-            <input type="email"  id="rEmail" placeholder="Email" required>
-            <label for="rEmail">Email</label>
-        </div>
-        <div class="input-group">
-            <i class="fas fa-lock"></i>
-            <input type="password" id="rPassword"  placeholder="Password" required>
-            <label for="rPassword">Password</label>
-        </div>
-        <button class="btn" id="submitSignUp" >Sign Up</button>
-    </form>
-
-    <h1 class="form-title">Sign In</h1>
-    <form method="post" action="">
-        <div id="signInMessage" class="messageDiv" style="display:none;"></div>
-
-        <div class="input-group">
-            <i class="fas fa-envelope"></i>
-            <input type="email"  id="email" placeholder="Email" required>
-            <label for="email">Email</label>
-        </div>
-        <div class="input-group">
-            <i class="fas fa-lock"></i>
-        <input type="password" id="password"  placeholder="Password" required>
-            <label for="password">Password</label>
-        </div>
-        <p class="recover">
-        <a href="#">Recover Password</a>
-        </p>
-        <button  class="btn"  id="submitSignIn">Sign In</button>
-    </form>
     
+        <div class="h1">
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="html/login.html">Log In</a></li>
+                    <li><a href="#">Compiler</a></li>
+                    <li><a href="#">Exercises</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </nav>
+        </div>
+        
+        <div class="search-bar">
+            <input type="text" placeholder="Search...">
+        </div>
     
-</body>
-</html>
+       
+        <div class="user-section">
+            <img src="images/profile.png" alt="User Icon">
+            <span>Jemuel Cebuano</span>
+        </div>
+    </header>
+    
+    </body>
+    </html>

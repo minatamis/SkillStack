@@ -14,8 +14,7 @@ class HeaderElem extends HTMLElement {
                     </span>
                 </div>
                 <div class="user-info d-none d-md-flex">
-                    <img src="assets/images/profile.png" alt="User" class="user-icon">
-                    <span class="username">Jemuel Cebuano<br><small>User</small></span>
+                    <span class="username"><a href="html/login.html">Log in</a></span>
                 </div>
                 <button class="navbar-toggler d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu" aria-controls="mobileMenu">
                     <img src="assets/images/navigation-bar.png" alt="Menu" style="width: 30px; height: 30px;">
@@ -45,8 +44,7 @@ class HeaderElem extends HTMLElement {
             
             <div class="offcanvas-body">
                 <div class="user-info d-flex flex-column align-items-center">
-                    <img src="assets/images/profile.png" alt="User" class="user-icon">
-                    <span class="username">Jemuel Cebuano<br><small>User</small></span>
+                    <span class="username"><a href="html/login.html">Log in</a></span>
                 </div>
                 <ul class="navbar-nav mt-4">
                     <li class="nav-item"><a class="nav-link" href="#">Home</a></li>

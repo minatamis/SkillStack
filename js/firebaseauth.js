@@ -46,15 +46,15 @@ function showMessage(message, divId){
     .then((userCredential)=>{
         const user=userCredential.user;
         const userData={
-            email: email,
-            firstName: firstName,
-            lastName:lastName
+            fld_email: email,
+            fld_firstName: firstName,
+            fld_lastName:lastName
         };
         showMessage('Account Created Successfully', 'signUpMessage');
-        const docRef=doc(db, "users", user.uid);
+        const docRef=doc(db, "tbl_users", user.uid);
         setDoc(docRef,userData)
         .then(()=>{
-            window.location.href='index.html';
+            window.location.href='login.html';
         })
         .catch((error)=>{
             console.error("error writing document", error);
@@ -95,4 +95,4 @@ function showMessage(message, divId){
             showMessage('Account does not Exist', 'signInMessage');
         }
     })
-});
+ });

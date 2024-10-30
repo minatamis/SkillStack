@@ -1,0 +1,219 @@
+@import url('https://fonts.googleapis.com/css2?family=Judson:ital,wght@0,400;0,700;1,400&display=swap');
+@import url(header.css);
+@import url(chat.css);
+
+body {
+    font-family: 'Judson', serif;
+    background: linear-gradient(135deg, #f4cbe9, #00367c5b); 
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+.container {
+    max-width: 1200px;
+
+    
+}
+
+
+.header-section {
+    padding: 80px 0;
+    
+    
+} 
+
+.header-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    
+}
+
+.header-content {
+    max-width: 50%;
+
+}
+
+.header-section h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+   
+}
+
+.header-section p {
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+}
+
+.code-box {
+    max-width: 50%; 
+    text-align: right; 
+
+}
+
+.code-box img {
+    max-width: 100%; 
+    border-radius: 10px;
+    margin-top: -120px;
+    margin-bottom: -50px;
+  
+}
+
+
+.tutorials-section {
+    padding: 60px 0;
+}
+
+.col-md-3 button {
+    border: none;
+    color: #fff;
+    background-image: linear-gradient(50deg, #c671be, #b976c0);
+    border-radius: 50px;
+    background-size: 100% auto;
+    font-family: "Judson" , inherit;
+    font-size: 20px;
+    padding: 0.2em 0.5em;
+   }
+   
+   button:hover {
+    background-position: right center;
+    background-size: 200% auto;
+    -webkit-animation: pulse 2s infinite;
+    animation: pulse512 1.5s infinite;
+   }
+   
+   @keyframes pulse512 {
+    0% {
+     box-shadow: 0 0 0 0 #6c51e5;
+    }
+   
+    70% {
+     box-shadow: 0 0 0 10px rgb(218 103 68 / 0%);
+    }
+   
+    100% {
+     box-shadow: 0 0 0 0 rgb(218 103 68 / 0%);
+    }
+   }
+
+
+
+
+
+
+   
+
+.section-divider {
+    border: 0;
+    height: 1px;
+    background-color: #ddd;
+    margin-bottom: 20px;
+}
+
+.tutorial-card {
+    background-color: rgba(255, 255, 255, 0.484);
+    border-radius: 10px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 30px;
+    transition: transform 0.3s ease;
+    max-height: 100%;
+}
+
+.tutorial-card:hover {
+    transform: translateY(-5px); 
+}
+
+.tutorial-card img {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.tutorial-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.col-md-3 {
+    border: solid black 1px;
+}
+
+
+.view-all {
+    margin-top: 30px;
+}
+
+.view-all button {
+    display: flex;
+    align-items: center;
+    font-family: inherit;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 17px;
+    padding: 0.8em 1.3em 0.8em 0.9em;
+    color: white;
+    background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+    border: none;
+    letter-spacing: 0.05em;
+    border-radius: 16px;
+    transition: transform 0.5s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.view-all button svg {
+    margin-right: 3px;
+    transform: rotate(30deg);
+    transition: transform 0.5s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.view-all button span {
+    transition: transform 0.5s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.view-all button:hover svg {
+    transform: translateX(5px) rotate(90deg);
+}
+
+.view-all button:hover span {
+    transform: translateX(7px);
+}
+
+
+.compiler-section {
+    padding: 60px 0;
+    background-color: #f5f5f5; 
+    border-top: 1px solid #ddd; 
+}
+
+
+@media (max-width: 768px) {
+    .header-container {
+        flex-direction: column; 
+        text-align: center;
+    }
+
+    .header-content {
+        max-width: 100%;
+    }
+
+    .code-box {
+        max-width: 100%;
+    }
+
+    .header-section h1 {
+        font-size: 2.5rem;
+    }
+
+    .header-section p {
+        font-size: 1rem;
+    }
+
+    .tutorial-card h3 {
+        font-size: 1rem;
+    }
+}

@@ -3,10 +3,13 @@
 @import url(chat.css);
 
 body {
-    font-family: 'Judson', serif;
-    background: linear-gradient(135deg, #f4cbe9, #00367c5b); 
+    height: 10%;
     margin: 0;
     padding: 0;
+    font-family: 'Judson', serif;
+    background: linear-gradient(135deg, #f4cbe9, #00367c5b); 
+    display: flex;
+    flex-direction: column;
     color: #333;
 }
 
@@ -100,18 +103,10 @@ body {
     }
    }
 
-
-
-
-
-
-   
-
 .section-divider {
     border: 0;
     height: 1px;
     background-color: #ddd;
-    margin-bottom: 20px;
 }
 
 .tutorial-card {
@@ -119,7 +114,6 @@ body {
     border-radius: 10px;
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    margin-bottom: 30px;
     transition: transform 0.3s ease;
     max-height: 100%;
 }
@@ -138,10 +132,6 @@ body {
 .tutorial-card h3 {
     font-size: 1.2rem;
     margin-bottom: 10px;
-}
-
-.col-md-3 {
-    border: solid black 1px;
 }
 
 
@@ -184,12 +174,58 @@ body {
 }
 
 
-.compiler-section {
+.compiler-section .container{
     padding: 60px 0;
-    background-color: #f5f5f5; 
-    border-top: 1px solid #ddd; 
 }
 
+.main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    max-width: 1000px;
+    margin: auto;
+    border-radius: 8px;
+    margin-bottom: -200px;
+
+}
+
+.text-container {
+    text-align: center;
+    margin-bottom: 20px;
+
+}
+.text-container h1 {
+    font-family: 'Judson';
+}
+
+.text-container h2 {
+    font-family: 'Judson';
+    font-size: 14px;
+}
+
+.image-container img {
+    max-width: 600px;
+    height: 400px;
+    border-radius: 8px;
+}
+
+@media (min-width: 500px) {
+    .main-container {
+        flex-direction: row; 
+        justify-content: space-between;
+    }
+    
+    .text-container {
+        margin-bottom: 0; 
+        margin-right: 20px; 
+    }
+
+    .image-container {
+        flex: 1; 
+}
+}
 
 @media (max-width: 768px) {
     .header-container {

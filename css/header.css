@@ -153,27 +153,234 @@ box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .footer {
-    background-color: #f8f9fa;
-    padding: 20px 0;
-    text-align: center;
-    margin-top: 900px;
+        background: #ffffffb6;
+        padding: 40px;
+        display: flex;
+        justify-content: space-around;
+        align-items: flex-start;
+        color: #333;
+        font-family: 'Judson', sans-serif;
+        margin-top: 300px;
 }
-.footer p {
-    margin: 0;
-    font-size: 14px;
-    color: #6c757d;
-}
-.footer .social-icons img {
-    width: 24px;
-    height: 24px;
-    margin: 0 10px;
-}
-
-@media (max-width: 768px) {
-    .footer {
+        
+  
+      .footer div {
+        flex: 1;
         padding: 10px;
+
+      }
+  
+
+      .footer h3 {
+        margin-bottom: 15px;
+        font-size: 25 px;
+        font-weight: bolder;
+      }
+  
+      .container1 p {
+        margin-bottom: 10px;
+        font-size: large;
+        margin-right: 20px;
+      }
+
+      .container2 {
+        max-width: max-content;
+        margin-right: 800px;
+      }
+      
+
+      .links ul {
+        list-style: none;
+        padding: 0;
     }
-    .footer .social-icons img {
-        margin: 0 5px;
+    
+    .links ul li {
+        margin-bottom: 10px;
     }
-}
+    
+    .links ul li a {
+        text-decoration: none;
+        color: #333;
+        transition: color 0.3s, text-decoration 0.3s;
+    }
+    
+    .links ul li a:hover {
+        color: #555;           /* Change color on hover */
+        text-decoration: underline;  /* Add underline on hover */
+    }
+
+.wrapper {
+    display:flex;
+    height: 10px;
+    width: 300px;
+    font-family: "Judson", sans-serif;
+    justify-content:left ;
+
+
+  }
+  
+  .wrapper .icon {
+    position: relative;
+    background: #fff;
+    border-radius: 50%;
+    margin: 10px;
+    width: 50px;
+    height: 50px;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  }
+  
+  .wrapper .tooltip {
+    position: absolute;
+    top: 0;
+    font-size: 14px;
+    background: #fff;
+    color: #fff;
+    padding: 5px 8px;
+    border-radius: 5px;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  }
+  
+  .wrapper .tooltip::before {
+    position: absolute;
+    content: "";
+    height: 8px;
+    width: 8px;
+    background: #fff;
+    bottom: -3px;
+    left: 50%;
+    transform: translate(-50%) rotate(45deg);
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+  
+  .wrapper .icon:hover .tooltip {
+    top: -45px;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+  
+  .wrapper .icon:hover span,
+  .wrapper .icon:hover .tooltip {
+    text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.1);
+  }
+
+  .wrapper .gmail:hover,
+  .wrapper .gmail:hover .tooltip,
+  .wrapper .gmail:hover .tooltip::before {
+    background: rgb(236, 236, 236);
+    color:#000
+    
+  }
+  
+  .wrapper .facebook:hover,
+  .wrapper .facebook:hover .tooltip,
+  .wrapper .facebook:hover .tooltip::before {
+    background: #1877f2;
+    color: #fff;
+  }
+  
+  .wrapper .instagram:hover,
+  .wrapper .instagram:hover .tooltip,
+  .wrapper .instagram:hover .tooltip::before {
+    background: linear-gradient(
+        45deg,
+        #405de6,
+        #5b51db,
+        #b33ab4,
+        #c135b4,
+        #e1306c,
+        #fd1f1f);
+    color: #fff;
+  }
+  
+
+      
+  
+
+
+      .links ul {
+        list-style: none;
+      }
+  
+      .links ul li {
+        margin-bottom: 10px;
+      }
+  
+      .links ul li a {
+        text-decoration: none;
+        color: #333;
+        transition: color 0.3s;
+      }
+  
+      .links ul li a:hover {
+        color: #555;
+      }
+  
+      /* Updates */
+      .updates form {
+        display: flex;
+        gap: 10px;
+      }
+  
+      .updates input[type="email"] {
+        padding: 10px;
+        border: 1px solid #333;
+        border-radius: 5px;
+        outline: none;
+        flex-grow: 1;
+      }
+  
+      .updates button {
+        padding: 10px 20px;
+        background-color: #333;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+  
+      .updates button:hover {
+        background-color: #555;
+      }
+  
+      /* Copyright */
+      .copyright {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 14px;
+        color: #777;
+      }
+  
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .footer {
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+        }
+  
+        .footer div {
+          margin-bottom: 20px;
+        }
+  
+        .updates form {
+          flex-direction: column;
+        }
+  
+        .updates button {
+          width: 100%;
+        }
+      }

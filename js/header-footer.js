@@ -25,11 +25,11 @@ class HeaderElem extends HTMLElement {
                 <div class="container-fluid">
                     <div class="collapse navbar-collapse">
                         <ul class="navbar-nav">
-                            <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">Tutorials</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">Compiler</a></li>
+                            <li class="nav-item"><a class="nav-link" href="home.html">Home</a></li>
+                            <li class="nav-item"><a class="nav-link" href="tutorials.html">Tutorials</a></li>
+                            <li class="nav-item"><a class="nav-link" href="text-editor.html">Compiler</a></li>
                             <li class="nav-item"><a class="nav-link" href="#">Exercises</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">Contact Us</a></li>
+                            <li class="nav-item"><a class="nav-link" href="contact-us.html">Contact Us</a></li>
                         </ul>
                     </div>
                 </div>

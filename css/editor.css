@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Judson:ital,wght@0,400;0,700;1,400&display=swap');
+@import url(header.css);
+@import url(chat.css);
+
+body {
+    height: 10%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Judson', serif;
+    background: linear-gradient(135deg, #f4cbe9, #00367c5b); 
+    color: #333;
+}
+.whole-editor{
+    /* border: 1px solid black; */
+    width: 80%;
+    height: 70vh;
+    margin: auto;
+    margin-top: 30px;
+    display: flex;
+    border-radius: 15px;
+    background-color: #c7c1c9;
+}
+.left-side, .right-side{ 
+    /* border: 1px solid black; */
+    width: 50%;
+    height: 70vh;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.title{
+    /* border: 1px solid black; */
+    width: 100%;
+    height: auto;
+    margin: 0;
+    padding: 0px 20px;
+    display: flex;
+    gap: 5%;
+}
+.title button{
+    margin-left: 50%;
+}
+.editor, .output{
+    border: 1px solid black;
+    height: 60vh;
+    width: 95%;
+    margin: auto;
+}
+.editor{
+    border-radius: 0 0 0 10px;
+}
+.output{
+    border-radius: 0 0 10px 0;
+}

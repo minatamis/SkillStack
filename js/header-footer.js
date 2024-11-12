@@ -25,11 +25,11 @@ class HeaderElem extends HTMLElement {
                 <div class="container-fluid">
                     <div class="collapse navbar-collapse">
                         <ul class="navbar-nav">
-                            <li class="nav-item"><a class="nav-link" href="home.php">Home</a></li>
-                            <li class="nav-item"><a class="nav-link" href="tutorials.php">Tutorials</a></li>
-                            <li class="nav-item"><a class="nav-link" href="text-editor.php">Compiler</a></li>
+                            <li class="nav-item"><a class="nav-link" href="home.html">Home</a></li>
+                            <li class="nav-item"><a class="nav-link" href="tutorials.html">Tutorials</a></li>
+                            <li class="nav-item"><a class="nav-link" href="text-editor.html">Compiler</a></li>
                             <li class="nav-item"><a class="nav-link" href="#">Exercises</a></li>
-                            <li class="nav-item"><a class="nav-link" href="contact-us.php">Contact Us</a></li>
+                            <li class="nav-item"><a class="nav-link" href="contact-us.html">Contact Us</a></li>
                         </ul>
                     </div>
                 </div>
@@ -49,11 +49,11 @@ class HeaderElem extends HTMLElement {
                     <span class="username">Jemuel Cebuano<br><small>User</small></span>
                 </div>
                 <ul class="navbar-nav mt-4">
-                    <li class="nav-item"><a class="nav-link" href="home.php">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="tutorials.php">Tutorials</a></li>
-                    <li class="nav-item"><a class="nav-link" href="text-editor.php">Compiler</a></li>
+                    <li class="nav-item"><a class="nav-link" href="home.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="tutorials.html">Tutorials</a></li>
+                    <li class="nav-item"><a class="nav-link" href="text-editor.html">Compiler</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Exercises</a></li>
-                    <li class="nav-item"><a class="nav-link" href="contact-us.php">Contact Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact-us.html">Contact Us</a></li>
                 </ul>
             </div>
         </div>
@@ -131,11 +131,11 @@ class FooterElem extends HTMLElement {
 <div class="links">
       <h3>Links</h3>
       <ul>
-        <li><a href="home.php">Home</a></li>
-        <li><a href="tutorials.php">Tutorials</a></li>
-        <li><a href="text-editor.php">Compiler</a></li>
+        <li><a href="home.html">Home</a></li>
+        <li><a href="tutorials.html">Tutorials</a></li>
+        <li><a href="text-editor.html">Compiler</a></li>
         <li><a href="#">Exercises</a></li>
-        <li><a href="contact-us.php">Contact Us</a></li>
+        <li><a href="contact-us.html">Contact Us</a></li>
       </ul>
     </div>
 

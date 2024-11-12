@@ -54,7 +54,7 @@ function showMessage(message, divId){
         const docRef=doc(db, "tbl_users", user.uid);
         setDoc(docRef,userData)
         .then(()=>{
-            window.location.href='index.php';
+            window.location.href='index.html';
         })
         .catch((error)=>{
             console.error("error writing document", error);
@@ -84,7 +84,7 @@ function showMessage(message, divId){
         showMessage('login is successful', 'signInMessage');
         const user=userCredential.user;
         localStorage.setItem('loggedInUserId', user.uid);
-        window.location.href='html/home.php';
+        window.location.href='html/home.html';
     })
     .catch((error)=>{
         const errorCode=error.code;

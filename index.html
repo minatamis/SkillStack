@@ -52,6 +52,17 @@
         <div class="form-group">
           <input type="password" id="rPassword" placeholder="Password">
         </div>
+        <div class="form-group">
+          <label for="userRole">I am a:</label>
+          <select id="userRole">
+            <option value="student">Student</option>
+            <option value="teacher">Teacher</option>
+          </select>
+        </div>
+        
+        <div class="form-group" id="teacherIdContainer" style="display: none;">
+          <input type="text" id="teacherId" placeholder="ID Number">
+        </div>
         <button type="submit" class="register-btn" id="submitSignUp">Register</button>
         <p class="login-text">Already have an account? <a href="#" class="log">Log in</a></p>
       </form>
@@ -60,5 +71,6 @@
 
   <script src="js/firebaseauth.js" type="module"></script>
   <script src="js/signin-change.js"></script>
+  <script src="js/register.js"></script>
 </body>
 </html>

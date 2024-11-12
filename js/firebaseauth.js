@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-analytics.js";
-import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut} from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 import{getFirestore, setDoc, doc} from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -48,15 +48,13 @@ function showMessage(message, divId){
         const userData={
             fld_email: email,
             fld_firstName: firstName,
-            fld_lastName:lastName,
-            fld_isTeacher: false,
-            fld_teacherId: teacherId ? teacherId : null
+            fld_lastName:lastName
         };
         showMessage('Account Created Successfully', 'signUpMessage');
         const docRef=doc(db, "tbl_users", user.uid);
         setDoc(docRef,userData)
         .then(()=>{
-            window.location.href='index.php';
+            window.location.href='index.html';
         })
         .catch((error)=>{
             console.error("error writing document", error);
@@ -86,7 +84,7 @@ function showMessage(message, divId){
         showMessage('login is successful', 'signInMessage');
         const user=userCredential.user;
         localStorage.setItem('loggedInUserId', user.uid);
-        window.location.href='html/home.php';
+        window.location.href='html/home.html';
     })
     .catch((error)=>{
         const errorCode=error.code;
@@ -98,17 +96,3 @@ function showMessage(message, divId){
         }
     })
  });
-
-const logoutButton = document.getElementById('logoutButton');
-logoutButton.addEventListener('click', () => {
-    const auth = getAuth();
-    signOut(auth)
-        .then(() => {
-            localStorage.removeItem('loggedInUserId');
-            showMessage('You have been logged out successfully', 'logoutMessage');
-            window.location.href = 'index.php';
-        })
-        .catch((error) => {
-            console.error("Error during logout:", error);
-        });
-});

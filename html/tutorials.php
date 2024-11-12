@@ -115,7 +115,7 @@
 
             <div class="centered-container">
                 <div class="title1">
-                    <img src="../assets/images/html.png" alt="Tutorial Icon" class="title-image">
+                    <img src="../assets/images/c#.png" alt="Tutorial Icon" class="title-image">
                     <h1>Tutorials</h1>
                 </div>
             </div>

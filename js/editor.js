@@ -10,11 +10,11 @@ function changeLaguage()
 {
     let language = $("#languages").val();
 
-    if (language == 'java') {
+    if (language === 'java') {
         editor.session.setMode("ace/mode/java");
-    } else if (language == 'csharp') {
+    } else if (language === 'csharp') {
         editor.session.setMode("ace/mode/csharp");
-    } else if (language == 'python') {
+    } else if (language === 'python') {
         editor.session.setMode("ace/mode/python");
     }
 }

@@ -2,29 +2,24 @@
 @import url(header.css);
 @import url(chat.css);
 
+
 body {
-    height: 10%;
+    height: 50%;
     margin: 0;
     padding: 0;
     font-family: 'Judson', serif;
-    background: linear-gradient(135deg, #f4cbe9, #00367c5b); 
-    display: flex;
-    flex-direction: column;
-    color: #333;
+    background: linear-gradient(to bottom, #29104A, #845162, #c79590, #FFE3D8);
+    color: #ffffff;
 }
 
 .container {
     max-width: 1200px;
-
-    
 }
 
-
+/* Header Section */
 .header-section {
     padding: 80px 0;
-    
-    
-} 
+}
 
 .header-container {
     display: flex;
@@ -32,19 +27,16 @@ body {
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
-    
 }
 
 .header-content {
     max-width: 50%;
-
 }
 
 .header-section h1 {
     font-size: 3rem;
     font-weight: bold;
     margin-bottom: 20px;
-   
 }
 
 .header-section p {
@@ -53,23 +45,17 @@ body {
 }
 
 .code-box {
-    max-width: 50%; 
-    text-align: right; 
-
+    max-width: 50%;
+    text-align: right;
 }
 
 .code-box img {
-    max-width: 100%; 
+    max-width: 100%;
     border-radius: 10px;
     margin-top: -120px;
     margin-bottom: -50px;
-  
 }
 
-
-.tutorials-section {
-    padding: 60px 0;
-}
 
 .col-md-3 button {
     border: none;
@@ -77,71 +63,174 @@ body {
     background-image: linear-gradient(50deg, #c671be, #b976c0);
     border-radius: 50px;
     background-size: 100% auto;
-    font-family: "Judson" , inherit;
+    font-family: 'Judson', serif;
     font-size: 20px;
     padding: 0.2em 0.5em;
-   }
-   
-   button:hover {
+}
+
+button:hover {
     background-position: right center;
     background-size: 200% auto;
-    -webkit-animation: pulse 2s infinite;
     animation: pulse512 1.5s infinite;
-   }
-   
-   @keyframes pulse512 {
+}
+
+@keyframes pulse512 {
     0% {
-     box-shadow: 0 0 0 0 #6c51e5;
+        box-shadow: 0 0 0 0 #6c51e5;
     }
-   
     70% {
-     box-shadow: 0 0 0 10px rgb(218 103 68 / 0%);
+        box-shadow: 0 0 0 10px rgba(218, 103, 68, 0);
     }
-   
     100% {
-     box-shadow: 0 0 0 0 rgb(218 103 68 / 0%);
+        box-shadow: 0 0 0 0 rgba(218, 103, 68, 0);
     }
-   }
-
-.section-divider {
-    border: 0;
-    height: 1px;
-    background-color: #ddd;
 }
 
-.tutorial-card {
-    background-color: rgba(255, 255, 255, 0.484);
-    border-radius: 10px;
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    transition: transform 0.3s ease;
-    max-height: 100%;
+.grid-container {
+    width: 80%;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    border: solid black 1px;
+
+
+}
+.grid-container img {
+    width: 190px;
+    height: 110px;
+    margin-top: 1px;
+    justify-content: center;
+
+    
+    
 }
 
-.tutorial-card:hover {
-    transform: translateY(-5px); 
-}
 
-.tutorial-card img {
-    max-width: 100%;
-    max-height: 100%;
-    border-radius: 10px;
-    margin-bottom: 15px;
-}
-
-.tutorial-card h3 {
-    font-size: 1.2rem;
+.grid-container .card {
+    width: 230px;
+    height: 400px;
+    border-radius: 20px;
+    background:  #ffffff5d;
+    background-blend-mode: soft-light;
+    position: relative;
+    padding: 1rem; 
+    transition: 0.5s ease-out;
+    margin: auto;
     margin-bottom: 10px;
+    justify-content: center;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
 }
 
+
+.card-details .card-image {
+    width: 85%; 
+    display: flex;
+    justify-content: center;
+
+}
+
+.card-details .card-image img {
+    max-width: 200px; 
+    border-radius: 25px;
+    object-fit: contain;
+}
+
+
+.card-details {
+    color: black;
+    gap: 0.5em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.text-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.text-body {
+    font-size: 0.9rem;
+}
+
+.card-button {
+ transform: translate(-50%, 125%);
+ width: 60%;
+ border-radius: 1rem;
+ border: none;
+ background-color: #88007A;
+ color: #fff;
+ font-size: 1.2rem;
+ padding: .5rem 1rem;
+ position: absolute;
+ left: 50%;
+ bottom: 0;
+ opacity: 0;
+ transition: 0.3s ease-out;
+}
+
+.text-body {
+ color: rgb(134, 134, 134);
+}
+
+.text-title {
+ font-size: 1.1em;
+ font-weight: bold;
+}
+.text-body {
+    font-size: .9em;
+ font-weight:normal;
+}
+
+
+.card:hover {
+ border-color: #c342b6;
+ box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.25);
+}
+
+.card:hover .card-button {
+ transform: translate(-50%, 50%);
+ opacity: 1;
+}
 
 .view-all {
     margin-top: 30px;
+    display:flex;
+    align-items: end;
+    border: solid black 1px;
+}
+
+
+@media (max-width: 100px) {
+    .view-all {
+        justify-content: center; 
+    }
+}
+
+
+.container1 {
+    width: 90%;
+    display: flex;
+    justify-content: flex-end; /* Aligns to the right on desktop */
+}
+
+/* Center the .view-all button on smaller screens */
+@media (max-width: 768px) {
+    .container {
+        justify-content: center; /* Center the button on mobile view */
+    }
 }
 
 .view-all button {
     display: flex;
-    align-items: center;
     font-family: inherit;
     cursor: pointer;
     font-weight: 500;
@@ -150,13 +239,12 @@ body {
     color: white;
     background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
     border: none;
-    letter-spacing: 0.05em;
     border-radius: 16px;
     transition: transform 0.5s cubic-bezier(0.76, 0, 0.24, 1);
 }
 
 .view-all button svg {
-    margin-right: 3px;
+    margin-right: 5px;
     transform: rotate(30deg);
     transition: transform 0.5s cubic-bezier(0.76, 0, 0.24, 1);
 }
@@ -174,9 +262,6 @@ body {
 }
 
 
-.compiler-section .container{
-    padding: 60px 0;
-}
 
 .main-container {
     display: flex;
@@ -187,49 +272,44 @@ body {
     max-width: 1000px;
     margin: auto;
     border-radius: 8px;
-    margin-bottom: -200px;
-
 }
 
 .text-container {
     text-align: center;
     margin-bottom: 20px;
-
 }
+
 .text-container h1 {
-    font-family: 'Judson';
+    font-family: 'Judson', serif;
 }
 
 .text-container h2 {
-    font-family: 'Judson';
+    font-family: 'Judson', serif;
     font-size: 14px;
 }
 
 .image-container img {
-    max-width: 600px;
-    height: 400px;
+    max-width: 100%;
+    height: auto;
     border-radius: 8px;
 }
 
+/* Responsive Styling */
 @media (min-width: 500px) {
     .main-container {
-        flex-direction: row; 
+        flex-direction: row;
         justify-content: space-between;
     }
-    
-    .text-container {
-        margin-bottom: 0; 
-        margin-right: 20px; 
-    }
 
-    .image-container {
-        flex: 1; 
-}
+    .text-container {
+        margin-bottom: 0;
+        margin-right: 20px;
+    }
 }
 
 @media (max-width: 768px) {
     .header-container {
-        flex-direction: column; 
+        flex-direction: column;
         text-align: center;
     }
 
@@ -251,5 +331,34 @@ body {
 
     .tutorial-card h3 {
         font-size: 1rem;
+    }
+
+    .tutorials-section .row {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .view-all button {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 500px) {
+    .header-section h1 {
+        font-size: 2rem;
+    }
+
+    .header-section p {
+        font-size: 0.9rem;
+    }
+
+    .tutorial-card h3 {
+        font-size: 0.9rem;
+    }
+
+    .image-container img {
+        max-width: 100%;
+        height: auto;
     }
 }

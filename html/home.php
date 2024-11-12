@@ -27,49 +27,80 @@
             </div>
         </section>
     
-        <section class="tutorials-section">
-            <div class="container">
+       
+            
                 <hr class="tutorial-line">
                 <h2 class="text-center">Tutorials</h2>
-                <div class="row text-center tutorials">
-                    <div class="col-md-3">
-                        <div class="tutorial-card">
-                            <img src="../assets/images/1.png" alt="HTML Guide">
-                            <h3>Beginner's Guide to HTML</h3>
-                            <button class="btn btn-primary">Start Now</button>
+                <div class="grid-container row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+            
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-details">
+                                <div class="card-image">
+                                    <img src="../assets/images/1.png" alt="HTML Tutorial">
+                                </div>
+                                <p class="text-title">Beginner’s Guide to HTML</p>
+                                <p class="text-body">Unlock the web with our Beginner's Guide to HTML – your first step to building amazing websites!</p>
+                            </div>
+                            <button class="card-button">Start Now</button>
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="tutorial-card">
-                            <img src="../assets/images/2.png" alt="C# for Starters">
-                            <h3>C# for Starters</h3>
-                            <button class="btn btn-primary">Start Now</button>
+
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-details">
+                                <div class="card-image">
+                                    <img src="../assets/images/2.png" alt="HTML Tutorial">
+                                </div>
+                                <p class="text-title">C# for starters</p>
+                                <p class="text-body">Unlock the web with our Beginner's Guide to HTML – your first step to building amazing websites!</p>
+                            </div>
+                            <button class="card-button">Start Now</button>
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="tutorial-card">
-                            <img src="../assets/images/3.png" alt="Forms">
-                            <h3>Learn to Manage Web Forms</h3>
-                            <button class="btn btn-primary">Start Now</button>
+
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-details">
+                                <div class="card-image">
+                                    <img src="../assets/images/3.png" alt="HTML Tutorial">
+                                </div>
+                                <p class="text-title">Learn how to create and manage web forms.</p>
+                                <p class="text-body">Unlock the web with our Beginner's Guide to HTML – your first step to building amazing websites!</p>
+                            </div>
+                            <button class="card-button">Start Now</button>
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="tutorial-card">
-                            <img src="../assets/images/4.png" alt="Functions and Methods">
-                            <h3>C# Methods and Functions</h3>
-                            <button class="btn btn-primary">Start Now</button>
+
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-details">
+                                <div class="card-image">
+                                    <img src="../assets/images/4.png" alt="HTML Tutorial">
+                                </div>
+                                <p class="text-title">C# Methods and Functions</p>
+                                <p class="text-body">Unlock the web with our Beginner's Guide to HTML – your first step to building amazing websites!</p>
+                            </div>
+                            <button class="card-button">Start Now</button>
                         </div>
+                    </div>
+
+                </div>
+
+
+
+
+                <div class="container1">
+                    <div class="view-all">
+                        <button>
+                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v13m0-13 4 4m-4-4-4 4"/>
+                            </svg>
+                            <span>View All</span>
+                        </button>
                     </div>
                 </div>
-                <div class="view-all text-center">
-                    <button>
-                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v13m0-13 4 4m-4-4-4 4"/>
-                          </svg>
-                          
-                      <span>View All</span>
-                    </button>
-                </div>
+                
             </div>
         </section>
     

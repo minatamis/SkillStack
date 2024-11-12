@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Judson:ital,wght@0,400;0,700;1,400&display=swap');
 
 body {
-  background: linear-gradient(135deg, #3c2a4d, #a16a8f);
+  background: linear-gradient(135deg, #D8BFD8, #ADD8E6);
   font-family: 'Judson', sans-serif;
   margin: 0;
   padding: 0;
@@ -13,7 +13,7 @@ body {
 }
 
 .container {
-  background-color: #FFE3D8;
+  background-color: white;
   padding: 30px;
   border-radius: 20px;
   display: flex;
@@ -64,7 +64,6 @@ body {
   border-radius: 100px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-
 }
 
 .buttons .signup-btn {
@@ -191,7 +190,7 @@ body {
   width: 50%;
   height: 390px;
   padding: 30px;
-  background: linear-gradient(to bottom, #f3a1b6, #ac9eb4);
+  background: linear-gradient(135deg, #88007a46, #00367c39);
   border-radius: 30px;
   display: flex;
   flex-direction: column;
@@ -231,12 +230,11 @@ body {
   font-size: 18px;
   border: none;
   border-radius: 30px;
-  padding: 10px 60px;
+  padding: 14px 28px;
   cursor: pointer;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   animation: button-shimmer 2s infinite;
   transition: all 0.3s ease-in-out;
-
 }
 
 .register-btn:hover {
@@ -249,23 +247,6 @@ body {
   transform: scale(0.95);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
-
-.form-group select {
-  font-size: medium;
-  font-family: "Judson";
-  padding: 3px;
-  border-radius: 10px;
-  transition: all 0.3s ease; 
-  background: transparent;
-}
-
-.form-group select:hover {
-  background-color: #2c0e3f; 
-  color: #fff; 
-  border-color: #e1d5e7; 
-  cursor: pointer;
-}
-
 
 @keyframes button-shimmer {
   0% {

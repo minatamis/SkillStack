@@ -16,7 +16,7 @@
         <section class="header-section">
             <div class="container header-container">
                 <div class="header-content">
-                    <h1>Welcome, Stackers!</h1>
+                    <h1>Welcome, Stackers!!</h1>
                     <p>Where coders build, master, 
                     and elevate their tech skills one stack at a 
                     time!</p>

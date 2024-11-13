@@ -15,7 +15,10 @@ class HeaderElem extends HTMLElement {
                 </div>
                 <div class="user-info d-none d-md-flex">
                     <img src="../assets/images/profile.png" alt="User" class="user-icon">
-                    <span class="username">Jemuel Cebuano<br><small>User</small></span>
+                    <div class="username">
+                      <span id="loggedUserFName"></span> <spanid="loggedUserLName"></span><br>
+                      <button id="logout">Logout</button>
+                    </div>
                 </div>
                 <button class="navbar-toggler d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu" aria-controls="mobileMenu">
                     <img src="../assets/images/navigation-bar.png" alt="Menu" style="width: 30px; height: 30px;">

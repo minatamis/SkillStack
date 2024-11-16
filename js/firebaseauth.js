@@ -1,13 +1,8 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-analytics.js";
-import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
-import {getFirestore, setDoc, doc} from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail  } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+import { getFirestore, setDoc, doc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
     apiKey: "AIzaSyBcp4pT_gjNkNJV8PU8T2Fx2ahBblFLMEs",
     authDomain: "skill-stack-df84c.firebaseapp.com",
@@ -18,18 +13,22 @@ const firebaseConfig = {
     measurementId: "G-WMJQPKF15X"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
-function showMessage(message, divId){
-    var messageDiv=document.getElementById(divId);
-    messageDiv.style.display="block";
-    messageDiv.innerHTML=message;
-    messageDiv.style.opacity=1;
-    setTimeout(function(){
-        messageDiv.style.opacity=0;
-    },5000);
+function showMessage(message, divId) {
+    var messageDiv = document.getElementById(divId);
+    messageDiv.style.display = "block";
+    messageDiv.innerHTML = message;
+    messageDiv.style.opacity = 1;
+    setTimeout(function () {
+        messageDiv.style.opacity = 0;
+    }, 5000);
+}
+
+function validatePassword(password) {
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+    return regex.test(password);
 }
 
 const signUp = document.getElementById('submitSignUp');
@@ -44,9 +43,26 @@ signUp.addEventListener('click', (event) => {
     const auth = getAuth();
     const db = getFirestore();
 
+    if (!validatePassword(password)) {
+        showMessage('Password must be at least 8 characters long, with at least one uppercase letter, one lowercase letter, and one number.', 'signUpMessage');
+        return;
+    }
+
+    
+
     createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             const user = userCredential.user;
+            
+            sendEmailVerification(user)
+                .then(() => {
+                    showMessage('Verification email sent. Please check your inbox.', 'signUpMessage');
+                })
+                .catch((error) => {
+                    console.error("Error sending verification email", error);
+                    showMessage('Unable to send verification email', 'signUpMessage');
+                });
+
             const userData = {
                 fld_email: email,
                 fld_firstName: firstName,
@@ -54,7 +70,7 @@ signUp.addEventListener('click', (event) => {
                 fld_isTeacher: false,
                 fld_teacherId: teacherId ? teacherId : null
             };
-            showMessage('Account Created Successfully', 'signUpMessage');
+
             const docRef = doc(db, "tbl_users", user.uid);
             setDoc(docRef, userData)
                 .then(() => {
@@ -62,6 +78,7 @@ signUp.addEventListener('click', (event) => {
                 })
                 .catch((error) => {
                     console.error("Error writing document", error);
+                    showMessage('Unable to save user data', 'signUpMessage');
                 });
         })
         .catch((error) => {
@@ -74,27 +91,53 @@ signUp.addEventListener('click', (event) => {
         });
 });
 
-const signIn=document.getElementById('submitSignIn');
-signIn.addEventListener('click', (event)=>{
+const signIn = document.getElementById('submitSignIn');
+signIn.addEventListener('click', (event) => {
     event.preventDefault();
-    const email=document.getElementById('email').value;
-    const password=document.getElementById('password').value;
-    const auth=getAuth();
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
 
-    signInWithEmailAndPassword(auth, email,password)
-    .then((userCredential)=>{
-        showMessage('login is successful', 'signInMessage');
-        const user=userCredential.user;
-        localStorage.setItem('loggedInUserId', user.uid);
-        window.location.href='html/home.html';
-    })
-    .catch((error)=>{
-        const errorCode=error.code;
-        if(errorCode==='auth/invalid-credential'){
-            showMessage('Incorrect Email or Password', 'signInMessage');
-        }
-        else{
-            showMessage('Account does not Exist', 'signInMessage');
-        }
-    })
+    const auth = getAuth();
+
+    signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            const user = userCredential.user;
+            if (user.emailVerified) {
+                showMessage('Login successful', 'signInMessage');
+                localStorage.setItem('loggedInUserId', user.uid);
+                window.location.href = 'html/home.html';
+            } else {
+                showMessage('Please verify your email before logging in.', 'signInMessage');
+            }
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            if (errorCode === 'auth/invalid-credential') {
+                showMessage('Incorrect Email or Password', 'signInMessage');
+            } else {
+                showMessage('Account does not Exist', 'signInMessage');
+            }
+        });
+});
+
+//for forgot password
+const forgotPasswordLink = document.getElementById('forgotPasswordLink');
+const resetPasswordButton = document.getElementById('resetPasswordButton');
+
+forgotPasswordLink.addEventListener('click', () => {
+    document.getElementById('forgotPasswordDiv').style.display = 'block';
+});
+
+resetPasswordButton.addEventListener('click', () => {
+    const email = document.getElementById('forgotPasswordEmail').value;
+    const auth = getAuth();
+
+    sendPasswordResetEmail(auth, email)
+        .then(() => {
+            showMessage('Password reset email sent. Check your inbox.', 'resetPasswordMessage');
+        })
+        .catch((error) => {
+            console.error("Error sending reset email", error);
+            showMessage('Error: Unable to send reset email', 'resetPasswordMessage');
+        });
 });

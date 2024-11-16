@@ -16,7 +16,7 @@ class HeaderElem extends HTMLElement {
                 <div class="user-info d-none d-md-flex">
                     <img src="../assets/images/profile.png" alt="User" class="user-icon">
                     <div class="username">
-                      <span id="loggedUserFName"></span> <spanid="loggedUserLName"></span><br>
+                      <span id="loggedUserFName"></span> <span id="loggedUserLName"></span><br>
                       <button id="logout">Logout</button>
                     </div>
                 </div>

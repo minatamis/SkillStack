@@ -2,19 +2,134 @@
 @import url(header.css);
 @import url(chat.css);
 
-
 body {
-    height: 50%;
+    height: 100%;
     margin: 0;
     padding: 0;
     font-family: 'Judson', serif;
-    /* background: linear-gradient(to bottom, #29104A, #845162, #c79590, #FFE3D8); */
-    /* color: #ffffff; */
+    background: linear-gradient(to bottom, #29104A, #845162, #c79590, #FFE3D8);
+    display: flex;
+    flex-direction: column;
+    color: #ffffff;
+    
 }
-.editor{
-    border: 1px solid black;
-    height: 30px;
-    width: 500px;
-    border-radius: 5px;
-    font-size: 20px
+
+
+.container {
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff74;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    justify-content: center; /* Horizontally center */
+    align-items: center;    /* Vertically center */
+}
+
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
+
+}
+.line {
+    border: solid white 2px;
+
+
+}
+
+header h1 {
+    color: #ffffff;
+    font-size: 1.8rem;
+}
+
+
+.exercise-block {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background-color: #fafafa5f;
+}
+
+#qNumber {
+    font-size: 1.4rem;
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+
+#directions {
+    font-size: 1.2rem;
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+
+#hint {
+    font-size: 1rem;
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+
+.editor {
+    font-size: 20px;
+    /* color: #333; */
+    margin-bottom: 15px;
+    padding: 10px;
+    /* background-color: #f3f3f3; */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    min-height: 50px;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+}
+
+.editor[contenteditable="true"]:focus {
+    outline: 2px solid #4CAF50;
+}
+
+/* From Uiverse.io by bandirevanth */ 
+.custom-btn {
+    width: 170px;
+    height: 40px;
+    color: #fff;
+    border-radius: 15px;
+    padding: 10px 25px;
+    font-family: 'Judson', sans-serif;
+    font-weight: 500;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    justify-content: center; /* Horizontally center */
+    align-items: center;    /* Vertically center */
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    box-shadow: inset 2px 2px 2px 0px rgba(255,255,255,.5),
+      7px 7px 20px 0px rgba(0,0,0,.1),
+      4px 4px 5px 0px rgba(0,0,0,.1);
+    outline: none;
+   }
+   
+   .btn-1 {
+    background: rgb(6,14,131);
+    background: linear-gradient(0deg, rgba(6,14,131,1) 0%, rgba(12,25,180,1) 100%);
+    border: none;
+   }
+   
+   .btn-1:hover {
+    background: rgb(0,3,255);
+    background: linear-gradient(0deg, rgb(0, 17, 255) 0%, rgba(2,126,251,1) 100%);
+   }
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+
+    button.submit-btn {
+        font-size: 0.9rem;
+        padding: 8px 15px;
+    }
 }

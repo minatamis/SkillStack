@@ -27,6 +27,27 @@ async function fetchExerciseData(exerciseId) {
             document.getElementById("quiz-title").innerText = exerciseData.fld_title;
             document.getElementById("Instruction").innerText = exerciseData.fld_instruction;
 
+            // Get language from tbl_exercises
+            const exerciseLanguage = exerciseData.fld_language;
+            let aceMode;
+
+            // Map fld_language to ACE mode
+            switch (exerciseLanguage) {
+                case "Java":
+                    aceMode = "ace/mode/java";
+                    break;
+                case "Python":
+                    aceMode = "ace/mode/python";
+                    break;
+                case "C#":
+                    aceMode = "ace/mode/csharp";
+                    break;
+                default:
+                    console.warn(`Unsupported language: ${exerciseLanguage}`);
+                    aceMode = "ace/mode/text"; // Fallback to plain text
+            }
+
+            // Fetch questions associated with the exercise
             const questionsQuery = query(
                 collection(db, "tbl_questions"),
                 where("fld_exerciseId", "==", exerciseId)
@@ -50,7 +71,7 @@ async function fetchExerciseData(exerciseId) {
                 // Initialize the ACE editor for the newly created div
                 const editor = ace.edit(editorId);
                 editor.setTheme("ace/theme/monokai");
-                editor.session.setMode("ace/mode/java");
+                editor.session.setMode(aceMode); // Set mode from fld_language
 
                 questionCount++;
             });

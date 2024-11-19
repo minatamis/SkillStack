@@ -27,11 +27,9 @@ async function fetchExerciseData(exerciseId) {
             document.getElementById("quiz-title").innerText = exerciseData.fld_title;
             document.getElementById("Instruction").innerText = exerciseData.fld_instruction;
 
-            // Get language from tbl_exercises
             const exerciseLanguage = exerciseData.fld_language;
             let aceMode;
 
-            // Map fld_language to ACE mode
             switch (exerciseLanguage) {
                 case "Java":
                     aceMode = "ace/mode/java";
@@ -44,10 +42,9 @@ async function fetchExerciseData(exerciseId) {
                     break;
                 default:
                     console.warn(`Unsupported language: ${exerciseLanguage}`);
-                    aceMode = "ace/mode/text"; // Fallback to plain text
+                    aceMode = "ace/mode/text";
             }
 
-            // Fetch questions associated with the exercise
             const questionsQuery = query(
                 collection(db, "tbl_questions"),
                 where("fld_exerciseId", "==", exerciseId)
@@ -58,7 +55,6 @@ async function fetchExerciseData(exerciseId) {
             questionsQuerySnap.forEach((doc) => {
                 const questionData = doc.data();
 
-                // Create unique editor ID for each question
                 const editorId = `editor-${questionCount}`;
                 const questionDiv = document.createElement("div");
                 questionDiv.innerHTML = `
@@ -68,10 +64,9 @@ async function fetchExerciseData(exerciseId) {
                 `;
                 document.getElementById("question-section").appendChild(questionDiv);
 
-                // Initialize the ACE editor for the newly created div
                 const editor = ace.edit(editorId);
                 editor.setTheme("ace/theme/monokai");
-                editor.session.setMode(aceMode); // Set mode from fld_language
+                editor.session.setMode(aceMode);
 
                 questionCount++;
             });
@@ -84,6 +79,15 @@ async function fetchExerciseData(exerciseId) {
     }
 }
 
-// Example: Replace with the actual exercise ID
-const currentExerciseId = "2MTxA4KjNmgrUJ1tHnoU";
-fetchExerciseData(currentExerciseId);
+function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+}
+
+const currentExerciseId = getQueryParam("exerciseId");
+
+if (currentExerciseId) {
+    fetchExerciseData(currentExerciseId);
+} else {
+    console.error("No exercise ID found in the URL.");
+}

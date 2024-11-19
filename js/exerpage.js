@@ -32,6 +32,7 @@ async function fetchExercises() {
 
         for (const exerciseDoc of exerciseDocs.docs) {
             const exerciseData = exerciseDoc.data();
+            const exerciseId = exerciseDoc.id; // Get the document ID for redirection
 
             const userDocRef = doc(db, "tbl_users", exerciseData.fld_userId);
             const userDocSnap = await getDoc(userDocRef);
@@ -40,22 +41,29 @@ async function fetchExercises() {
                 ? `${userDocSnap.data().fld_firstName} ${userDocSnap.data().fld_lastName}`
                 : "Unknown Creator";
 
-            const exerciseCard = `
-                <div class="col">
-                    <div class="card">
-                        <div class="card-details">
-                            <img src="../assets/images/interface.jpg" alt="${exerciseData.fld_title}">
-                            <p class="text-title">${exerciseData.fld_title}</p>
-                            <p class="text-body">${exerciseData.fld_instruction}</p>
-                            <p class="text-muted">Created by: ${creatorName}</p>
-                        </div>
-                        <button class="card-button">Start Now</button>
+            const exerciseCard = document.createElement("div");
+            exerciseCard.classList.add("col");
+            exerciseCard.innerHTML = `
+                <div class="card">
+                    <div class="card-details">
+                        <img src="../assets/images/interface.jpg" alt="${exerciseData.fld_title}">
+                        <p class="text-title">${exerciseData.fld_title}</p>
+                        <p class="text-body">${exerciseData.fld_instruction}</p>
+                        <p class="text-muted">Created by: ${creatorName}</p>
                     </div>
+                    <button class="card-button" data-id="${exerciseId}">Start Now</button>
                 </div>
             `;
 
-            gridContainer.innerHTML += exerciseCard;
+            gridContainer.appendChild(exerciseCard);
         }
+
+        document.querySelectorAll(".card-button").forEach((button) => {
+            button.addEventListener("click", (e) => {
+                const exerciseId = e.target.getAttribute("data-id");
+                window.location.href = `exercise.html?exerciseId=${exerciseId}`;
+            });
+        });
     } catch (error) {
         console.error("Error fetching exercises:", error);
     }

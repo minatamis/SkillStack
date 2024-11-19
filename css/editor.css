@@ -20,7 +20,7 @@ body {
     background-color: #c7c1c9;
 }
 .left-side, .right-side{ 
-    border: 1px solid black;
+    /* border: 1px solid black; */
     width: 50%;
     height: 70vh;
     margin: auto;
@@ -53,7 +53,12 @@ body {
     border-radius: 0 0 0 10px;
 }
 .output{
+    background-color: #333;
     border-radius: 0 0 10px 0;
+    color: #fff;
+    padding: 10px;
+    margin-bottom: auto;
+    /* border: 1px solid black; */
 }
 
 .custom-btn {

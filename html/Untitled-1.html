@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Code Compiler</title>
+  <style>
+    /* General Styles */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f9f9f9;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(90deg, #5c237a, #a14b9b);
+      color: white;
+      padding: 10px 20px;
+    }
+
+    header .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    header .search-bar input {
+      padding: 5px;
+      border-radius: 5px;
+      border: none;
+    }
+
+    header .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    header .user-profile img {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+    }
+
+    nav {
+      background: #d7b8d9;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 10px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #5c237a;
+      font-weight: bold;
+    }
+
+    .compiler-section {
+      margin: 20px;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .controls select, .controls button {
+      padding: 5px;
+      border-radius: 5px;
+      border: 1px solid #5c237a;
+    }
+
+    .controls button {
+      background: #a14b9b;
+      color: white;
+      cursor: pointer;
+    }
+
+    .controls .version-history {
+      color: #5c237a;
+      text-decoration: none;
+    }
+
+    .code-area {
+      display: flex;
+      gap: 20px;
+    }
+
+    textarea {
+      width: 50%;
+      height: 300px;
+      border: 1px solid #5c237a;
+      border-radius: 10px;
+      padding: 10px;
+      font-family: monospace;
+    }
+
+    #output {
+      width: 50%;
+      height: 300px;
+      border: 1px solid #5c237a;
+      border-radius: 10px;
+      padding: 10px;
+      background: #f3f3f3;
+      overflow: auto;
+    }
+
+    #loading {
+      display: none;
+      font-weight: bold;
+      color: #5c237a;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <h1>Code Compiler</h1>
+    </div>
+    <div class="search-bar">
+      <input type="text" placeholder="Search...">
+    </div>
+    <div class="user-profile">
+      <img src="https://via.placeholder.com/30" alt="User Profile">
+      <span>User</span>
+    </div>
+  </header>
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+  </nav>
+  <div class="compiler-section">
+    <div class="controls">
+      <select id="language">
+        <option value="python">Python</option>
+        <option value="javascript">JavaScript</option>
+        <option value="java">Java</option>
+      </select>
+      <button id="run-btn">Run</button>
+      <button id="save-btn">Save</button>
+      <a href="#" class="version-history">Version History</a>
+    </div>
+    <div class="code-area">
+      <textarea id="code-editor" placeholder="Write your code here..."></textarea>
+      <div id="output"></div>
+    </div>
+    <div id="loading">Running...</div>
+  </div>
+  <script>
+    const API_URL = "https://emkc.org/api/v2/piston/execute"; // Piston API URL
+
+    // Maximum allowed length of code input
+    const MAX_CODE_LENGTH = 5000;
+
+    document.getElementById("run-btn").addEventListener("click", async () => {
+      const code = document.getElementById("code-editor").value;
+      const language = document.getElementById("language").value;
+      const output = document.getElementById("output");
+      const loadingMessage = document.getElementById("loading");
+
+      // Check for large code inputs
+      if (code.length > MAX_CODE_LENGTH) {
+        alert("Code is too large to run.");
+        return;
+      }
+
+      loadingMessage.style.display = "block"; // Show loading message
+      output.innerText = ""; // Clear previous output
+
+      // Case 1: For Java code (or any language with user input)
+      if (language === "java" && code.includes("Scanner")) {
+        // Prompt user for input for Java (e.g. numbers for addition)
+        const num1 = prompt("Enter first number: ");
+        const num2 = prompt("Enter second number: ");
+
+        let modifiedCode = code.replace("int num1 = 0;", `int num1 = ${num1};`);
+        modifiedCode = modifiedCode.replace("int num2 = 0;", `int num2 = ${num2};`);
+
+        try {
+          const response = await fetch(API_URL, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              language,
+              version: "*", // Use the latest version
+              files: [
+                {
+                  name: "Main.java",
+                  content: modifiedCode, // Send modified code with user input
+                },
+              ],
+            }),
+          });
+
+          const result = await response.json();
+          loadingMessage.style.display = "none"; // Hide loading message
+
+          if (result.run && result.run.output) {
+            output.innerText = result.run.output;
+          } else {
+            output.innerText = "No output or an error occurred.";
+          }
+        } catch (error) {
+          loadingMessage.style.display = "none"; // Hide loading message
+          output.innerText = `Error: ${error.message}`;
+        }
+      }
+      // Case 2: For languages without user input (just print output)
+      else {
+        try {
+          const response = await fetch(API_URL, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              language,
+              version: "*", // Use the latest version
+              files: [
+                {
+                  name: "main",
+                  content: code, // Send the code as is
+                },
+              ],
+            }),
+          });
+
+          const result = await response.json();
+          loadingMessage.style.display = "none"; // Hide loading message
+
+          if (result.run && result.run.output) {
+            output.innerText = result.run.output;
+          } else {
+            output.innerText = "No output or an error occurred.";
+          }
+        } catch (error) {
+          loadingMessage.style.display = "none"; // Hide loading message
+          output.innerText = `Error: ${error.message}`;
+        }
+      }
+    });
+
+    document.getElementById("save-btn").addEventListener("click", () => {
+      alert("Your code has been saved!");
+    });
+  </script>
+</body>
+</html>
+
+

@@ -7,11 +7,10 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Judson', serif;
-    background: linear-gradient(135deg, #f4cbe9, #00367c5b); 
+    background: linear-gradient(to bottom, #29104A, #845162, #c79590, #FFE3D8);
     color: #333;
 }
 .whole-editor{
-    /* border: 1px solid black; */
     width: 80%;
     height: 70vh;
     margin: auto;
@@ -21,7 +20,7 @@ body {
     background-color: #c7c1c9;
 }
 .left-side, .right-side{ 
-    /* border: 1px solid black; */
+    border: 1px solid black;
     width: 50%;
     height: 70vh;
     margin: auto;
@@ -31,19 +30,21 @@ body {
     align-items: center;
 }
 .title{
-    /* border: 1px solid black; */
+
     width: 100%;
     height: auto;
     margin: 0;
     padding: 0px 20px;
     display: flex;
     gap: 5%;
+    margin-top: 10px;
 }
 .title button{
-    margin-left: 50%;
+    margin-left: 20%;
+    margin-top: 5px;
 }
 .editor, .output{
-    border: 1px solid black;
+
     height: 60vh;
     width: 95%;
     margin: auto;
@@ -54,3 +55,89 @@ body {
 .output{
     border-radius: 0 0 10px 0;
 }
+
+.custom-btn {
+    width: 90px;
+    height: 40px;
+    color: #fff;
+    border-radius: 5px;
+    padding: 10px 25px;
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    box-shadow: inset 2px 2px 2px 0px rgba(255,255,255,.5),
+      7px 7px 20px 0px rgba(0,0,0,.1),
+      4px 4px 5px 0px rgba(0,0,0,.1);
+    outline: none;
+   }
+   
+   .btn-1 {
+    background: rgb(6,14,131);
+    background: linear-gradient(0deg, rgba(6,14,131,1) 0%, rgba(12,25,180,1) 100%);
+    border: none;
+ 
+   }
+   
+   .btn-1:hover {
+    background: rgb(0,3,255);
+    background: linear-gradient(0deg, rgb(0, 17, 255) 0%, rgba(2,126,251,1) 100%);
+   }
+
+
+:focus {
+    outline: 0;
+    border-color: #2260ff;
+    box-shadow: 0 0 0 4px #b5c9fc;
+  }
+  
+  .mydict div {
+    display: flex;
+    margin-top: 0.5rem;
+    justify-content: center;
+    justify-content: flex-start; 
+    align-items: center; 
+  }
+  
+  .mydict input[type="radio"] {
+    clip: rect(0 0 0 0);
+    clip-path: inset(100%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+  }
+  
+  .mydict input[type="radio"]:checked + span {
+    box-shadow: 0 0 0 0.0625em #0043ed;
+    background-color: #dee7ff;
+    z-index: 1;
+    color: #0043ed;
+  }
+  
+  label span {
+    display: block;
+    cursor: pointer;
+    background-color: #fff;
+    padding: 0.375em .75em;
+    position: relative;
+    margin-left: .0625em;
+    box-shadow: 0 0 0 0.0625em #b5bfd9;
+    letter-spacing: .05em;
+    color: #3e4963;
+    text-align: center;
+    transition: background-color .5s ease;
+  }
+  
+  label:first-child span {
+    border-radius: .375em 0 0 .375em;
+  }
+  
+  label:last-child span {
+    border-radius: 0 .375em .375em 0;
+  }
+  

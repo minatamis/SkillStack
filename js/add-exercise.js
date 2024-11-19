@@ -24,7 +24,7 @@ onAuthStateChanged(auth, (user) => {
         currentUserId = user.uid;
     } else {
         console.error("User is not logged in!");
-        window.location.href = 'login.html';
+        window.location.href = '../index.html';
     }
 });
 

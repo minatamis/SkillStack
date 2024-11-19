@@ -14,15 +14,27 @@
     <div class="main-bod">
         <div class="whole-editor">
             <div class="left-side">
-                <div class="title">
+                <div class="title ">
                     <h4>Language: </h4>
-                    <select name="" id="languages" onchange="changeLanguage()">
-                        <option value="java">Java</option>
-                        <option value="csharp">C#</option>
-                        <option value="python">Python</option>
-                    </select>
+                    <div class="mydict">
+                        <div>
+                            <label>
+                                <input type="radio" name="radio" checked="">
+                                <span>Java</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="radio">
+                                <span>C#</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="radio">
+                                <span>Python</span>
+                            </label>
+                            
+                        </div>
+                    </div>
 
-                    <button>Run</button>
+                   <button class="custom-btn btn-1">Run</button>
                 </div>
                 <div class="editor" id="editor">//Code Here</div>
 

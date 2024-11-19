@@ -3,26 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/exercise.css">
     <title>Exercise</title>
-    <style>
-        .editor{
-            width: 100px;
-            height: 30px;
-            margin: auto;
-        }
-    </style>
 </head>
 <body>
     <h3 id="quiz-title">Title</h3><br>
     <p id="Instruction">Instruction</p><br>
 
     <div id="question-section">
-        <p id="qNumber">Question 1</p><br>
-        <p id="hint"></p><br>
-        <div id="editor" class="editor"></div>
 
     </div>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.36.4/ace.js"></script>
-    <script src="../js/exercise.js"></script>
+    <script type="module" src="../js/exercise.js"></script>
+    <script src="../js/exercise-editor.js"></script>
+    
 </body>
 </html>

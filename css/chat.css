@@ -1,12 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Judson:ital,wght@0,400;0,700;1,400&display=swap');
 
-body {
+/* body {
     font-family: 'Judson', serif;
     background: linear-gradient(135deg, #f4cbe9, #00367c5b);
     margin: 0;
     padding: 0;
     color: #333;
-}
+} */
 
 .chatbot-icon {
     position: fixed;

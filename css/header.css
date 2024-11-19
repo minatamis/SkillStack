@@ -5,16 +5,16 @@
     padding: 0;
 }
 
-body {
+ body {
     font-family: Judson, sans-serif;
-    background: linear-gradient(135deg, #e9a1d6, #bdcfea);
+    background: linear-gradient(to bottom, #29104A, #845162, #c79590, #FFE3D8);
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
 
     height: 100vh;
 
-}
+} 
 
 
 .header {
@@ -96,20 +96,73 @@ box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 .user-info {
     display: flex;
     align-items: center;
-}
-
-.user-icon {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    
-}
-
-.username {
+    position: relative;
+    gap: 12px; 
+  }
+  
+  .username {
     color: #000000;
     text-align: right;
-    margin-left: 50px;
-}
+    font-size: 20px;
+  }
+  
+  .user-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+  }
+  
+  .user-options {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    z-index: 100;
+    width: 150px;
+  }
+  
+  .user-options a,
+  .user-options button {
+    display: block;
+    color: #333;
+    text-decoration: none;
+    padding: 10px 15px;
+    text-align: left;
+    width: 100%;
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
+  
+  .user-options a:hover,
+  .user-options button:hover {
+    background-color: #f0f0f0;
+  }
+  
+  /* Hover effect for toggle */
+  .user-info:hover #userOptions {
+    display: block;
+    animation: slide-down 0.3s ease-out;
+  }
+  
+  /* Animation for dropdown */
+  @keyframes slide-down {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  
 
 .navbar {
     border-top: 1px solid #000000;

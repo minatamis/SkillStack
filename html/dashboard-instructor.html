@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Dashboard</title>
+    <link rel="icon" href="../assets/images/Logo.png" type="image/png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body>
+
+    <head-element></head-element>
+
+    <div class="container">
+        <div class="sidebar">
+            <div class="info-user">
+                <img src="../assets/images/profile 2.png" alt="User profile" class="User profile">
+                <p class="user-name">Jemuel Cebuano</p>
+                <p class="user-email">jemuelcebuano@gmail.com</p>
+                <p class="user-status">INSTRUCTOR</p>
+            </div>
+
+            <hr>
+
+            <ul class="menu">
+                <li><a href="#"><img src="../assets/images/home.png" alt="Dashboard Icon" class="icon">Dashboard</a></li>
+                <li><a href="#"><img src="../assets/images/module.png" alt="Dashboard Icon" class="icon">Modules</a></li>
+                <li><a href="#"><img src="../assets/images/quiz.png" alt="Dashboard Icon" class="icon">Quizzes</a></li>
+                <li><a href="#"><img src="../assets/images/help.png" alt="Dashboard Icon" class="icon">Help</a></li>
+            </ul>
+            <button class="add-module">
+                Add New Module <img src="../assets/images/plus.png" alt="Add Icon" class="icon">
+            </button>
+        </div>
+        
+        <div class="main-content">
+            <div class="header-content">
+                <h3>Welcome, Jemuel</h3>
+                <p id="current-date"></p>
+            </div>
+            <script>
+                const currentDate = new Date();
+                const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
+                const formattedDate = currentDate.toLocaleDateString('en-US', options);
+                document.getElementById('current-date').textContent = formattedDate;
+            </script>
+
+            <hr>
+            <div class="stats">
+                <div class="stat-box">Total Modules Posted<br>3</div>
+                <div class="stat-box">Total Quizzes Created<br>3</div>
+                <div class="stat-box">Total Quiz Scores<br>50</div>
+            </div>
+
+            <section class = "recent-section">
+                <div class ="modules-header">
+                    <p>Recent Module Uploads </p>
+                    <div class="module-list">
+                        <a href="#"><img src="../assets/images/pdf icon.png" alt="PDF" code="PDF"></a>
+                        <a href="#"><img src="../assets/images/pdf icon.png" alt="PDF" code="PDF"></a>
+                        <a href="#"><img src="../assets/images/pdf icon.png" alt="PDF" code="PDF"></a>
+                    </div>
+                </div>
+            
+                <div class ="quiz-header">
+                    <p>Recent Created Quizzes</p>
+                    <div class="quiz-list">
+                        <a href="#"><img src="../assets/images/quiz dashboard.png" alt="Quiz" code="Quiz"></a>
+                        <a href="#"><img src="../assets/images/quiz dashboard.png" alt="Quiz" code="Quiz"></a>
+                        <a href="#"><img src="../assets/images/quiz dashboard.png" alt="Quiz" code="Quiz"></a>
+                    </div>
+                </div>
+                
+            </section>
+
+        </div>
+    </div> 
+
+    <foot-element></foot-element>
+    <script src="../js/header-footer.js"></script>
+    <script src="../js/b.js"></script>
+    <script src="../js/toggle-chat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

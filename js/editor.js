@@ -1,4 +1,4 @@
-let editor;
+ let editor;
 window.onload = function()
 {
     editor = ace.edit("editor");

@@ -1,21 +1,23 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-import { getFirestore, getDoc, doc, query, collection, where, getDocs } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+document.addEventListener("DOMContentLoaded", () => {
+    const questionsData = JSON.parse(sessionStorage.getItem("checkedQuestions"));
+    const exerciseSection = document.getElementById("exercise-section");
 
-// Firebase configuration
-const firebaseConfig = {
-    apiKey: "AIzaSyBcp4pT_gjNkNJV8PU8T2Fx2ahBblFLMEs",
-    authDomain: "skill-stack-df84c.firebaseapp.com",
-    projectId: "skill-stack-df84c",
-    storageBucket: "skill-stack-df84c.appspot.com",
-    messagingSenderId: "208320005858",
-    appId: "1:208320005858:web:ec4bf63c6da69c598680bb",
-    measurementId: "G-WMJQPKF15X"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore();
-
-async function checkExercise() {
-    
-}
+    if (questionsData && exerciseSection) {
+        questionsData.forEach((question, index) => {
+            const questionDiv = document.createElement("div");
+            questionDiv.innerHTML = `
+                <p id="qNumber">Question ${index + 1}</p>
+                <p id="hint">${question.hint}</p>
+                <div class="editor" style="background-color: ${
+                    question.isCorrect ? "lightgreen" : "lightcoral"
+                };"> ${question.userAnswer}</div>
+                <p><strong>Question:</strong> ${question.question}</p>
+                <p><strong>Correct Answer:</strong> ${question.correctAnswer}</p>
+                <hr>
+            `;
+            exerciseSection.appendChild(questionDiv);
+        });
+    } else {
+        console.error("No data found for checked questions!");
+    }
+});

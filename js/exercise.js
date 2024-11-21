@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-import { getFirestore, getDoc, doc, query, collection, where, getDocs } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+import { getFirestore, getDoc, doc, query, collection, where, getDocs, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -79,9 +79,16 @@ async function fetchExerciseData(exerciseId) {
     }
 }
 
+// Function to get query parameters from URL
 function getQueryParam(param) {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(param);
+}
+
+// Mock function to get the current user ID (replace with your actual implementation)
+function getCurrentUserId() {
+    const loggedInUserId=localStorage.getItem('loggedInUserId');
+    return loggedInUserId;
 }
 
 const currentExerciseId = getQueryParam("exerciseId");
@@ -91,3 +98,72 @@ if (currentExerciseId) {
 } else {
     console.error("No exercise ID found in the URL.");
 }
+
+// Add event listener for submit button
+document.querySelector(".custom-btn").addEventListener("click", async () => {
+    const userAnswers = [];
+    const editors = document.querySelectorAll(".editor");
+
+    // Collect user answers
+    editors.forEach((editor, index) => {
+        const aceEditor = ace.edit(editor.id);
+        userAnswers.push({
+            questionNumber: index + 1,
+            answer: aceEditor.getValue()
+        });
+    });
+
+    const exerciseId = getQueryParam("exerciseId");
+    const userId = getCurrentUserId();
+
+    if (exerciseId && userId) {
+        try {
+            // Fetch correct answers
+            const questionsQuery = query(
+                collection(db, "tbl_questions"),
+                where("fld_exerciseId", "==", exerciseId)
+            );
+            const questionsQuerySnap = await getDocs(questionsQuery);
+
+            const questionsWithAnswers = [];
+            questionsQuerySnap.forEach((doc) => {
+                questionsWithAnswers.push({
+                    questionId: doc.id,
+                    question: doc.data().fld_question,
+                    hint: doc.data().fld_hint,
+                    correctAnswer: doc.data().fld_answer
+                });
+            });
+
+            // Evaluate answers and calculate score
+            let correctAnswersCount = 0;
+            const questionsToDisplay = questionsWithAnswers.map((question, index) => {
+                const userAnswer = userAnswers[index]?.answer || "";
+                const isCorrect = userAnswer.trim() === question.correctAnswer.trim();
+                if (isCorrect) correctAnswersCount++;
+                return {
+                    ...question,
+                    userAnswer,
+                    isCorrect
+                };
+            });
+
+            // Save score to Firestore
+            await addDoc(collection(db, "tbl_scores"), {
+                fld_userId: userId,
+                fld_score: correctAnswersCount,
+                fld_exerciseId: exerciseId,
+                fld_answeredAt: serverTimestamp()
+            });
+
+            // Redirect with data in session storage
+            sessionStorage.setItem("checkedQuestions", JSON.stringify(questionsToDisplay));
+            window.location.href = "checked.html";
+
+        } catch (error) {
+            console.error("Error saving score or processing answers:", error);
+        }
+    } else {
+        console.error("Exercise ID or User ID is missing!");
+    }
+});

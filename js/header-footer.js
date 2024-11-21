@@ -19,7 +19,7 @@ class HeaderElem extends HTMLElement {
                   <small>User</small>
                   <div id="userOptions" class="user-options">
                     <a href="https://www.facebook.com/jememem">Profile</a>
-                    <button id="logoutBtn">Logout</button>
+                    <button id="logout">Logout</button>
                   </div>
                 </div>
                 <img src="../assets/images/profile.png" alt="User" class="user-icon" id="userIcon">
@@ -61,7 +61,7 @@ class HeaderElem extends HTMLElement {
                 <li class="nav-item"><a class="nav-link" href="home.html">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="tutorials.html">Tutorials</a></li>
                 <li class="nav-item"><a class="nav-link" href="text-editor.html">Compiler</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Exercises</a></li>
+                <li class="nav-item"><a class="nav-link" href="exercise-list.html">Exercises</a></li>
                 <li class="nav-item"><a class="nav-link" href="contact-us.html">Contact Us</a></li>
             </ul>
         </div>

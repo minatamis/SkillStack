@@ -26,7 +26,7 @@ async function fetchExercises() {
 
         for (const exerciseDoc of exerciseDocs.docs) {
             const exerciseData = exerciseDoc.data();
-            const exerciseId = exerciseDoc.id; // Get the document ID for redirection
+            const exerciseId = exerciseDoc.id;
 
             const userDocRef = doc(db, "tbl_users", exerciseData.fld_userId);
             const userDocSnap = await getDoc(userDocRef);

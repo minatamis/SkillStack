@@ -21,3 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error("No data found for checked questions!");
     }
 });
+
+document.getElementById("answer-again-btn").addEventListener("click", function() {
+    window.location.href = "exercise-list.html";
+});

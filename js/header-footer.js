@@ -18,7 +18,7 @@ class HeaderElem extends HTMLElement {
                   <span id="loggedUserFName"></span> <span id="loggedUserLName"></span><br>
                   <small>User</small>
                   <div id="userOptions" class="user-options">
-                    <a href="https://www.facebook.com/jememem">Profile</a>
+                    <a id="profButton">Profile</a>
                     <button id="logout">Logout</button>
                   </div>
                 </div>
@@ -55,7 +55,7 @@ class HeaderElem extends HTMLElement {
         <div class="offcanvas-body">
             <div class="user-info d-flex flex-column align-items-center">
                 <img src="../assets/images/profile.png" alt="User" class="user-icon">
-                <span class="username">Jemuel Cebuano<br><small>User</small></span>
+                <span id="loggedUserFName"></span> <span id="loggedUserLName"></span><br>
             </div>
             <ul class="navbar-nav mt-4">
                 <li class="nav-item"><a class="nav-link" href="home.html">Home</a></li>

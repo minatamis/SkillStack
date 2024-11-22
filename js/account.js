@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-import {getAuth, onAuthStateChanged, signOut} from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
-import{getFirestore, getDoc, doc} from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+import { getFirestore, getDoc, doc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBcp4pT_gjNkNJV8PU8T2Fx2ahBblFLMEs",
@@ -14,44 +14,72 @@ const firebaseConfig = {
  
 const app = initializeApp(firebaseConfig);
 
-const auth=getAuth();
-const db=getFirestore();
+const auth = getAuth();
+const db = getFirestore();
 
-onAuthStateChanged(auth, (user)=>{
-  const loggedInUserId=localStorage.getItem('loggedInUserId');
-  if(loggedInUserId){
+onAuthStateChanged(auth, (user) => {
+  const loggedInUserId = localStorage.getItem('loggedInUserId');
+  if (loggedInUserId) {
       console.log(user);
       const docRef = doc(db, "tbl_users", loggedInUserId);
       getDoc(docRef)
-      .then((docSnap)=>{
-          if(docSnap.exists()){
-              const userData=docSnap.data();
-              document.getElementById('loggedUserFName').innerText=userData.fld_firstName;
-              document.getElementById('loggedUserLName').innerText=userData.fld_lastName;
-
+      .then((docSnap) => {
+          if (docSnap.exists()) {
+              const userData = docSnap.data();
+              document.getElementById('loggedUserFName').innerText = userData.fld_firstName;
+              document.getElementById('loggedUserLName').innerText = userData.fld_lastName;
           }
-          else{
-              console.log("no document found matching id");
+          else {
+              console.log("No document found matching id");
           }
       })
-      .catch((error)=>{
-          console.log("Error getting document");
+      .catch((error) => {
+          console.log("Error getting document:", error);
       })
   }
-  else{
+  else {
       console.log("User Id not Found in Local storage");
   }
 });
 
-const logoutButton=document.getElementById('logout');
+// Handle profile button click using id="profButton"
+const profileButton = document.getElementById('profButton');
 
-logoutButton.addEventListener('click',()=>{
+profileButton.addEventListener('click', () => {
+  const loggedInUserId = localStorage.getItem('loggedInUserId');
+  if (loggedInUserId) {
+      const docRef = doc(db, "tbl_users", loggedInUserId);
+      getDoc(docRef)
+      .then((docSnap) => {
+          if (docSnap.exists()) {
+              const userData = docSnap.data();
+              const isTeacher = userData.fld_isTeacher; // Check if the user is a teacher
+              if (isTeacher) {
+                  window.location.href = 'dashboard-instructor.html'; // Redirect to instructor dashboard
+              } else {
+                  window.location.href = 'dashboard-student.html'; // Redirect to student dashboard
+              }
+          } else {
+              console.log("No document found matching id");
+          }
+      })
+      .catch((error) => {
+          console.log("Error getting document:", error);
+      })
+  } else {
+      console.log("User Id not Found in Local storage");
+  }
+});
+
+// Handle logout functionality
+const logoutButton = document.getElementById('logout');
+logoutButton.addEventListener('click', () => {
   localStorage.removeItem('loggedInUserId');
   signOut(auth)
-  .then(()=>{
-      window.location.href='../index.html';
+  .then(() => {
+      window.location.href = '../index.html'; // Redirect to home page after sign-out
   })
-  .catch((error)=>{
+  .catch((error) => {
       console.error('Error Signing out:', error);
   })
 });

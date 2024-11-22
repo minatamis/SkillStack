@@ -79,15 +79,13 @@ async function fetchExerciseData(exerciseId) {
     }
 }
 
-// Function to get query parameters from URL
 function getQueryParam(param) {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(param);
 }
 
-// Mock function to get the current user ID (replace with your actual implementation)
 function getCurrentUserId() {
-    const loggedInUserId=localStorage.getItem('loggedInUserId');
+    const loggedInUserId = localStorage.getItem('loggedInUserId');
     return loggedInUserId;
 }
 
@@ -99,12 +97,10 @@ if (currentExerciseId) {
     console.error("No exercise ID found in the URL.");
 }
 
-// Add event listener for submit button
 document.querySelector(".custom-btn").addEventListener("click", async () => {
     const userAnswers = [];
     const editors = document.querySelectorAll(".editor");
 
-    // Collect user answers
     editors.forEach((editor, index) => {
         const aceEditor = ace.edit(editor.id);
         userAnswers.push({
@@ -118,7 +114,6 @@ document.querySelector(".custom-btn").addEventListener("click", async () => {
 
     if (exerciseId && userId) {
         try {
-            // Fetch correct answers
             const questionsQuery = query(
                 collection(db, "tbl_questions"),
                 where("fld_exerciseId", "==", exerciseId)
@@ -135,7 +130,7 @@ document.querySelector(".custom-btn").addEventListener("click", async () => {
                 });
             });
 
-            // Evaluate answers and calculate score
+            const totalQuestions = questionsWithAnswers.length;
             let correctAnswersCount = 0;
             const questionsToDisplay = questionsWithAnswers.map((question, index) => {
                 const userAnswer = userAnswers[index]?.answer || "";
@@ -148,15 +143,15 @@ document.querySelector(".custom-btn").addEventListener("click", async () => {
                 };
             });
 
-            // Save score to Firestore
+
             await addDoc(collection(db, "tbl_scores"), {
                 fld_userId: userId,
                 fld_score: correctAnswersCount,
+                fld_totalQuestions: totalQuestions,
                 fld_exerciseId: exerciseId,
                 fld_answeredAt: serverTimestamp()
             });
 
-            // Redirect with data in session storage
             sessionStorage.setItem("checkedQuestions", JSON.stringify(questionsToDisplay));
             window.location.href = "checked.html";
 

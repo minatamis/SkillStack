@@ -30,7 +30,7 @@
                 <li><a href="#"><img src="../assets/images/quiz.png" alt="Dashboard Icon" class="icon">Quizzes</a></li>
                 <li><a href="#"><img src="../assets/images/help.png" alt="Dashboard Icon" class="icon">Help</a></li>
             </ul>
-            <button class="add-module">
+            <button class="add-module" id="addModuleBtn">
                 Add New Module <img src="../assets/images/plus.png" alt="Add Icon" class="icon">
             </button>
         </div>
@@ -76,9 +76,34 @@
             </section>
 
         </div>
+
+        <div id="popup" style="display: none;">
+            <h2>Upload PDF Module</h2>
+            <form id="uploadForm">
+                <div>
+                    <label for="moduleTitle">Module Title:</label>
+                    <input type="text" id="moduleTitle" placeholder="Enter Module Title" required>
+                </div>
+                <div>
+                    <label for="language">Select Programming Language:</label>
+                    <select id="language" required>
+                        <option value="java">Java</option>
+                        <option value="csharp">C#</option>
+                        <option value="python">Python</option>
+                    </select>
+                </div>
+                <div id="dropArea">Drag and drop your PDF file here or click to select</div>
+                <button type="submit" id="uploadBtn">Upload</button>
+            </form>
+            <button id="closePopup">Close</button>
+        </div>
+
+        
+        
     </div> 
     <chat-head></chat-head>
     <foot-element></foot-element>
+    <script type="module" src="../js/upload-pop-up.js"></script>
     <script src="../js/header-footer.js"></script>
     <script src="../js/toggle-chat.js"></script>
     <script type="module" src="../js/account.js"></script>

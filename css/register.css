@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Judson:ital,wght@0,400;0,700;1,400&display=swap');
 
 body {
@@ -12,6 +11,11 @@ body {
   min-height: 100vh;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+}
+
 .container {
   background-color: white;
   padding: 30px;
@@ -21,8 +25,9 @@ body {
   justify-content: space-between;
   gap: 50px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-  width: 800px; 
-  height: 450px;
+  width: 100%;
+  max-width: 1000px;
+  height: 480px;
 }
 
 .left-side {
@@ -81,16 +86,13 @@ body {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
   animation: button-shimmer 2s infinite;
   transition: all 0.3s ease-in-out;
-
 }
-
 
 .buttons .signup-btn:hover {
   background: linear-gradient(to bottom, #2c0e3f, #5c2a7e);
   animation: button-particles 1s ease-in-out infinite;
   transform: translateY(-2px);
 }
-
 
 .buttons .signup-btn:active {
   transform: scale(0.95);
@@ -101,23 +103,19 @@ body {
   0% {
     background-position: left top;
   }
-
   100% {
     background-position: right bottom;
   }
 }
-
 
 @keyframes button-particles {
   0% {
     background-position: left top;
   }
-
   100% {
     background-position: right bottom;
   }
 }
-
 
 .buttons .login-btn {
   position: relative;
@@ -134,9 +132,7 @@ body {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
   animation: button-shimmer 2s infinite;
   transition: all 0.3s ease-in-out;
-
 }
-
 
 .buttons .login-btn:hover {
   background: linear-gradient(to bottom, #2c0e3f, #5c2a7e);
@@ -145,32 +141,9 @@ body {
   color: white;
 }
 
-
 .buttons .login-btn:active {
   transform: scale(0.95);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-}
-
-
-@keyframes button-shimmer {
-  0% {
-    background-position: left top;
-  }
-
-  100% {
-    background-position: right bottom;
-  }
-}
-
-
-@keyframes button-particles {
-  0% {
-    background-position: left top;
-  }
-
-  100% {
-    background-position: right bottom;
-  }
 }
 
 .login-text {
@@ -184,14 +157,12 @@ body {
   text-decoration: none;
 }
 
-
-
 .right-side {
   width: 50%;
-  height: 390px;
+  height: 420px;
   padding: 30px;
   background: linear-gradient(135deg, #88007a46, #00367c39);
-  border-radius: 30px;
+  border-radius: 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -219,9 +190,21 @@ body {
   transition: border-color 0.3s ease;
 }
 
+.forgotPasswordDiv input {
+  width: 50%;
+  padding: 10px;
+  border: none;
+  border-bottom: 2px solid #333;
+  background-color: transparent;
+  font-size: 13px;
+  font-family: "Judson";
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
 .register-btn {
   position: relative;
-  display: block;     
+  display: block;
   margin: 0 auto;
   background: #262626;
   color: white;
@@ -248,39 +231,17 @@ body {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
-@keyframes button-shimmer {
-  0% {
-    background-position: left top;
-  }
-
-  100% {
-    background-position: right bottom;
-  }
-}
-
-@keyframes button-particles {
-  0% {
-    background-position: left top;
-  }
-
-  100% {
-    background-position: right bottom;
-  }
-}
-
-
-
 @media (max-width: 768px) {
   .container {
     flex-direction: column;
-    width: 100%;
+    width: 90%;
     height: auto;
     padding: 20px;
   }
 
   .left-side, .right-side {
-    width: 100%;
-    padding: 10px;
+    width: 90%;
+    padding: 20px;
   }
 
   .left-side h1 {
@@ -288,8 +249,9 @@ body {
   }
 
   .logo img {
-    width: 100px;
-    height: 100px;
+    width: 130px;
+    height: 130px;
+    margin-top: 10px;
   }
 
   .buttons button {
@@ -321,7 +283,7 @@ body {
   }
 
   .form-group input {
-    width: 100%;
+    width: 90%;
   }
 
   .register-btn {

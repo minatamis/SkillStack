@@ -1,8 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-import { getStorage, ref, uploadBytes } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-storage.js";
-import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-storage.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
-// Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyBcp4pT_gjNkNJV8PU8T2Fx2ahBblFLMEs",
     authDomain: "skill-stack-df84c.firebaseapp.com",
@@ -13,118 +12,101 @@ const firebaseConfig = {
     measurementId: "G-WMJQPKF15X"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const storage = getStorage(app);  // Firebase Storage instance
-const db = getFirestore(app);  // Firestore instance
+const storage = getStorage();
+const db = getFirestore();
 
-const addModuleBtn = document.getElementById('addModuleBtn');
-const popup = document.getElementById('popup');
-const dropArea = document.getElementById('dropArea');
-const closePopup = document.getElementById('closePopup');
-const languageSelect = document.getElementById('language'); // Select element for language
+const addModuleBtn = document.getElementById("addModuleBtn");
+const popup = document.getElementById("popup");
+const dropArea = document.getElementById("dropArea");
+const closePopup = document.getElementById("closePopup");
+const uploadForm = document.getElementById("uploadForm");
 
-// Show the popup when the button is clicked
-addModuleBtn.addEventListener('click', () => {
-    popup.style.display = 'block';
+let selectedFile = null;
+
+addModuleBtn.addEventListener("click", () => {
+    popup.style.display = "block";
 });
 
-// Close the popup
-closePopup.addEventListener('click', () => {
-    popup.style.display = 'none';
+closePopup.addEventListener("click", () => {
+    popup.style.display = "none";
 });
 
-// Drag-and-drop functionality
-dropArea.addEventListener('dragover', (e) => {
+dropArea.addEventListener("dragover", (e) => {
     e.preventDefault();
-    dropArea.classList.add('drag-over');
+    dropArea.classList.add("drag-over");
 });
 
-dropArea.addEventListener('dragleave', () => {
-    dropArea.classList.remove('drag-over');
+dropArea.addEventListener("dragleave", () => {
+    dropArea.classList.remove("drag-over");
 });
 
-dropArea.addEventListener('drop', (e) => {
+dropArea.addEventListener("drop", (e) => {
     e.preventDefault();
-    dropArea.classList.remove('drag-over');
-
+    dropArea.classList.remove("drag-over");
     const file = e.dataTransfer.files[0];
-    const language = languageSelect.value; // Get selected language
-    const userId = localStorage.getItem('loggedInUserId');  // Get logged-in user ID
-
-    if (file && file.type === "application/pdf" && language) {
-        const storageRef = ref(storage, `modules/${language}/${file.name}`);
-
-        // Upload file to Firebase Storage
-        uploadBytes(storageRef, file)
-            .then((snapshot) => {
-                console.log('Uploaded file:', snapshot);
-                
-                // After file is uploaded, create a new record in Firestore
-                const moduleRef = doc(db, "tbl_modules", snapshot.metadata.name);
-                const moduleData = {
-                    fld_moduleTitle: file.name,
-                    fld_language: language,
-                    fld_uploaderId: userId,
-                    fld_uploadedAt: serverTimestamp()
-                };
-
-                return setDoc(moduleRef, moduleData);
-            })
-            .then(() => {
-                alert('File uploaded successfully!');
-                popup.style.display = 'none'; // Close popup after successful upload
-            })
-            .catch((error) => {
-                console.error('Error uploading file:', error);
-                alert('Error uploading file.');
-            });
-    } else {
-        alert("Please upload a valid PDF file and select a language.");
-    }
+    handleFile(file);
 });
 
-// Handle click on drop area to open file picker
-dropArea.addEventListener('click', () => {
-    const fileInput = document.createElement('input');
-    fileInput.type = 'file';
-    fileInput.accept = '.pdf';
+dropArea.addEventListener("click", () => {
+    const fileInput = document.createElement("input");
+    fileInput.type = "file";
+    fileInput.accept = ".pdf";
     fileInput.click();
 
-    fileInput.addEventListener('change', (e) => {
+    fileInput.addEventListener("change", (e) => {
         const file = e.target.files[0];
-        const language = languageSelect.value;
-        const userId = localStorage.getItem('loggedInUserId');  // Get logged-in user ID
-
-        if (file && file.type === "application/pdf" && language) {
-            const storageRef = ref(storage, `modules/${language}/${file.name}`);
-
-            // Upload file to Firebase Storage
-            uploadBytes(storageRef, file)
-                .then((snapshot) => {
-                    console.log('Uploaded file:', snapshot);
-
-                    // After file is uploaded, create a new record in Firestore
-                    const moduleRef = doc(db, "tbl_modules", snapshot.metadata.name);
-                    const moduleData = {
-                        fld_moduleTitle: file.name,
-                        fld_language: language,
-                        fld_uploaderId: userId,
-                        fld_uploadedAt: serverTimestamp()
-                    };
-
-                    return setDoc(moduleRef, moduleData);
-                })
-                .then(() => {
-                    alert('File uploaded successfully!');
-                    popup.style.display = 'none'; // Close popup after successful upload
-                })
-                .catch((error) => {
-                    console.error('Error uploading file:', error);
-                    alert('Error uploading file.');
-                });
-        } else {
-            alert("Please upload a valid PDF file and select a language.");
-        }
+        handleFile(file);
     });
+});
+
+function handleFile(file) {
+    if (file && file.type === "application/pdf") {
+        selectedFile = file;
+        dropArea.textContent = `Selected file: ${file.name}`;
+    } else {
+        alert("Please upload a valid PDF file.");
+    }
+}
+
+uploadForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const moduleTitle = document.getElementById("moduleTitle").value;
+    const language = document.getElementById("language").value;
+    const uploaderId = localStorage.getItem("loggedInUserId");
+
+    if (!selectedFile) {
+        alert("Please select a PDF file.");
+        return;
+    }
+
+    if (!moduleTitle || !language) {
+        alert("Please fill in all fields.");
+        return;
+    }
+
+    try {
+        const storageRef = ref(storage, `modules/${language}/${selectedFile.name}`);
+        const snapshot = await uploadBytes(storageRef, selectedFile);
+        const downloadURL = await getDownloadURL(snapshot.ref);
+
+        const moduleData = {
+            fld_moduleTitle: moduleTitle,
+            fld_language: language,
+            fld_uploaderId: uploaderId,
+            fld_uploadedAt: new Date(),
+            fld_downloadURL: downloadURL
+        };
+
+        await addDoc(collection(db, "tbl_modules"), moduleData);
+
+        alert("Module uploaded successfully!");
+        uploadForm.reset();
+        dropArea.textContent = "Drag and drop your PDF file here or click to select";
+        popup.style.display = "none";
+    } catch (error) {
+        console.error("Error uploading module:", error);
+        alert("Error uploading module. Please try again.");
+    }
 });

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Skill Stack</title>
+    <link rel="icon" href="../assets/images/Logo.png" type="image/png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/home.css">
+</head>
+<body>
+
+    <head-element></head-element>
+    <div class="main-bod">
+
+        <div class="chat-container">
+            <div class="chat-head" id="chat-head" onclick="toggleChatbox()">
+                <img src="../assets/images/ava.gif" alt="Chatbot Icon">
+            </div>
+            <div class="chatbox" id="chatbox">
+                <!-- Chatbox Header -->
+                <div class="chatbox-header">
+                    <span class="bot-name">AVA</span>
+                    <button class="close-btn" onclick="closeChat()">
+                        <img src="../assets/images/close.png" alt="Close" class="close-icon">
+                    </button>
+                </div>
+                <div class="chat-messages" id="chat-messages"></div>
+                <div class="chat-input">
+                    <input type="text" id="user-input" placeholder="Type a message...">
+                    <button id="send-btn" onclick="sendMessage()">
+                        <!-- SVG Icon for send button (can be changed) -->
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="currentColor" d="M4 4v16l16-8z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+   
+
+
+
+
+</div>
+
+    
+
+    <foot-element></foot-element>
+    <script src="../js/header-footer.js"></script>
+    <script src="../js/mess.js"></script>
+    <script type="module" src="../js/account.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -368,3 +368,99 @@ body {
     background-color: #efddff;
   }
   
+
+
+.modules-header {
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+
+.modules-header p {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+
+.module-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+
+.module-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+
+.module-item a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+}
+
+.module-item a img {
+    margin-right: 10px;
+}
+
+
+.three-dots {
+    cursor: pointer;
+    font-size: 20px;
+    color: #888;
+    margin-left: 10px;
+    transition: color 0.3s ease;
+}
+
+.three-dots:hover {
+    color: #000;
+}
+
+
+.delete-option {
+    display: none;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    background-color: #ff4d4d;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: opacity 0.3s ease;
+}
+
+
+.module-item.show-delete .delete-option {
+    display: block;
+}
+
+
+.delete-option:hover {
+    background-color: #ff0000;
+}
+
+
+.module-item:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+.module-list {
+    margin-top: 20px;
+}

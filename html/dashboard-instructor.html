@@ -24,12 +24,11 @@
 
             <hr>
 
-            <ul class="menu">
-                <li><a href="#"><img src="../assets/images/home.png" alt="Dashboard Icon" class="icon">Dashboard</a></li>
-                <li><a href="#"><img src="../assets/images/module.png" alt="Dashboard Icon" class="icon">Modules</a></li>
-                <li><a href="#"><img src="../assets/images/quiz.png" alt="Dashboard Icon" class="icon">Quizzes</a></li>
-                <li><a href="#"><img src="../assets/images/help.png" alt="Dashboard Icon" class="icon">Help</a></li>
-            </ul>
+            <button class="add-module" id="addQuizBtn">
+                Add New Quiz <img src="../assets/images/plus.png" alt="Add Icon" class="icon">
+            </button>
+
+            
             <button class="add-module" id="addModuleBtn">
                 Add New Module <img src="../assets/images/plus.png" alt="Add Icon" class="icon">
             </button>
@@ -45,18 +44,47 @@
             <div class="stats">
                 <div class="stat-box">Total Modules Posted<br>3</div>
                 <div class="stat-box">Total Quizzes Created<br>3</div>
-                <div class="stat-box">Total Quiz Scores<br>50</div>
+        
             </div>
 
             <section class = "recent-section">
-                <div class ="modules-header">
-                    <p>Module Uploads </p>
+                <div class="modules-header">
+                    <p>Module Uploads</p>
                     <div class="module-list">
-                        <a href="#"><img src="../assets/images/pdf icon.png" alt="PDF" code="PDF"></a>
-                        <a href="#"><img src="../assets/images/pdf icon.png" alt="PDF" code="PDF"></a>
-                        <a href="#"><img src="../assets/images/pdf icon.png" alt="PDF" code="PDF"></a>
+                        <div class="module-item">
+                            <a href="#">
+                                <img src="../assets/images/pdf icon.png" alt="Quiz">
+                                <span class="quiz-name">${title}</span>
+                            </a>
+                            <span class="dots">...</span>
+                            <div class="options">
+                                <button class="delete" id="delete-${exerciseId}">Delete</button>
+                            </div>
+                        </div>
+                        <div class="module-item">
+                            <a href="#">
+                                <img src="../assets/images/pdf icon.png" alt="Quiz">
+                                <span class="quiz-name">${title}</span>
+                            </a>
+                            <span class="dots">...</span>
+                            <div class="options">
+                                <button class="delete" id="delete-${exerciseId}">Delete</button>
+                            </div>
+                        </div>
+                        <div class="module-item">
+                            <a href="#">
+                                <img src="../assets/images/pdf icon.png" alt="Quiz">
+                                <span class="quiz-name">${title}</span>
+                            </a>
+                            <span class="dots">...</span>
+                            <div class="options">
+                                <button class="delete" id="delete-${exerciseId}">Delete</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
+
             
                 <div class="quiz-header">
                     <p>Created Quizzes</p>

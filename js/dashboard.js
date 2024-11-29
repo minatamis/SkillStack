@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-import { getFirestore, doc, getDoc, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+import { getFirestore, doc, getDoc, collection, query, where, getDocs, writeBatch } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -16,7 +16,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore();
 
-                  async function getUserData(userId) {
+async function getUserData(userId) {
     const userDocRef = doc(db, "tbl_users", userId);
     const userDocSnap = await getDoc(userDocRef);
 
@@ -75,10 +75,111 @@ async function getQuizScores(userId) {
     }
 }
 
+async function getExercises(userId) {
+    const exercisesQuery = query(
+        collection(db, "tbl_exercises"),
+        where("fld_userId", "==", userId)
+    );
+
+    try {
+        const exercisesQuerySnap = await getDocs(exercisesQuery);
+        const listContainer = document.querySelector(".list");
+        listContainer.innerHTML = "";
+
+        if (exercisesQuerySnap.empty) {
+            listContainer.innerHTML = "<p>No exercises found.</p>";
+            return;
+        }
+
+        exercisesQuerySnap.forEach(doc => {
+            const exerciseData = doc.data();
+            const title = exerciseData.fld_title;
+            const exerciseId = doc.id;
+        
+            if (title) {
+                const quizItem = document.createElement("div");
+                quizItem.classList.add("quiz-item");
+        
+                quizItem.innerHTML = `
+                    <a href="#">
+                        <img src="../assets/images/quiz dashboard.png" alt="Quiz">
+                        <span class="quiz-name">${title}</span>
+                    </a>
+                    <span class="dots">...</span>
+                    <div class="options">
+                        <button class="edit" id="edit-${exerciseId}">Edit</button>
+                        <button class="delete" id="delete-${exerciseId}">Delete</button>
+                        <button class="view-scores" id="view-scores-${exerciseId}">View Scores</button>
+                    </div>
+                `;
+        
+                listContainer.appendChild(quizItem);
+
+                const editBtn = quizItem.querySelector(`#edit-${exerciseId}`);
+                editBtn.addEventListener("click", function () {
+                    window.location.href = `edit.html?exerciseId=${exerciseId}`;
+                });
+        
+                const deleteBtn = quizItem.querySelector(`#delete-${exerciseId}`);
+                deleteBtn.addEventListener("click", function() {
+                    deleteExercise(exerciseId, quizItem);
+                });
+
+                const viewScoresBtn = quizItem.querySelector(`#view-scores-${exerciseId}`);
+                viewScoresBtn.addEventListener("click", function () {
+                    window.location.href = `score-list.html?exerciseId=${exerciseId}`;
+                });
+
+            } else {
+                console.error(`Missing title for document: ${doc.id}`);
+            }
+        });
+
+        attachDotsListeners();
+    } catch (error) {
+        console.error("Error fetching exercises:", error);
+    }
+}
+
+async function deleteExercise(exerciseId, exerciseDiv) {
+    const exerciseRef = doc(db, "tbl_exercises", exerciseId);
+    const questionsQuery = query(
+        collection(db, "tbl_questions"),
+        where("fld_exerciseId", "==", exerciseId)
+    );
+
+    const batch = writeBatch(db); // Firebase batch to handle multiple writes
+
+    try {
+        // Delete the related questions first
+        const questionsSnapshot = await getDocs(questionsQuery);
+        questionsSnapshot.forEach((questionDoc) => {
+            const questionRef = doc(db, "tbl_questions", questionDoc.id);
+            batch.delete(questionRef); // Add delete operation to the batch
+        });
+
+        // Delete the exercise document
+        batch.delete(exerciseRef);
+
+        // Commit the batch
+        await batch.commit();
+
+        // Remove the corresponding div from the DOM
+        if (exerciseDiv && exerciseDiv.parentElement) {
+            exerciseDiv.remove(); // Directly remove the element
+        }
+        
+        console.log(`Exercise with ID: ${exerciseId} and its related questions deleted successfully.`);
+    } catch (error) {
+        console.error("Error deleting exercise and related questions: ", error);
+    }
+}
+
 const userId = localStorage.getItem('loggedInUserId');
 if (userId) {
     getUserData(userId);
     getQuizScores(userId);
+    getExercises(userId);
 } else {
     console.error("User ID not found in localStorage.");
 }
@@ -87,3 +188,40 @@ const currentDate = new Date();
 const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
 const formattedDate = currentDate.toLocaleDateString('en-US', options);
 document.getElementById('current-date').textContent = formattedDate;
+
+// Define the function
+function attachDotsListeners() {
+    const dots = document.querySelectorAll(".dots");
+
+    dots.forEach(dot => {
+        dot.addEventListener("click", function () {
+            const options = this.nextElementSibling;
+
+            // Toggle the visibility of the options
+            options.style.display = options.style.display === "block" ? "none" : "block";
+
+            // Close other open menus
+            dots.forEach(otherDot => {
+                if (otherDot !== dot) {
+                    const otherOptions = otherDot.nextElementSibling;
+                    otherOptions.style.display = "none";
+                }
+            });
+        });
+    });
+
+    // Close the menu if clicked outside
+    document.addEventListener("click", function (e) {
+        dots.forEach(dot => {
+            const options = dot.nextElementSibling;
+            if (!dot.contains(e.target) && !options.contains(e.target)) {
+                options.style.display = "none";
+            }
+        });
+    });
+}
+
+// Call the function after DOM is ready
+document.addEventListener("DOMContentLoaded", function () {
+    attachDotsListeners();
+});

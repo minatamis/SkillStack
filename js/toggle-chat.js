@@ -111,7 +111,7 @@ window.sendMessage = async function () {
     if (userMessage !== "") {
         appendMessage(userMessage, 'user');
 
-        const typingMessage = appendMessage("Bot is typing...", 'bot', true);
+        const typingMessage = appendMessage("Ava is typing...", 'bot', true);
 
         try {
             const docRef = await addDoc(collection(db, "tbl_messages"), {

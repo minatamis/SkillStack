@@ -47,18 +47,28 @@ async function getQuizScores(userId) {
             return;
         }
 
-        scoresQuerySnap.forEach(doc => {
-            const scoreData = doc.data();
+        for (const scoreDoc of scoresQuerySnap.docs) {
+            const scoreData = scoreDoc.data();
             const score = scoreData.fld_score;
             const totalQuestions = scoreData.fld_totalQuestions;
+            const exerciseId = scoreData.fld_exerciseId;
 
-            if (score != null && totalQuestions != null) {
+            if (score != null && totalQuestions != null && exerciseId) {
+                // Fetch the title from tbl_exercises based on exerciseId
+                const exerciseDocRef = doc(db, "tbl_exercises", exerciseId);
+                const exerciseDocSnap = await getDoc(exerciseDocRef);
+
+                let quizName = "Unknown Quiz"; // Default name
+                if (exerciseDocSnap.exists()) {
+                    const exerciseData = exerciseDocSnap.data();
+                    quizName = exerciseData.fld_title || "Unnamed Quiz"; // Use fld_title or fallback to "Unnamed Quiz"
+                }
+
                 const percentage = (score / totalQuestions) * 100;
 
                 const quizItem = document.createElement("li");
                 quizItem.classList.add("quiz-item");
 
-                const quizName = `Quiz ID: ${doc.id}`;
                 const quizScore = `${Math.round(percentage)}%`;
 
                 quizItem.innerHTML = `
@@ -67,13 +77,14 @@ async function getQuizScores(userId) {
                 `;
                 quizList.appendChild(quizItem);
             } else {
-                console.error(`Missing score or totalQuestions for document: ${doc.id}`);
+                console.error(`Missing score, totalQuestions, or exerciseId for document: ${scoreDoc.id}`);
             }
-        });
+        }
     } catch (error) {
         console.error("Error fetching quiz scores:", error);
     }
 }
+
 
 async function getExercises(userId) {
     const exercisesQuery = query(

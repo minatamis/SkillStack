@@ -63,20 +63,225 @@
           <label for="userRole">I am a:</label>
           <select id="userRole">
             <option value="student">Student</option>
-            <option value="teacher">Teacher</option>
+            <option value="teacher">Instructor</option>
           </select>
         </div>
         
         <div class="form-group" id="teacherIdContainer" style="display: none;">
           <input type="text" id="teacherId" placeholder="ID Number">
         </div>
-        <button type="submit" class="register-btn" id="submitSignUp">Register</button>
+        <button type="submit" class="register-btn" id="submitSignUp" disabled>Register</button>
+
+
         <p class="login-text">Already have an account? <a href="#" class="log">Log in</a></p>
       </form>
+
+      
+
+
+
+
+
+
+      <div class="terms-container">
+        <input type="checkbox" id="agreeTerms">
+        <label for="agreeTerms">
+          I agree to the 
+          <a id="termsLink" href="#">Terms and Conditions</a>.
+        </label>
+      </div>
+    
+      <!-- Modal -->
+      <div class="modal" id="termsModal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2>Terms and Conditions</h2>
+            <button class="close-btn" id="closeModal">&times;</button>
+          </div>
+          <div class="modal-body">
+            <h3>Skill Stack</h3>
+            <br>
+                <hr>
+                <br>
+            <h4>1. Introduction</h4>
+            <p>Welcome to Skill Stack, an innovative coding education platform featuring an AI-integrated chatbot. These Terms and Conditions constitute a legally binding agreement between you and Skill Stack governing your access to and use of our website, services, features, and content.</p>
+            <h5>1.1 Acceptance of Terms</h5>
+            <p>By accessing or using this website, you agree to comply with and be bound by these Terms and Conditions. If you do not agree with any part of these terms, you must not use the website.</p>
+            <br>
+                <hr>
+                <br>
+            <h4>2. Description of Services</h4>
+            <p>This platform provides programming tutorials, quizzes, and file-sharing functionalities. Registered users can upload tutorials or files and create quizzes, which will be accessible to other users.</p>
+            <br>
+                <hr>
+                <br>
+            <h4>3. User Responsibilities</h4>
+            <ul>
+              <li>You must provide accurate and complete registration information.</li>
+              <li>You are responsible for maintaining the confidentiality of your account and password.</li>
+              <li>You must not use the website for any illegal or unauthorized purpose.</li>
+            </ul>
+
+            <br>
+                <hr>
+                <br> 
+            <h4>4. Content Uploads Ownership and Rights</h4>
+            <p>By uploading content (tutorials, files, quizzes), you affirm that you own or have the necessary rights to share the content:</p>
+            <ul>
+              <li><b>Licensing:</b> By uploading, you grant the website a non-exclusive, royalty-free, worldwide license to display, distribute, and make the content available to users.</li>
+              <li><b>Prohibited Content:</b> You agree not to upload content that is:
+                <ul>
+                  <li>Plagiarized or infringes on intellectual property rights.</li>
+                  <li>Offensive, defamatory, or promotes hate speech.</li>
+                  <li>Malware or any harmful software.</li>
+                </ul>
+              </li>
+              <li><b>Approval Process:</b> Uploaded content may be reviewed before publication to ensure compliance with these terms.</li>
+            </ul>
+
+            <br>
+                <hr>
+                <br>
+
+
+            <h4>5. User-Generated Quizzes</h4>
+            <li><b>Responsibility:</b> Users creating quizzes must ensure that questions and answers are
+              accurate, appropriate, and relevant to the platform's educational objectives.</li>
+              <li><b>Plagiarism:</b> All quiz content must be original or properly attributed.
+              </li>
+              <li><b>Availability:</b> Quizzes created by users will be shared and accessible to all users unless
+                otherwise restricted.
+                </li>
+
+                <br>
+                <hr>
+                <br>
+
+                
+            <h4>6. Prohibited Activities</h4>
+            <p>You agree not to:</p>
+            
+              <li>Use the platform to distribute spam or unauthorized advertisements.</li>
+              <li>Attempt to hack, disrupt, or compromise the platform's security.</li>
+              <li>Misrepresent authorship of uploaded content.</li>
+            
+
+            <br>
+                <hr>
+                <br>
+
+
+                <h4>7. Intellectual Property</h4>
+              <li>The website owns all rights to its name, logo, and platform design.</li>
+              <li>User-uploaded content remains the property of the uploader, subject to the licensing
+                terms stated in Section 4.</li>
+            
+            <br>
+                <hr>
+                <br>
+
+                <h4>8. Privacy Policy</h4>
+            <p>Your personal information will be handled in accordance with our Privacy Policy. We use
+              encryption and secure protocols to protect your data.</p>
+
+              <br>
+                <hr>
+                <br>
+
+                <h4>9. Disclaimer of Liability</h4>
+              <li>The platform does not guarantee the accuracy, reliability, or completeness of
+                user-uploaded content.</li>
+              <li>The platform is not responsible for any damages caused by errors in content or by
+                third-party interactions.</li>
+
+                <br>
+                <hr>
+                <br>
+
+                <h4>10. Content Removal</h4>
+            <p>The platform reserves the right to remove any uploaded content that:
+            </p>
+            
+              <li>Violates these terms or applicable laws.</li>
+              <li>Receives repeated complaints from users.</li>
+              <li>Is deemed harmful to the platform or its users.</li>
+
+              <p>Note: The content must be approved by the administrator first before it was posted on the
+                Website.</p>
+
+            <br>
+                <hr>
+                <br>
+
+                <h4>11. Termination</h4>
+            <p>The platform may suspend or terminate your account if you:</p>
+            
+              <li>Violates these terms or applicable laws.</li>
+              <li>Engage in fraudulent or harmful activities.</li>
+
+              <br>
+                <hr>
+                <br>
+
+                <h4>12. Amendments</h4>
+            <p>These terms may be updated periodically. Continued use of the platform constitutes acceptance
+              of the updated terms.</p>
+
+              <br>
+                <hr>
+                <br>
+
+                <h4>13. Governing Laws</h4>
+                <p>These terms shall be governed and construed in accordance with the laws of the Philippines.</p>
+    
+                  <br>
+                    <hr>
+                    <br>
+
+                    <h4>14. Contact Information</h4>
+                <p>If you have questions about these Terms and Conditions, please contact us at [Contact
+                  Email/Phone].
+                  </p>
+
+                  <br>
+                    <hr>
+                    <br>
+
+                    <p>By using Skill Stack, you acknowledge that you have read, understood, and agree to be bound
+                      by these Terms and Conditions
+                      </p>
+
+                      <br>
+                    <hr>
+                    <br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+          </div>
+        </div>
+      </div>
+
+
+
+
     </div>
   </div>
 
   <script src="js/firebaseauth.js" type="module"></script>
+  <script src="js/terms.js"></script>
   <script src="js/signin-change.js"></script>
   <script src="js/register.js"></script>
 </body>

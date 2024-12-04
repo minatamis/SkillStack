@@ -79,7 +79,7 @@ uploadForm.addEventListener("submit", async (e) => {
 
     const moduleTitle = document.getElementById("moduleTitle").value;
     const language = document.getElementById("language").value;
-    const uploaderId = localStorage.getItem("loggedInUserId");
+    const uploaderId = localStorage.getItem("loggedInUserId") || "guest"; // Default if not logged in
 
     if (!selectedFile) {
         alert("Please select a PDF file.");
@@ -100,7 +100,7 @@ uploadForm.addEventListener("submit", async (e) => {
             fld_moduleTitle: moduleTitle,
             fld_language: language,
             fld_uploaderId: uploaderId,
-            fld_uploadedAt: new Date(),
+            fld_uploadedAt: new Date().toISOString(),
             fld_downloadURL: downloadURL
         };
 
@@ -112,6 +112,6 @@ uploadForm.addEventListener("submit", async (e) => {
         popup.style.display = "none";
     } catch (error) {
         console.error("Error uploading module:", error);
-        alert("Error uploading module. Please try again.");
+        alert(`Error uploading module: ${error.message}`);
     }
 });

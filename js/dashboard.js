@@ -47,18 +47,27 @@ async function getQuizScores(userId) {
             return;
         }
 
-        scoresQuerySnap.forEach(doc => {
-            const scoreData = doc.data();
+        for (const scoreDoc of scoresQuerySnap.docs) {
+            const scoreData = scoreDoc.data();
             const score = scoreData.fld_score;
             const totalQuestions = scoreData.fld_totalQuestions;
+            const exerciseId = scoreData.fld_exerciseId;
 
-            if (score != null && totalQuestions != null) {
+            if (score != null && totalQuestions != null && exerciseId) {
+                const exerciseDocRef = doc(db, "tbl_exercises", exerciseId);
+                const exerciseDocSnap = await getDoc(exerciseDocRef);
+
+                let quizName = "Unknown Quiz";
+                if (exerciseDocSnap.exists()) {
+                    const exerciseData = exerciseDocSnap.data();
+                    quizName = exerciseData.fld_title || "Unnamed Quiz";
+                }
+
                 const percentage = (score / totalQuestions) * 100;
 
                 const quizItem = document.createElement("li");
                 quizItem.classList.add("quiz-item");
 
-                const quizName = `Quiz ID: ${doc.id}`;
                 const quizScore = `${Math.round(percentage)}%`;
 
                 quizItem.innerHTML = `
@@ -67,14 +76,117 @@ async function getQuizScores(userId) {
                 `;
                 quizList.appendChild(quizItem);
             } else {
-                console.error(`Missing score or totalQuestions for document: ${doc.id}`);
+                console.error(`Missing score, totalQuestions, or exerciseId for document: ${scoreDoc.id}`);
             }
-        });
+        }
     } catch (error) {
         console.error("Error fetching quiz scores:", error);
     }
 }
 
+<<<<<<< Updated upstream
+=======
+
+async function getExercises(userId) {
+    const exercisesQuery = query(
+        collection(db, "tbl_exercises"),
+        where("fld_userId", "==", userId)
+    );
+    let count = 0;
+    try {
+        const exercisesQuerySnap = await getDocs(exercisesQuery);
+        const listContainer = document.querySelector(".list");
+        listContainer.innerHTML = "";
+
+        if (exercisesQuerySnap.empty) {
+            listContainer.innerHTML = "<p>No exercises found.</p>";
+            return;
+        }
+
+        exercisesQuerySnap.forEach(doc => {
+            count++;
+
+            const exerciseData = doc.data();
+            const title = exerciseData.fld_title;
+            const exerciseId = doc.id;
+
+            if (title) {
+                const quizItem = document.createElement("div");
+                quizItem.classList.add("quiz-item");
+
+                quizItem.innerHTML = `
+                    <a href="#">
+                        <img src="../assets/images/quiz dashboard.png" alt="Quiz">
+                        <span class="quiz-name">${title}</span>
+                    </a>
+                    <span class="dots">...</span>
+                    <div class="options">
+                        <button class="edit" id="edit-${exerciseId}">Edit</button>
+                        <button class="delete" id="delete-${exerciseId}">Delete</button>
+                        <button class="view-scores" id="view-scores-${exerciseId}">View Scores</button>
+                    </div>
+                `;
+
+                listContainer.appendChild(quizItem);
+
+                const editBtn = quizItem.querySelector(`#edit-${exerciseId}`);
+                editBtn.addEventListener("click", function () {
+                    window.location.href = `edit.html?exerciseId=${exerciseId}`;
+                });
+
+                const deleteBtn = quizItem.querySelector(`#delete-${exerciseId}`);
+                deleteBtn.addEventListener("click", function() {
+                    deleteExercise(exerciseId, quizItem);
+                });
+
+                const viewScoresBtn = quizItem.querySelector(`#view-scores-${exerciseId}`);
+                viewScoresBtn.addEventListener("click", function () {
+                    window.location.href = `score-list.html?exerciseId=${exerciseId}`;
+                });
+            } else {
+                console.error(`Missing title for document: ${doc.id}`);
+            }
+
+        });
+
+        attachDotsListeners();
+    } catch (error) {
+        console.error("Error fetching exercises:", error);
+    }
+    document.getElementById("total-quizzes").innerHTML = `Total Quizzes Created<br>${count}`;
+}
+
+async function deleteExercise(exerciseId, exerciseDiv) {
+    const exerciseRef = doc(db, "tbl_exercises", exerciseId);
+    const questionsQuery = query(
+        collection(db, "tbl_questions"),
+        where("fld_exerciseId", "==", exerciseId)
+    );
+
+    const batch = writeBatch(db);
+
+    try {
+        const questionsSnapshot = await getDocs(questionsQuery);
+        questionsSnapshot.forEach((questionDoc) => {
+            const questionRef = doc(db, "tbl_questions", questionDoc.id);
+            batch.delete(questionRef);
+        });
+
+        batch.delete(exerciseRef);
+
+        await batch.commit();
+
+        if (exerciseDiv && exerciseDiv.parentElement) {
+            exerciseDiv.remove();
+        }
+        
+        console.log(`Exercise with ID: ${exerciseId} and its related questions deleted successfully.`);
+    } catch (error) {
+        console.error("Error deleting exercise and related questions: ", error);
+    }
+}
+
+>>>>>>> Stashed changes
 const userId = localStorage.getItem('loggedInUserId');
 if (userId) {
     getUserData(userId);
@@ -87,3 +199,43 @@ const currentDate = new Date();
 const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
 const formattedDate = currentDate.toLocaleDateString('en-US', options);
 document.getElementById('current-date').textContent = formattedDate;
+<<<<<<< Updated upstream
+=======
+
+// Define the function
+function attachDotsListeners() {
+    const dots = document.querySelectorAll(".dots");
+
+    dots.forEach(dot => {
+        dot.addEventListener("click", function () {
+            const options = this.nextElementSibling;
+
+            // Toggle the visibility of the options
+            options.style.display = options.style.display === "block" ? "none" : "block";
+
+            // Close other open menus
+            dots.forEach(otherDot => {
+                if (otherDot !== dot) {
+                    const otherOptions = otherDot.nextElementSibling;
+                    otherOptions.style.display = "none";
+                }
+            });
+        });
+    });
+
+    // Close the menu if clicked outside
+    document.addEventListener("click", function (e) {
+        dots.forEach(dot => {
+            const options = dot.nextElementSibling;
+            if (!dot.contains(e.target) && !options.contains(e.target)) {
+                options.style.display = "none";
+            }
+        });
+    });
+}
+
+// Call the function after DOM is ready
+document.addEventListener("DOMContentLoaded", function () {
+    attachDotsListeners();
+});
+>>>>>>> Stashed changes

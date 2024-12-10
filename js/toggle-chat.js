@@ -52,7 +52,52 @@ function sendMessage() {
         // Append the user's message
         appendMessage(userMessage, 'user');
 
+<<<<<<< Updated upstream
         // Clear the input field
+=======
+        const typingMessage = appendMessage("Ava is typing...", 'bot', true);
+
+        try {
+            const docRef = await addDoc(collection(db, "tbl_messages"), {
+                fld_prompt: userMessage,
+                fld_userId: userId
+            });
+
+            console.log("Document written with ID:", docRef.id);
+
+            const intervalId = setInterval(async () => {
+                try {
+                    const savedDoc = await getDoc(docRef);
+
+                    if (savedDoc.exists()) {
+                        const botResponse = savedDoc.data().fld_response;
+
+                        if (botResponse) {
+                            typingMessage.textContent = `${botResponse}`;
+                            clearInterval(intervalId); 
+
+                            clearTimeout(timeout);
+                        }
+                    } else {
+                        console.warn("Document does not exist yet.");
+                    }
+                } catch (error) {
+                    console.error("Error fetching document during polling:", error);
+                }
+            }, 500);
+
+            const timeout = setTimeout(() => {
+                clearInterval(intervalId);
+                typingMessage.textContent = "Sorry, the response is taking too long.";
+                console.error("Polling timed out after 10 seconds.");
+            }, 10000);
+
+        } catch (error) {
+            console.error("Error adding or fetching message from Firestore:", error);
+            typingMessage.textContent = "Sorry, something went wrong!";
+        }
+
+>>>>>>> Stashed changes
         userInput.value = "";
 
         // Simulate a bot response after a short delay

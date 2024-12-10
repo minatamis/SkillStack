@@ -24,12 +24,11 @@
 
             <hr>
 
-            <ul class="menu">
-                <li><a href="#"><img src="../assets/images/home.png" alt="Dashboard Icon" class="icon">Dashboard</a></li>
-                <li><a href="#"><img src="../assets/images/module.png" alt="Dashboard Icon" class="icon">Modules</a></li>
-                <li><a href="#"><img src="../assets/images/quiz.png" alt="Dashboard Icon" class="icon">Quizzes</a></li>
-                <li><a href="#"><img src="../assets/images/help.png" alt="Dashboard Icon" class="icon">Help</a></li>
-            </ul>
+            <button class="add-module" id="addQuizBtn">
+                Add New Quiz <img src="../assets/images/plus.png" alt="Add Icon" class="icon">
+            </button>
+
+            
             <button class="add-module" id="addModuleBtn">
                 Add New Module <img src="../assets/images/plus.png" alt="Add Icon" class="icon">
             </button>
@@ -49,20 +48,25 @@
 
             <hr>
             <div class="stats">
-                <div class="stat-box">Total Modules Posted<br>3</div>
-                <div class="stat-box">Total Quizzes Created<br>3</div>
-                <div class="stat-box">Total Quiz Scores<br>50</div>
+                <div class="stat-box" id="total-modules">Total Modules Posted<br>0</div>
+                <div class="stat-box" id="total-quizzes">Total Quizzes Created<br>0</div>
             </div>
+            
 
             <section class = "recent-section">
+<<<<<<< Updated upstream
                 <div class ="modules-header">
                     <p>Recent Module Uploads </p>
+=======
+                <div class="modules-header">
+                    <p>Module Uploads</p>
+>>>>>>> Stashed changes
                     <div class="module-list">
-                        <a href="#"><img src="../assets/images/pdf icon.png" alt="PDF" code="PDF"></a>
-                        <a href="#"><img src="../assets/images/pdf icon.png" alt="PDF" code="PDF"></a>
-                        <a href="#"><img src="../assets/images/pdf icon.png" alt="PDF" code="PDF"></a>
+                       
                     </div>
                 </div>
+
+
             
                 <div class ="quiz-header">
                     <p>Recent Created Quizzes</p>
@@ -103,7 +107,13 @@
     <foot-element></foot-element>
     <script type="module" src="../js/upload-pop-up.js"></script>
     <script src="../js/header-footer.js"></script>
+<<<<<<< Updated upstream
     <script src="../js/toggle-chat.js"></script>
+=======
+    <script type="module" src="../js/dashboard-fetch-module.js"></script>
+    <script type="module" src="../js/dashboard.js"></script>
+    <script type="module" src="../js/toggle-chat.js"></script>
+>>>>>>> Stashed changes
     <script type="module" src="../js/account.js"></script>
     <script type="module" src="../js/dashboard.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

@@ -73,6 +73,10 @@ textarea {
     border-radius: 5px;
 }
 
+.noedit{
+    background-color: #ececec;
+}
+
 textarea {
     resize: none;
 }

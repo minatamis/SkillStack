@@ -6,12 +6,13 @@ class HeaderElem extends HTMLElement {
             <div class="d-flex align-items-center">
                 <img src="../assets/images/Logo.png" alt="Logo" class="logo">
                 <h1 class="site-title">Coding Tutorial Website</h1>
+                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
             </div>
             <div class="search-bar-container">
-                <input type="text" class="search-bar" placeholder="Search...">
+                <!--<input type="text" class="search-bar" placeholder="Search...">
                 <span class="search-icon">
                     <img src="../assets/images/search.png" alt="Search Icon">
-                </span>
+                </span>-->
             </div>
             <div class="user-info d-none d-md-flex">
                 <div class="username">
@@ -91,6 +92,7 @@ class FooterElem extends HTMLElement {
             </ul>
         </div>
         <div class="container2">
+<<<<<<< Updated upstream
             <div class="links">
                 <h3>Links</h3>
                 <ul>
@@ -101,10 +103,22 @@ class FooterElem extends HTMLElement {
                     <li><a href="contact-us.html">Contact Us</a></li>
                 </ul>
             </div>
+=======
+        <div class="links">
+            <ul>
+                <li><a href="home.html" title="Home"><i class="fas fa-home"></i></a></li>
+                <li><a href="tutorials.html" title="Tutorials"><i class="fas fa-book"></i></a></li>
+                <li><a href="text-editor.html" title="Compiler"><i class="fas fa-code"></i></a></li>
+                <li><a href="exercise-list.html" title="Exercises"><i class="fas fa-chalkboard-teacher"></i></a></li>
+                <li><a href="contact-us.html" title="Contact Us"><i class="fas fa-phone-alt"></i></a></li>
+            </ul>
+>>>>>>> Stashed changes
         </div>
+    </div>
+
     </footer>
-    <div class="copyright">
-        <p>Copyright 2024.</p>
+     <div class="copyright">
+        <p>Copyright 2024.  |<a href="policy.html">Policy</a></p>
     </div>
     `;
   }

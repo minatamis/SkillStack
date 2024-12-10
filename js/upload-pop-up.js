@@ -13,10 +13,18 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+<<<<<<< Updated upstream
 const storage = getStorage();
 const db = getFirestore();
 
 const addModuleBtn = document.getElementById("addModuleBtn");
+=======
+const storage = getStorage(app);
+const db = getFirestore(app);
+
+const addModuleBtn = document.getElementById("addModuleBtn");
+const addQuizBtn = document.getElementById("addQuizBtn");
+>>>>>>> Stashed changes
 const popup = document.getElementById("popup");
 const dropArea = document.getElementById("dropArea");
 const closePopup = document.getElementById("closePopup");
@@ -24,6 +32,13 @@ const uploadForm = document.getElementById("uploadForm");
 
 let selectedFile = null;
 
+<<<<<<< Updated upstream
+=======
+addQuizBtn.addEventListener("click", () => {
+  window.location.href = `create.html`;
+});
+
+>>>>>>> Stashed changes
 addModuleBtn.addEventListener("click", () => {
     popup.style.display = "block";
 });
@@ -74,7 +89,11 @@ uploadForm.addEventListener("submit", async (e) => {
 
     const moduleTitle = document.getElementById("moduleTitle").value;
     const language = document.getElementById("language").value;
+<<<<<<< Updated upstream
     const uploaderId = localStorage.getItem("loggedInUserId");
+=======
+    const uploaderId = localStorage.getItem("loggedInUserId") || "guest"; // Default if not logged in
+>>>>>>> Stashed changes
 
     if (!selectedFile) {
         alert("Please select a PDF file.");
@@ -95,7 +114,11 @@ uploadForm.addEventListener("submit", async (e) => {
             fld_moduleTitle: moduleTitle,
             fld_language: language,
             fld_uploaderId: uploaderId,
+<<<<<<< Updated upstream
             fld_uploadedAt: new Date(),
+=======
+            fld_uploadedAt: new Date().toISOString(),
+>>>>>>> Stashed changes
             fld_downloadURL: downloadURL
         };
 
@@ -107,6 +130,10 @@ uploadForm.addEventListener("submit", async (e) => {
         popup.style.display = "none";
     } catch (error) {
         console.error("Error uploading module:", error);
+<<<<<<< Updated upstream
         alert("Error uploading module. Please try again.");
+=======
+        alert(`Error uploading module: ${error.message}`);
+>>>>>>> Stashed changes
     }
 });

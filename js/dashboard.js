@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-import { getFirestore, doc, getDoc, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+import { getFirestore, doc, getDoc, collection, query, where, getDocs, writeBatch } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -16,7 +16,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore();
 
-                  async function getUserData(userId) {
+async function getUserData(userId) {
     const userDocRef = doc(db, "tbl_users", userId);
     const userDocSnap = await getDoc(userDocRef);
 
@@ -84,8 +84,6 @@ async function getQuizScores(userId) {
     }
 }
 
-<<<<<<< Updated upstream
-=======
 
 async function getExercises(userId) {
     const exercisesQuery = query(
@@ -186,11 +184,11 @@ async function deleteExercise(exerciseId, exerciseDiv) {
     }
 }
 
->>>>>>> Stashed changes
 const userId = localStorage.getItem('loggedInUserId');
 if (userId) {
     getUserData(userId);
     getQuizScores(userId);
+    getExercises(userId);
 } else {
     console.error("User ID not found in localStorage.");
 }
@@ -199,8 +197,6 @@ const currentDate = new Date();
 const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
 const formattedDate = currentDate.toLocaleDateString('en-US', options);
 document.getElementById('current-date').textContent = formattedDate;
-<<<<<<< Updated upstream
-=======
 
 // Define the function
 function attachDotsListeners() {
@@ -238,4 +234,3 @@ function attachDotsListeners() {
 document.addEventListener("DOMContentLoaded", function () {
     attachDotsListeners();
 });
->>>>>>> Stashed changes

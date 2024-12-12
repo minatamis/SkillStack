@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-import { getFirestore, collection, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+import { getFirestore, collection, getDocs, doc, getDoc, orderBy, query } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBcp4pT_gjNkNJV8PU8T2Fx2ahBblFLMEs",
@@ -29,7 +29,9 @@ async function fetchModules() {
             return;
         }
 
-        const modulesSnapshot = await getDocs(collection(db, "tbl_modules"));
+        const modulesRef = collection(db, "tbl_modules");
+        const moduleQuery = query(modulesRef, orderBy("fld_uploadedAt"))
+        const modulesSnapshot = await getDocs(moduleQuery);
 
         for (const moduleDoc of modulesSnapshot.docs) {
             const module = moduleDoc.data();

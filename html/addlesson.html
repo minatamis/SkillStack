@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Dashboard</title>
+    <link rel="icon" href="../assets/images/Logo.png" type="image/png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/addlesson.css">
+</head>
+<body>
+
+    <head-element></head-element>
+
+   
+    <div class="container-wrapper">
+        <h1 class="container-title">Lesson</h1>
+        <button class="btn-save">Save</button>
+        <div class="container" id="container">
+            
+           
+            <!-- <div class="card">
+                <div class="menu-container">
+                    <span class="menu-btn" onclick="toggleMenu(event, this)">...</span>
+                    <div class="menu-options">
+                        <button onclick="deleteCard(this)">Delete</button>
+                    </div>
+                </div>
+                <img src="../assets/images/1.png" alt="Module Image">
+                <h3>Modules</h3>
+                <p>Learn how to create and manage web forms.</p>
+                <button class="btn-view">View</button>
+            </div> -->
+
+           
+            <div class="add-card" id="add-card">
+                <span class="plus-icon" id="plus-icon">+</span>
+                <div class="options" id="options">
+                    <button onclick="addCard('Module')">Module</button>
+                    <button onclick="addCard('Quiz')">Quiz</button>
+                    <button onclick="addCard('Coding')">Activity</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popup for Module -->
+    <div id="popup" class="popup hidden">
+        <div id="closePopup" class="close-popup">&times;</div>
+        <form id="uploadForm">
+            <div class="form-group">
+                <label for="moduleTitle">Module Title:</label>
+                <input type="text" id="moduleTitle" placeholder="Enter module title..." required>
+            </div>
+
+            <div class="upload-area" id="upload-area">
+                <div class="upload-content">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 19V5"></path>
+                        <polyline points="5 12 12 5 19 12"></polyline>
+                    </svg>
+                    <p>Drag and drop</p>
+                    <p>or <a href="#" id="file-select">Select file</a></p>
+                </div>
+            </div>
+            <button type="submit" id="uploadBtn">Create Module</button>
+        </form>
+    </div>
+
+<chat-head></chat-head>
+<foot-element></foot-element>
+<!-- <script type="module" src="../js/upload-pop-up.js"></script> -->
+<script src="../js/header-footer.js"></script>
+<script type="module" src="../js/add-content.js"></script>
+<script type="module" src="../js/toggle-chat.js"></script>
+<script type="module" src="../js/account.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

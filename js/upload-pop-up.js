@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-storage.js";
+// import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-storage.js";
 import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -13,7 +13,7 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const storage = getStorage(app);
+// const storage = getStorage(app);
 const db = getFirestore(app);
 
 const addModuleBtn = document.getElementById("addModuleBtn");
@@ -22,19 +22,23 @@ const popup = document.getElementById("popup");
 const dropArea = document.getElementById("dropArea");
 const closePopup = document.getElementById("closePopup");
 const uploadForm = document.getElementById("uploadForm");
+const overlay = document.getElementById('overlay');
+
 
 let selectedFile = null;
 
 addQuizBtn.addEventListener("click", () => {
-  window.location.href = `create.html`;
+    window.location.href = `create.html`;
 });
 
 addModuleBtn.addEventListener("click", () => {
     popup.style.display = "block";
+    overlay.style.display = "block";
 });
 
 closePopup.addEventListener("click", () => {
     popup.style.display = "none";
+    overlay.style.display = "none";
 });
 
 dropArea.addEventListener("dragover", (e) => {
@@ -79,7 +83,7 @@ uploadForm.addEventListener("submit", async (e) => {
 
     const moduleTitle = document.getElementById("moduleTitle").value;
     const language = document.getElementById("language").value;
-    const uploaderId = localStorage.getItem("loggedInUserId") || "guest"; // Default if not logged in
+    const userId = localStorage.getItem("loggedInUserId") || "guest";
 
     if (!selectedFile) {
         alert("Please select a PDF file.");
@@ -92,26 +96,52 @@ uploadForm.addEventListener("submit", async (e) => {
     }
 
     try {
-        const storageRef = ref(storage, `modules/${language}/${selectedFile.name}`);
-        const snapshot = await uploadBytes(storageRef, selectedFile);
-        const downloadURL = await getDownloadURL(snapshot.ref);
+        const uploadSuccess = await uploadFile(selectedFile, language);
 
-        const moduleData = {
-            fld_moduleTitle: moduleTitle,
-            fld_language: language,
-            fld_uploaderId: uploaderId,
-            fld_uploadedAt: new Date().toISOString(),
-            fld_downloadURL: downloadURL
-        };
+        if (uploadSuccess) {
+            const moduleData = {
+                fld_name: moduleTitle,
+                fld_fileName: selectedFile.name,
+                fld_language: language,
+                fld_uploadedAt: new Date().toISOString(),
+                fld_userId: userId
+            };
 
-        await addDoc(collection(db, "tbl_modules"), moduleData);
+            await addDoc(collection(db, "tbl_modules"), moduleData);
 
-        alert("Module uploaded successfully!");
-        uploadForm.reset();
-        dropArea.textContent = "Drag and drop your PDF file here or click to select";
-        popup.style.display = "none";
+            alert("Module uploaded successfully!");
+            uploadForm.reset();
+            dropArea.textContent = "Drag and drop your PDF file here or click to select";
+            popup.style.display = "none";
+        } else {
+            alert("Error uploading file to server.");
+        }
     } catch (error) {
         console.error("Error uploading module:", error);
         alert(`Error uploading module: ${error.message}`);
     }
 });
+
+async function uploadFile(file, language) {
+    return new Promise((resolve, reject) => {
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("language", language);
+
+        const xhttp = new XMLHttpRequest();
+        xhttp.open("POST", "ajaxfile.php", true);
+
+        xhttp.onreadystatechange = function() {
+            if (this.readyState === 4 && this.status === 200) {
+                const response = this.responseText;
+                if (response === "1") {
+                    resolve(true);
+                } else {
+                    resolve(false);
+                }
+            }
+        };
+
+        xhttp.send(formData);
+    });
+}

@@ -1,0 +1,264 @@
+@import url('https://fonts.googleapis.com/css2?family=Judson:ital,wght@0,400;0,700;1,400&display=swap');
+@import url(header.css);
+@import url(chat.css);
+
+body {
+    height: 10%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Judson', serif;
+    background: linear-gradient(135deg, #29104A, #845162, #FFE3D8); 
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 1000px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    color: #333;
+    font-size: 1.8em;
+}
+
+.timer {
+    background: #000;
+    color: #fff;
+    border-radius: 50%;
+    text-align: center;
+    width: 70px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4em;
+}
+
+.activity-description {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.editor-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.code-area, .output-area {
+    flex: 1 1 45%;
+    min-width: 300px;
+}
+
+label, select {
+    margin-right: 10px;
+}
+
+#code-editor {
+    width: 100%;
+    height: 200px;
+    margin-top: 10px;
+    background: #1e1e1e;
+    color: #fff;
+    border: none;
+    font-size: 1em;
+    padding: 10px;
+    border-radius: 5px;
+    outline: none;
+    resize: none;
+}
+
+.btn-run {
+    background: #9d1981;
+    color: #fff;
+    border: none;
+    padding: 5px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+.btn-run:hover {
+    background: #720d59;
+}
+
+.output-area {
+    background: #000;
+    color: #fff;
+    padding: 10px;
+    height: 200px;
+    border-radius: 5px;
+    overflow-y: auto;
+    font-size: 0.9em;
+}
+
+pre {
+    white-space: pre-wrap;
+}
+
+.btn-submit {
+    background: #9d1981;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    font-size: 1.2em;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 20px auto 0;
+    display: block;
+    text-align: center;
+}
+
+.btn-submit:hover {
+    background: #720d59;
+}
+
+.whole-editor{
+    width: 80%;
+    height: 70vh;
+    margin: auto;
+    margin-top: 30px;
+    display: flex;
+    border-radius: 15px;
+    background-color: #c7c1c9;
+}
+.left-side, .right-side{ 
+    /* border: 1px solid black; */
+    width: 50%;
+    height: 70vh;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.title{
+
+    width: 100%;
+    height: auto;
+    margin: 0;
+    padding: 0px 20px;
+    display: flex;
+    gap: 5%;
+    margin-top: 10px;
+}
+.title button{
+    margin-left: 20%;
+    margin-top: 5px;
+}
+.editor, .output{
+
+    height: 60vh;
+    width: 95%;
+    margin: auto;
+}
+.editor{
+    border-radius: 0 0 0 10px;
+}
+.output{
+    background-color: #333;
+    border-radius: 0 0 10px 0;
+    color: #fff;
+    padding: 10px;
+    margin-bottom: auto;
+    /* border: 1px solid black; */
+}
+
+.custom-btn {
+    width: 90px;
+    height: 40px;
+    color: #fff;
+    border-radius: 5px;
+    padding: 10px 25px;
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    box-shadow: inset 2px 2px 2px 0px rgba(255,255,255,.5),
+      7px 7px 20px 0px rgba(0,0,0,.1),
+      4px 4px 5px 0px rgba(0,0,0,.1);
+    outline: none;
+   }
+   
+   .btn-1 {
+    background: #88007A;
+
+    border: none;
+ 
+   }
+   
+   .btn-1:hover {
+    background: #3a0b36;
+   }
+
+
+   .focus {
+    outline: 0;
+    border-color: #88007A;
+    box-shadow: 0 0 0 4px #b5c9fc;
+  }
+  
+  .mydict div {
+    display: flex;
+    margin-top: 0.5rem;
+    justify-content: center;
+    justify-content: flex-start; 
+    align-items: center; 
+  }
+  
+  .mydict input[type="radio"] {
+    clip: rect(0 0 0 0);
+    clip-path: inset(100%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+  }
+  
+  .mydict input[type="radio"]:checked + span {
+    box-shadow: 0 0 0 0.0625em #88007A;
+    background-color: #88007A;
+    z-index: 1;
+    color: #88007A;
+  }
+  
+  label span {
+    display: block;
+    cursor: pointer;
+    background-color: #fff;
+    padding: 0.375em .75em;
+    position: relative;
+    margin-left: .0625em;
+    box-shadow: 0 0 0 0.0625em #b5bfd9;
+    letter-spacing: .05em;
+    color: #3e4963;
+    text-align: center;
+    transition: background-color .5s ease;
+  }
+  
+  label:first-child span {
+    border-radius: .375em 0 0 .375em;
+  }
+  
+  label:last-child span {
+    border-radius: 0 .375em .375em 0;
+  }
+  

@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Judson:ital,wght@0,400;0,700;1,400&display=swap');
+@import url(header.css);
+@import url(chat.css);
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Judson, sans-serif;
+    background: linear-gradient(to bottom, #29104A, #845162, #c79590, #FFE3D8);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    height: 100vh;
+}
+
+
+/* Neomorphic container */
+.progress-container {
+    border-radius: 50%;
+    padding: 20px;
+
+}
+
+/* SVG progress circle */
+.progress-circle {
+    position: relative;
+    width: 160px;
+    height: 160px;
+}
+
+/* Progress text */
+.progress-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #f4f4f4;
+}

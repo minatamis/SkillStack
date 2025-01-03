@@ -54,14 +54,13 @@ async function getQuizScores(userId) {
             const exerciseId = scoreData.fld_exerciseId;
 
             if (score != null && totalQuestions != null && exerciseId) {
-                // Fetch the title from tbl_exercises based on exerciseId
                 const exerciseDocRef = doc(db, "tbl_exercises", exerciseId);
                 const exerciseDocSnap = await getDoc(exerciseDocRef);
 
-                let quizName = "Unknown Quiz"; // Default name
+                let quizName = "Unknown Quiz";
                 if (exerciseDocSnap.exists()) {
                     const exerciseData = exerciseDocSnap.data();
-                    quizName = exerciseData.fld_title || "Unnamed Quiz"; // Use fld_title or fallback to "Unnamed Quiz"
+                    quizName = exerciseData.fld_title || "Unnamed Quiz";
                 }
 
                 const percentage = (score / totalQuestions) * 100;
@@ -91,7 +90,7 @@ async function getExercises(userId) {
         collection(db, "tbl_exercises"),
         where("fld_userId", "==", userId)
     );
-
+    let count = 0;
     try {
         const exercisesQuerySnap = await getDocs(exercisesQuery);
         const listContainer = document.querySelector(".list");
@@ -103,14 +102,16 @@ async function getExercises(userId) {
         }
 
         exercisesQuerySnap.forEach(doc => {
+            count++;
+
             const exerciseData = doc.data();
             const title = exerciseData.fld_title;
             const exerciseId = doc.id;
-        
+
             if (title) {
                 const quizItem = document.createElement("div");
                 quizItem.classList.add("quiz-item");
-        
+
                 quizItem.innerHTML = `
                     <a href="#">
                         <img src="../assets/images/quiz dashboard.png" alt="Quiz">
@@ -123,14 +124,14 @@ async function getExercises(userId) {
                         <button class="view-scores" id="view-scores-${exerciseId}">View Scores</button>
                     </div>
                 `;
-        
+
                 listContainer.appendChild(quizItem);
 
                 const editBtn = quizItem.querySelector(`#edit-${exerciseId}`);
                 editBtn.addEventListener("click", function () {
                     window.location.href = `edit.html?exerciseId=${exerciseId}`;
                 });
-        
+
                 const deleteBtn = quizItem.querySelector(`#delete-${exerciseId}`);
                 deleteBtn.addEventListener("click", function() {
                     deleteExercise(exerciseId, quizItem);
@@ -140,16 +141,17 @@ async function getExercises(userId) {
                 viewScoresBtn.addEventListener("click", function () {
                     window.location.href = `score-list.html?exerciseId=${exerciseId}`;
                 });
-
             } else {
                 console.error(`Missing title for document: ${doc.id}`);
             }
+
         });
 
         attachDotsListeners();
     } catch (error) {
         console.error("Error fetching exercises:", error);
     }
+    document.getElementById("total-quizzes").innerHTML = `Total Quizzes Created<br>${count}`;
 }
 
 async function deleteExercise(exerciseId, exerciseDiv) {
@@ -159,25 +161,21 @@ async function deleteExercise(exerciseId, exerciseDiv) {
         where("fld_exerciseId", "==", exerciseId)
     );
 
-    const batch = writeBatch(db); // Firebase batch to handle multiple writes
+    const batch = writeBatch(db);
 
     try {
-        // Delete the related questions first
         const questionsSnapshot = await getDocs(questionsQuery);
         questionsSnapshot.forEach((questionDoc) => {
             const questionRef = doc(db, "tbl_questions", questionDoc.id);
-            batch.delete(questionRef); // Add delete operation to the batch
+            batch.delete(questionRef);
         });
 
-        // Delete the exercise document
         batch.delete(exerciseRef);
 
-        // Commit the batch
         await batch.commit();
 
-        // Remove the corresponding div from the DOM
         if (exerciseDiv && exerciseDiv.parentElement) {
-            exerciseDiv.remove(); // Directly remove the element
+            exerciseDiv.remove();
         }
         
         console.log(`Exercise with ID: ${exerciseId} and its related questions deleted successfully.`);

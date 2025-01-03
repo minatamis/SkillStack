@@ -29,8 +29,8 @@
             </button>
 
             
-            <button class="add-module" id="addModuleBtn">
-                Add New Module <img src="../assets/images/plus.png" alt="Add Icon" class="icon">
+            <button class="add-module" id="addLessonBtn">
+                Add New Lesson <img src="../assets/images/plus.png" alt="Add Icon" class="icon">
             </button>
         </div>
         
@@ -42,45 +42,16 @@
 
             <hr>
             <div class="stats">
-                <div class="stat-box">Total Modules Posted<br>3</div>
-                <div class="stat-box">Total Quizzes Created<br>3</div>
-        
+                <div class="stat-box" id="total-modules">Total Modules Posted<br>0</div>
+                <div class="stat-box" id="total-quizzes">Total Quizzes Created<br>0</div>
             </div>
+            
 
             <section class = "recent-section">
                 <div class="modules-header">
                     <p>Module Uploads</p>
                     <div class="module-list">
-                        <div class="module-item">
-                            <a href="#">
-                                <img src="../assets/images/pdf icon.png" alt="Quiz">
-                                <span class="quiz-name">${title}</span>
-                            </a>
-                            <span class="dots">...</span>
-                            <div class="options">
-                                <button class="delete" id="delete-${exerciseId}">Delete</button>
-                            </div>
-                        </div>
-                        <div class="module-item">
-                            <a href="#">
-                                <img src="../assets/images/pdf icon.png" alt="Quiz">
-                                <span class="quiz-name">${title}</span>
-                            </a>
-                            <span class="dots">...</span>
-                            <div class="options">
-                                <button class="delete" id="delete-${exerciseId}">Delete</button>
-                            </div>
-                        </div>
-                        <div class="module-item">
-                            <a href="#">
-                                <img src="../assets/images/pdf icon.png" alt="Quiz">
-                                <span class="quiz-name">${title}</span>
-                            </a>
-                            <span class="dots">...</span>
-                            <div class="options">
-                                <button class="delete" id="delete-${exerciseId}">Delete</button>
-                            </div>
-                        </div>
+                       
                     </div>
                 </div>
 
@@ -98,13 +69,16 @@
         </div>
 
         <div id="popup">
-            <h2>Upload PDF Module</h2>
-            <form id="uploadForm">
-                <div>
-                    <label for="moduleTitle">Module Title:</label>
-                    <input type="text" id="moduleTitle" placeholder="Enter Module Title" required>
+            <div id="closePopup">
+                <img src="../assets/images/close1.png" alt="Upload Icon" style="width: 15px; height: 15px;">
+            </div>
+            
+            <form id="addLessonForm">
+                <div class="form-group">
+                    <label for="lessonTitle">Lesson Title:</label>
+                    <input type="text" id="lessonTitle" placeholder="Enter Lesson title..." required>
                 </div>
-                <div>
+                <div class="form-group">
                     <label for="language">Select Programming Language:</label>
                     <select id="language" required>
                         <option value="java">Java</option>
@@ -112,17 +86,17 @@
                         <option value="python">Python</option>
                     </select>
                 </div>
-                <div id="dropArea">Drag and drop your PDF file here or click to select</div>
-                <button type="submit" id="uploadBtn">Upload</button>
+                
+                <button type="submit" id="createBtn">Create</button>
             </form>
-            <button id="closePopup">Close</button>
         </div>      
         
     </div> 
     <chat-head></chat-head>
     <foot-element></foot-element>
-    <script type="module" src="../js/upload-pop-up.js"></script>
+    <script type="module" src="../js/add-lesson.js"></script>
     <script src="../js/header-footer.js"></script>
+    <script type="module" src="../js/dashboard-fetch-module.js"></script>
     <script type="module" src="../js/dashboard.js"></script>
     <script type="module" src="../js/toggle-chat.js"></script>
     <script type="module" src="../js/account.js"></script>

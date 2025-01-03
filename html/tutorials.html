@@ -7,79 +7,46 @@
     <title>Tutorials</title>
     <link rel="icon" href="../assets/images/Logo.png" type="image/png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/tutor.css">
+    <link rel="stylesheet" href="../css/TutorialsNew.css">
 </head>
 <body>
 
     <head-element></head-element>
-    <div class="main-bod">
-
-        <!-- JAVA PART -->
-
-        <div class="centered-container">
-            <div class="title">
-                <img src="../assets/images/java.png" alt="Tutorial Icon" class="title-image">
-                <h1>Java</h1>
-            </div>
-        </div>
-        
-        <div class="grid-container row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4" id="java-div">
-
-        </div>   
-
-        <!-- C# PART -->
-
-        <div class="centered-container">
-            <div class="title1">
-                <img src="../assets/images/csharp.png" alt="Tutorial" class="title-image1">
-                <h1>C#</h1>
-            </div>
-        </div>
-           
-        <div class="grid-container row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4" id="csharp-div">
-            
-
-        </div>   
-
-        <!-- PYTHON PART -->
-
-        <div class="centered-container">
-            <div class="title1">
-                <img src="../assets/images/py.png" alt="Tutorial" class="title-image1">
-                <h1>Python</h1>
-            </div>
-        </div>
-           
-        <div class="grid-container row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4" id="python-div">
-            
-
-         </div>
-
-
-
-
-
-
-
-
-
-
-
-        
     
-        
-        
-        
+    <h1>Tutorials</h1>
+    <div class="card-container">
+        <!-- Java Card -->
+        <div class="card">
+            <h2>Java</h2>
+            <img src="../assets/images/java.png" alt="Java Logo">
+            <p>A Programming Language</p>
+            <a href="lesson.html?language=Java"><button>Learn Java</button></a>
+        </div>
+
+        <!-- C# Card -->
+        <div class="card">
+            <h2>C#</h2>
+            <img src="../assets/images/csharp.png" alt="C# Logo">
+            <p>A Programming Language</p>
+            <a href="lesson.html?language=CSharp"><button>Learn C#</button></a>
+        </div>
+
+        <!-- Python Card -->
+        <div class="card">
+            <h2>Python</h2>
+            <img src="../assets/images/py.png" alt="Python Logo">
+            <p>A Programming Language</p>
+            <a href="lesson.html?language=Python"><button>Learn Python</button></a>
+        </div>
+
     </div>
 
 
-
     <chat-head></chat-head>
-
     <foot-element></foot-element>
     <script src="../js/header-footer.js"></script>
+    <script type="module" src="../js/dashboard.js"></script>
     <script type="module" src="../js/toggle-chat.js"></script>
-    <script type="module" src="../js/tutorials.js"></script>
     <script type="module" src="../js/account.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>

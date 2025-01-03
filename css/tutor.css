@@ -218,3 +218,78 @@ body {
         width: 100%; /* One card per row on small screens */
     }
 }
+
+/* Wrapper container to position it at the right side */
+.progress-container-wrapper {
+    position: fixed;
+    top: 50%;
+    right: 2%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    border-radius: 20px;
+    background-color: #ffffff6e;
+    width: 200px;
+    height:200px;
+}
+
+
+.progress-container {
+   
+    padding: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+}
+
+/* SVG progress circle */
+.progress-circle {
+        position: relative;
+        width: 160px;
+        height: 160px;
+}
+
+/* Progress text */
+.progress-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #090909;
+}
+
+/* Make the progress bar responsive */
+@media (max-width: 768px) {
+    .progress-container-wrapper {
+        top: 5%;
+        right: 5%;
+    }
+
+    .progress-container {
+        padding: 5px;
+    }
+
+    .progress-text {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .progress-container-wrapper {
+        top: 5%;
+        right: 5%;
+    }
+
+    .progress-container {
+        padding: 3px;
+    }
+
+    .progress-text {
+        font-size: 1rem;
+    }
+}
+

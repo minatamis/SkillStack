@@ -13,10 +13,23 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore();
 
-// Function to fetch data
+// Global variable to store the displayed questions
+let questionsArray = [];
+
+// Function to shuffle an array (Fisher-Yates Shuffle)
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
+// Function to fetch exercise data
 async function fetchExerciseData(exerciseId) {
     try {
         const exerciseDocRef = doc(db, "tbl_exercises", exerciseId);
@@ -27,6 +40,7 @@ async function fetchExerciseData(exerciseId) {
             document.getElementById("quiz-title").innerText = exerciseData.fld_title;
             document.getElementById("Instruction").innerText = exerciseData.fld_instruction;
 
+            const fld_questionCountStore = exerciseData.fld_questionCountStore || null; // Get question count or default to null
             const exerciseLanguage = exerciseData.fld_language;
             let aceMode;
 
@@ -51,10 +65,19 @@ async function fetchExerciseData(exerciseId) {
             );
             const questionsQuerySnap = await getDocs(questionsQuery);
 
-            let questionCount = 1;
+            // Populate global questionsArray
+            questionsArray = [];
             questionsQuerySnap.forEach((doc) => {
-                const questionData = doc.data();
+                questionsArray.push({ id: doc.id, ...doc.data() });
+            });
 
+            if (fld_questionCountStore && fld_questionCountStore > 0) {
+                // Shuffle and slice the array to get a random subset
+                questionsArray = shuffleArray(questionsArray).slice(0, fld_questionCountStore);
+            }
+
+            let questionCount = 1;
+            questionsArray.forEach((questionData) => {
                 const editorId = `editor-${questionCount}`;
                 const questionDiv = document.createElement("div");
                 questionDiv.innerHTML = `
@@ -79,24 +102,27 @@ async function fetchExerciseData(exerciseId) {
     }
 }
 
+// Function to get a query parameter
 function getQueryParam(param) {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(param);
 }
 
+// Function to get the current user ID
 function getCurrentUserId() {
     const loggedInUserId = localStorage.getItem('loggedInUserId');
     return loggedInUserId;
 }
 
+// Fetch the exercise data
 const currentExerciseId = getQueryParam("exerciseId");
-
 if (currentExerciseId) {
     fetchExerciseData(currentExerciseId);
 } else {
     console.error("No exercise ID found in the URL.");
 }
 
+// Handle answer submission
 document.querySelector(".custom-btn").addEventListener("click", async () => {
     const userAnswers = [];
     const editors = document.querySelectorAll(".editor");
@@ -114,28 +140,9 @@ document.querySelector(".custom-btn").addEventListener("click", async () => {
 
     if (exerciseId && userId) {
         try {
-            const questionsQuery = query(
-                collection(db, "tbl_questions"),
-                where("fld_exerciseId", "==", exerciseId)
-            );
-            const questionsQuerySnap = await getDocs(questionsQuery);
-
-            const questionsWithAnswers = [];
-            questionsQuerySnap.forEach((doc) => {
-                questionsWithAnswers.push({
-                    questionId: doc.id,
-                    question: doc.data().fld_question,
-                    hint: doc.data().fld_hint,
-                    correctAnswer: doc.data().fld_answer
-                });
-            });
-
-            const totalQuestions = questionsWithAnswers.length;
-            let correctAnswersCount = 0;
-            const questionsToDisplay = questionsWithAnswers.map((question, index) => {
+            const questionsWithAnswers = questionsArray.map((question, index) => {
                 const userAnswer = userAnswers[index]?.answer || "";
-                const isCorrect = userAnswer.trim() === question.correctAnswer.trim();
-                if (isCorrect) correctAnswersCount++;
+                const isCorrect = userAnswer.trim() === question.fld_answer.trim();
                 return {
                     ...question,
                     userAnswer,
@@ -143,6 +150,8 @@ document.querySelector(".custom-btn").addEventListener("click", async () => {
                 };
             });
 
+            const totalQuestions = questionsWithAnswers.length;
+            const correctAnswersCount = questionsWithAnswers.filter(q => q.isCorrect).length;
 
             await addDoc(collection(db, "tbl_scores"), {
                 fld_userId: userId,
@@ -152,7 +161,7 @@ document.querySelector(".custom-btn").addEventListener("click", async () => {
                 fld_answeredAt: serverTimestamp()
             });
 
-            sessionStorage.setItem("checkedQuestions", JSON.stringify(questionsToDisplay));
+            sessionStorage.setItem("checkedQuestions", JSON.stringify(questionsWithAnswers));
             window.location.href = "checked.html";
 
         } catch (error) {
@@ -162,3 +171,4 @@ document.querySelector(".custom-btn").addEventListener("click", async () => {
         console.error("Exercise ID or User ID is missing!");
     }
 });
+

@@ -13,34 +13,28 @@
 
     <head-element></head-element>
     <div class="main-bod">
-
-       
-          <div class="container">
-            <h1>Quiz Title</h1>
-            <div class="table-responsive">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Student Name</th>
-                    <th>Time Answered</th>
-                    <th>Score</th>
-                  </tr>
-                </thead>
-                <tbody>
-
-                </tbody>
-                    
-              </table>
-          
-
+        <div class="container">
+            <h1 id="quiz-ttl">Quiz Title</h1>
+            <div class="search-bar">
+                <input type="text" id="search-input" class="search-input" placeholder="Search by student name..." />
+                <button id="search-btn" class="search-btn">Search</button>
             </div>
-
-
-
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Student Name</th>
+                            <th>Time Answered</th>
+                            <th>Score</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
     <chat-head></chat-head>
-
     <foot-element></foot-element>
     <script src="../js/header-footer.js"></script>
     <script type="module" src="../js/toggle-chat.js"></script>

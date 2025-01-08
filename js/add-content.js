@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-import { getFirestore, collection, query, where, getDocs, doc, getDoc, deleteDoc, addDoc  } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+import { getFirestore, collection, query, where, getDocs, doc, getDoc, deleteDoc, addDoc, updateDoc, orderBy } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -57,50 +57,55 @@ async function fetchLessonTitle() {
 
 // Fetch Lesson Contents
 async function fetchLessonContents() {
-  if (!lessonId) {
-      console.error("Lesson ID not found in URL.");
-      return;
-  }
+    if (!lessonId) {
+        console.error("Lesson ID not found in URL.");
+        return;
+    }
 
-  try {
-      const lessonContentsRef = collection(db, "tbl_lessonContents");
-      const q = query(lessonContentsRef, where("fld_lessonId", "==", lessonId));
-      const querySnapshot = await getDocs(q);
+    try {
+        const lessonContentsRef = collection(db, "tbl_lessonContents");
+        const q = query(
+            lessonContentsRef,
+            where("fld_lessonId", "==", lessonId),
+            orderBy("fld_order") // Order contents by fld_order field
+        );
+        const querySnapshot = await getDocs(q);
 
-      // Fetch language from tbl_lessons
-      const lessonDocRef = doc(db, "tbl_lessons", lessonId);
-      const lessonDoc = await getDoc(lessonDocRef);
-      const fld_language = lessonDoc.exists() ? lessonDoc.data().fld_language : "";
+        // Fetch language from tbl_lessons
+        const lessonDocRef = doc(db, "tbl_lessons", lessonId);
+        const lessonDoc = await getDoc(lessonDocRef);
+        const fld_language = lessonDoc.exists() ? lessonDoc.data().fld_language : "";
 
-      querySnapshot.forEach(doc => {
-          const data = doc.data();
-          const contentId = doc.id;
-          const contentName = data.fld_contentName;
-          const contentType = data.fld_contentType;
-          const fileName = data.fld_fileName || "";
-          const exerciseId = data.fld_exerciseId || "";
+        querySnapshot.forEach(doc => {
+            const data = doc.data();
+            const contentId = doc.id;
+            const contentName = data.fld_contentName;
+            const contentType = data.fld_contentType;
+            const fileName = data.fld_fileName || "";
+            const exerciseId = data.fld_exerciseId || "";
 
-          // Use createCard function to display content
-          createCard(contentType, contentName, contentId, fld_language, fileName, exerciseId);
-      });
-  } catch (error) {
-      console.error("Error fetching lesson contents:", error);
-  }
+            // Use createCard function to display content
+            createCard(contentType, contentName, contentId, fld_language, fileName, exerciseId);
+        });
+    } catch (error) {
+        console.error("Error fetching lesson contents:", error);
+    }
 }
+
 
 // Create a New Card
 function createCard(type, title, contentId, language = "", fileName = "", exerciseId = "") {
     const card = document.createElement("div");
     card.classList.add("card");
-    card.setAttribute("data-content-id", contentId); // Store the contentId in the card
+    card.setAttribute("data-content-id", contentId);
 
     let buttonAction = "";
     if (type === "Module") {
         buttonAction = `window.location.href='../assets/modules/${language}/${fileName}'`;
     } else if (type === "Quiz") {
-        buttonAction = `window.location.href='edit.html?exerciseId=${exerciseId}'`;
+        buttonAction = `window.location.href='edit.html?exerciseId=${exerciseId}&lessonContentId=${contentId}'`;
     } else if (type === "Coding") {
-        buttonAction = ""; // Placeholder
+        buttonAction = `window.location.href='compact-edit.html?contentId=${contentId}&lessonId=${lessonId}'`;
     }
 
     card.innerHTML = `
@@ -113,14 +118,16 @@ function createCard(type, title, contentId, language = "", fileName = "", exerci
         <img src="../assets/images/1.png" alt="Module Image">
         <h3>${title}</h3>
         <p>${type}</p>
-        <button class="btn-start" ${type !== "Coding" ? `onclick="${buttonAction}"` : ""}>View</button>
+        <button class="btn-start" onclick="${buttonAction}">View</button>
         <div class="card-controls">
             <button class="btn-left" onclick="moveCard(this, 'left')">&larr;</button>
             <button class="btn-right" onclick="moveCard(this, 'right')">&rarr;</button>
         </div>
     `;
+
     container.insertBefore(card, addCardElement);
 }
+
 
 
 // Toggle the Three-Dot Menu
@@ -403,3 +410,36 @@ window.moveCard = function (button, direction) {
         }
     }
 };
+
+// Save Button Event Listener
+const saveButton = document.querySelector(".btn-save");
+
+saveButton.addEventListener("click", async () => {
+    if (!lessonId) {
+        alert("Lesson ID is missing. Cannot save order.");
+        return;
+    }
+
+    try {
+        // Get all cards (excluding the add-card element)
+        const cards = Array.from(document.querySelectorAll(".card"))
+            .filter(card => card.getAttribute("data-content-id"));
+
+        // Update each card's order in Firestore
+        const updates = cards.map((card, index) => {
+            const contentId = card.getAttribute("data-content-id");
+            const order = index + 1; // 1-based index for fld_order
+
+            const contentDocRef = doc(db, "tbl_lessonContents", contentId);
+            return updateDoc(contentDocRef, { fld_order: order });
+        });
+
+        // Wait for all updates to complete
+        await Promise.all(updates);
+
+        alert("Card order saved successfully!");
+    } catch (error) {
+        console.error("Error saving card order:", error);
+        alert(`Error saving card order: ${error.message}`);
+    }
+});

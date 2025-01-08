@@ -32,13 +32,13 @@ document.addEventListener("DOMContentLoaded", () => {
             titleImage.src = `../assets/images/${im}.png`;
             titleImage.alt = `${language} Tutorial Icon`;
         }
-        fetchModules(language);
+        fetchLessons(language);
     } else {
         console.error("No language specified in the URL.");
     }
 });
 
-async function fetchModules(language) {
+async function fetchLessons(language) {
     try {
         const lessonDiv = document.querySelector("#lesson-div");
         if (!lessonDiv) {
@@ -46,29 +46,28 @@ async function fetchModules(language) {
             return;
         }
 
-        const modulesRef = collection(db, "tbl_modules");
-        const moduleQuery = query(
-            modulesRef,
-            where("fld_language", "==", language.toLowerCase()),
-            orderBy("fld_uploadedAt")
+        const lessonsRef = collection(db, "tbl_lessons");
+        const lessonQuery = query(
+            lessonsRef,
+            where("fld_language", "==", language.toLowerCase())
         );
-        const modulesSnapshot = await getDocs(moduleQuery);
+        const lessonsSnapshot = await getDocs(lessonQuery);
 
         lessonDiv.innerHTML = "";
 
-        for (const moduleDoc of modulesSnapshot.docs) {
-            const module = moduleDoc.data();
+        for (const lessonDoc of lessonsSnapshot.docs) {
+            const lesson = lessonDoc.data();
 
-            if (!module.fld_language || !module.fld_userId || !module.fld_fileName) {
-                console.error(`Module ${moduleDoc.id} is missing required fields.`);
+            if (!lesson.fld_language || !lesson.fld_userId || !lesson.fld_lessonName) {
+                console.error(`Lesson ${lessonDoc.id} is missing required fields.`);
                 continue;
             }
 
-            const userRef = doc(db, "tbl_users", module.fld_userId);
+            const userRef = doc(db, "tbl_users", lesson.fld_userId);
             const userSnap = await getDoc(userRef);
 
             if (!userSnap.exists()) {
-                console.error(`User with ID ${module.fld_userId} not found.`);
+                console.error(`User with ID ${lesson.fld_userId} not found.`);
                 continue;
             }
 
@@ -77,11 +76,11 @@ async function fetchModules(language) {
             const cardHTML = `
                 <div class="card">
                     <div class="card-details">
-                        <img src="../assets/images/1.png" alt="${module.fld_language} Tutorial">
-                        <p class="text-title">${module.fld_name}</p>
+                        <img src="../assets/images/1.png" alt="${lesson.fld_language} Tutorial">
+                        <p class="text-title">${lesson.fld_lessonName}</p>
                         <p class="text-body">Uploaded by: ${user.fld_firstName} ${user.fld_lastName}</p>
                     </div>
-                    <button class="card-button" data-file-path="../assets/modules/${module.fld_language}/${module.fld_fileName}">
+                    <button class="card-button" data-lesson-id="${lessonDoc.id}">
                         Start Now
                     </button>
                 </div>
@@ -89,39 +88,18 @@ async function fetchModules(language) {
             lessonDiv.innerHTML += cardHTML;
         }
 
+        // Add event listeners to all buttons
         document.querySelectorAll(".card-button").forEach((button) => {
             button.addEventListener("click", (event) => {
-                const filePath = event.target.getAttribute("data-file-path");
-                if (filePath) {
-                    window.open(filePath, "_blank");
+                const lessonId = event.target.getAttribute("data-lesson-id");
+                if (lessonId) {
+                    window.location.href = `lesson-contents.html?lessonId=${lessonId}`;
                 } else {
-                    console.error("File path is missing for this module.");
+                    console.error("Lesson ID is missing for this button.");
                 }
             });
         });
     } catch (error) {
-        console.error("Error fetching modules:", error);
+        console.error("Error fetching lessons:", error);
     }
 }
-
-
-// Set the progress value
-let progressValue = 5; // Set progress percentage (0 to 100)
-
-// Get elements
-const progressCircle = document.getElementById('progress-circle');
-const progressValueDisplay = document.getElementById('progress-value');
-
-// Maximum circumference of the circle
-const circumference = 2 * Math.PI * 70; // Radius is 70
-progressCircle.style.strokeDasharray = circumference;
-
-// Animate the progress
-function updateProgress(value) {
-    const offset = circumference - (value / 100) * circumference;
-    progressCircle.style.strokeDashoffset = offset;
-    progressValueDisplay.textContent = `${value}%`;
-}
-
-// Call the function with the initial value
-updateProgress(progressValue);

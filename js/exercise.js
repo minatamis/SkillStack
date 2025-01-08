@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-import { getFirestore, getDoc, doc, query, collection, where, getDocs, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+import { getFirestore, getDoc, doc, query, collection, where, getDocs, addDoc, serverTimestamp, setDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -12,7 +12,6 @@ const firebaseConfig = {
     measurementId: "G-WMJQPKF15X"
 };
 
-// Initialize Firebase
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore();
@@ -137,6 +136,7 @@ document.querySelector(".custom-btn").addEventListener("click", async () => {
 
     const exerciseId = getQueryParam("exerciseId");
     const userId = getCurrentUserId();
+    const contentId = getQueryParam("contentId");
 
     if (exerciseId && userId) {
         try {
@@ -161,6 +161,16 @@ document.querySelector(".custom-btn").addEventListener("click", async () => {
                 fld_answeredAt: serverTimestamp()
             });
 
+            if (contentId) {
+                const progressDocId = `${contentId}${userId}`;
+                await setDoc(doc(db, "tbl_progress", progressDocId), {
+                    fld_userId: userId,
+                    fld_contentId: contentId,
+                    fld_lastUpdated: new Date().toISOString()
+                });
+                console.log(`Progress added with ID: ${progressDocId}`);
+            }
+
             sessionStorage.setItem("checkedQuestions", JSON.stringify(questionsWithAnswers));
             window.location.href = "checked.html";
 
@@ -171,4 +181,3 @@ document.querySelector(".custom-btn").addEventListener("click", async () => {
         console.error("Exercise ID or User ID is missing!");
     }
 });
-

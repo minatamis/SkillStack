@@ -34,15 +34,19 @@ if (isset($_FILES['file']['name'])) {
     $file_extension = pathinfo($location, PATHINFO_EXTENSION);
     $file_extension = strtolower($file_extension);
 
-    // Valid file extensions
-    $valid_ext = array("pdf");
+    // Valid file extensions (PDF and common video formats)
+    $valid_ext = array("pdf", "mp4", "avi", "mkv", "mov", "wmv", "flv");
 
     $response = 0;
     if (in_array($file_extension, $valid_ext)) {
         // Upload the file
         if (move_uploaded_file($_FILES['file']['tmp_name'], $location)) {
             $response = 1;
+        } else {
+            echo "Error uploading the file.";
         }
+    } else {
+        echo "Invalid file format. Only PDF and video files are allowed.";
     }
 
     echo $response;

@@ -66,8 +66,7 @@ async function fetchLessonContents() {
         const lessonContentsRef = collection(db, "tbl_lessonContents");
         const q = query(
             lessonContentsRef,
-            where("fld_lessonId", "==", lessonId),
-            orderBy("fld_order") // Order contents by fld_order field
+            where("fld_lessonId", "==", lessonId)
         );
         const querySnapshot = await getDocs(q);
 
@@ -76,21 +75,41 @@ async function fetchLessonContents() {
         const lessonDoc = await getDoc(lessonDocRef);
         const fld_language = lessonDoc.exists() ? lessonDoc.data().fld_language : "";
 
+        // Collect and sort documents
+        const contents = [];
         querySnapshot.forEach(doc => {
             const data = doc.data();
-            const contentId = doc.id;
-            const contentName = data.fld_contentName;
-            const contentType = data.fld_contentType;
-            const fileName = data.fld_fileName || "";
-            const exerciseId = data.fld_exerciseId || "";
+            contents.push({
+                id: doc.id,
+                ...data,
+            });
+        });
 
-            // Use createCard function to display content
-            createCard(contentType, contentName, contentId, fld_language, fileName, exerciseId);
+        // Sort contents: entries with fld_order go first, followed by those without
+        contents.sort((a, b) => {
+            if (a.fld_order === undefined && b.fld_order === undefined) return 0;
+            if (a.fld_order === undefined) return 1; // No fld_order goes last
+            if (b.fld_order === undefined) return -1; // No fld_order goes last
+            return a.fld_order - b.fld_order; // Ascending order
+        });
+
+        // Display sorted contents
+        contents.forEach(content => {
+            const { id, fld_contentName, fld_contentType, fld_fileName, fld_exerciseId } = content;
+            createCard(
+                fld_contentType || "Unknown",
+                fld_contentName || "Untitled Content",
+                id,
+                fld_language,
+                fld_fileName || "",
+                fld_exerciseId || ""
+            );
         });
     } catch (error) {
         console.error("Error fetching lesson contents:", error);
     }
 }
+
 
 
 // Create a New Card
@@ -100,7 +119,7 @@ function createCard(type, title, contentId, language = "", fileName = "", exerci
     card.setAttribute("data-content-id", contentId);
 
     let buttonAction = "";
-    if (type === "Module") {
+    if (type === "Lecture") {
         buttonAction = `window.location.href='../assets/modules/${language}/${fileName}'`;
     } else if (type === "Quiz") {
         buttonAction = `window.location.href='edit.html?exerciseId=${exerciseId}&lessonContentId=${contentId}'`;
@@ -181,7 +200,7 @@ window.addCard = async function (type) {
         if (lessonDoc.exists()) {
             const fld_language = lessonDoc.data().fld_language || "";
 
-            if (type === "Module") {
+            if (type === "Lecture") {
                 popup.classList.remove("hidden");
             } else if (type === "Quiz") {
                 window.location.href = `create.html?lessonId=${lessonId}&lessonLang=${encodeURIComponent(fld_language)}`;
@@ -223,13 +242,16 @@ async function fetchLessonLanguage() {
     }
 }
 
+// Supported file types
+const allowedFileTypes = ["application/pdf", "video/mp4", "video/x-msvideo", "video/x-matroska", "video/quicktime", "video/x-ms-wmv", "video/x-flv"];
+
 // Handle file selection
 function handleFile(file) {
-    if (file && file.type === "application/pdf") {
+    if (file && allowedFileTypes.includes(file.type)) {
         selectedFile = file;
         dropArea.textContent = `Selected file: ${file.name}`;
     } else {
-        alert("Please upload a valid PDF file.");
+        alert("Please upload a valid file. Supported formats: PDF, MP4, AVI, MKV, MOV, WMV, FLV.");
     }
 }
 
@@ -253,7 +275,7 @@ dropArea.addEventListener("drop", (e) => {
 dropArea.addEventListener("click", () => {
     const fileInput = document.createElement("input");
     fileInput.type = "file";
-    fileInput.accept = ".pdf";
+    fileInput.accept = ".pdf, .mp4, .avi, .mkv, .mov, .wmv, .flv"; // Allow multiple formats
     fileInput.click();
 
     fileInput.addEventListener("change", (e) => {
@@ -295,7 +317,7 @@ uploadForm.addEventListener("submit", async (e) => {
     const userId = localStorage.getItem("loggedInUserId") || "guest";
 
     if (!selectedFile) {
-        alert("Please select a PDF file.");
+        alert("Please select a file.");
         return;
     }
 
@@ -310,7 +332,7 @@ uploadForm.addEventListener("submit", async (e) => {
         if (uploadSuccess) {
             const moduleData = {
                 fld_contentName: moduleTitle,
-                fld_contentType: "Module",
+                fld_contentType: "Lecture",
                 fld_fileName: selectedFile.name,
                 fld_uploadedAt: new Date().toISOString(),
                 fld_lessonId: lessonId,
@@ -318,18 +340,19 @@ uploadForm.addEventListener("submit", async (e) => {
 
             await addDoc(collection(db, "tbl_lessonContents"), moduleData);
 
-            alert("Module uploaded successfully!");
+            alert("Lecture uploaded successfully!");
             uploadForm.reset();
-            dropArea.textContent = "Drag and drop your PDF file here or click to select";
+            dropArea.textContent = "Drag and drop your file here or click to select";
             popup.classList.add("hidden");
         } else {
             alert("Error uploading file to server.");
         }
     } catch (error) {
         console.error("Error uploading module:", error);
-        alert(`Error uploading module: ${error.message}`);
+        alert(`Error uploading lecture: ${error.message}`);
     }
 });
+
 
 // Close popup
 closePopup.addEventListener("click", () => {
@@ -345,7 +368,7 @@ window.addEventListener("DOMContentLoaded", async () => {
 document.getElementById("uploadForm").addEventListener("submit", (e) => {
     e.preventDefault();
     const moduleTitle = document.getElementById("moduleTitle").value;
-    createCard("Module", moduleTitle, null); // No Firestore document ID yet for locally created modules
+    createCard("Lecture", moduleTitle, null); // No Firestore document ID yet for locally created modules
     popup.classList.add("hidden");
     document.getElementById("uploadForm").reset();
 });

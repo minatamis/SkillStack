@@ -76,7 +76,7 @@ async function fetchLessons(language) {
             const cardHTML = `
                 <div class="card">
                     <div class="card-details">
-                        <img src="../assets/images/1.png" alt="${lesson.fld_language} Tutorial">
+                        <img src="../assets/images/Java1.png" alt="${lesson.fld_language} Tutorial">
                         <p class="text-title">${lesson.fld_lessonName}</p>
                         <p class="text-body">Uploaded by: ${user.fld_firstName} ${user.fld_lastName}</p>
                     </div>

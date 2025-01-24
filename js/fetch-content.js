@@ -95,26 +95,34 @@ async function fetchLessonContent(lessonId, fld_language, userId) {
         lessonDiv.innerHTML = "";
         for (const lessonDoc of lessonsSnapshot.docs) {
             const lessonContent = lessonDoc.data();
-
+        
+            // Determine if this content is "Done" based on progress data
+            const isDone = progressSnapshot.docs.some(
+                (progressDoc) => progressDoc.data().fld_contentId === lessonDoc.id
+            );
+        
+            const statusText = isDone ? "Done" : "Unfinished";
+        
             const card = document.createElement("div");
             card.className = "card";
-
+        
             const cardDetails = `
                 <div class="card-details">
                     <img src="../assets/images/1.png" alt="${lessonContent.fld_contentName} Lesson">
                     <p class="text-title">${lessonContent.fld_contentName}</p>
                     <p class="text-body">${lessonContent.fld_contentType}</p>
+                    <p class="text-body">Status: ${statusText}</p>
                 </div>
             `;
-
+        
             const button = document.createElement("button");
             button.className = "card-button";
             button.textContent = "Start Now";
-
-            if (lessonContent.fld_contentType === "Module") {
+        
+            if (lessonContent.fld_contentType === "Lecture") {
                 button.addEventListener("click", async () => {
                     const progressDocId = `${lessonDoc.id}${userId}`;
-
+        
                     try {
                         await setDoc(doc(db, "tbl_progress", progressDocId), {
                             fld_userId: userId,
@@ -125,8 +133,9 @@ async function fetchLessonContent(lessonId, fld_language, userId) {
                     } catch (error) {
                         console.error("Error creating progress document:", error);
                     }
+        
+                    window.open(`../assets/modules/${fld_language}/${lessonContent.fld_fileName}`, "_blank");
 
-                    window.location.href = `../assets/modules/${fld_language}/${lessonContent.fld_fileName}`;
                 });
             } else if (lessonContent.fld_contentType === "Quiz") {
                 button.addEventListener("click", () => {
@@ -137,11 +146,12 @@ async function fetchLessonContent(lessonId, fld_language, userId) {
                     window.location.href = `compact-student.html?contentId=${lessonDoc.id}&lessonLang=${fld_language}`;
                 });
             }
-
+        
             card.innerHTML = cardDetails;
             card.appendChild(button);
             lessonDiv.appendChild(card);
         }
+        
     } catch (error) {
         console.error("Error fetching lesson contents:", error);
     }

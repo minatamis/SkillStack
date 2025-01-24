@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Judson:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
 @import url(header.css);
 @import url(chat.css);
 
@@ -6,7 +6,7 @@ body {
     height: 10%;
     margin: 0;
     padding: 0;
-    font-family: 'Judson', serif;
+    font-family: 'Montserrat' serif;
     background: linear-gradient(135deg, #29104A, #845162, #FFE3D8); 
     display: flex;
     flex-direction: column;
@@ -18,6 +18,7 @@ h1 {
     font-size: 2rem;
     text-align: center;
     color: white;
+    font-family: 'Montserrat';
 }
 
 .card-container {
@@ -35,10 +36,13 @@ h1 {
     padding: 20px;
     width: 250px;
     text-align: center;
+    font-family: 'Montserrat';
+    
 }
 
 .card h2 {
     font-size: 2rem;
+    font-family: 'Montserrat';
     margin-bottom: 10px;
     color: white;
 }
@@ -52,6 +56,7 @@ h1 {
 
 .card p {
     font-size: 0.9rem;
+    font-family: 'Montserrat';
     margin-bottom: 20px;
     color: #d1c4e9;
 }

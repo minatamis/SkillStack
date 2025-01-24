@@ -73,6 +73,11 @@ class HeaderElem extends HTMLElement {
     connectedCallback() {
       this.innerHTML = `
       <footer class="footer">
+      <div class="logo2">
+      <a href="home.html">
+        <img src="../assets/images/Logo.png" alt="Skill Stack Logo">
+      </a>
+    </div>
           <div class="container1">
               <ul class="wrapper">
     <li class="icon facebook">
@@ -134,16 +139,14 @@ class HeaderElem extends HTMLElement {
   
   
          <div class="container2">
-  <div class="links">
-    <ul>
-      <li><a href="home.html" title="Home"><i class="fas fa-home"></i></a></li>
-      <li><a href="tutorials.html" title="Tutorials"><i class="fas fa-book"></i></a></li>
-      <li><a href="text-editor.html" title="Compiler"><i class="fas fa-code"></i></a></li>
-      <li><a href="exercise-list.html" title="Exercises"><i class="fas fa-chalkboard-teacher"></i></a></li>
-      <li><a href="contact-us.html" title="Contact Us"><i class="fas fa-phone-alt"></i></a></li>
-    </ul>
-  </div>
-</div>
+      <div class="navbar">
+        <a href="home.html">Home</a>
+        <a href="tutorials.html">Tutorials</a>
+        <a href="text-editor.html">Compiler</a>
+        <a href="exercise-list.html">Exercises</a>
+        <a href="contact-us.html">Contact Us</a>
+      </div>
+    </div>
   
       </footer>
        <div class="copyright">

@@ -1,5 +1,13 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-import {getFirestore,collection,getDocs,doc,getDoc} from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+import {
+    getFirestore,
+    collection,
+    query,
+    where,
+    getDocs,
+    doc,
+    getDoc
+} from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -18,16 +26,36 @@ const db = getFirestore();
 
 async function fetchExercises() {
     try {
+        // Get the language parameter from the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const language = urlParams.get("language");
+
+        if (!language) {
+            console.error("No language parameter specified in the URL.");
+            return;
+        }
+
+        // Query exercises based on the fld_language field
         const exercisesCollection = collection(db, "tbl_exercises");
-        const exerciseDocs = await getDocs(exercisesCollection);
+        const languageQuery = query(
+            exercisesCollection,
+            where("fld_language", "==", language)
+        );
+        const exerciseDocs = await getDocs(languageQuery);
 
         const gridContainer = document.querySelector(".grid-container");
         gridContainer.innerHTML = "";
+
+        if (exerciseDocs.empty) {
+            gridContainer.innerHTML = "<p>No exercises found for the specified language.</p>";
+            return;
+        }
 
         for (const exerciseDoc of exerciseDocs.docs) {
             const exerciseData = exerciseDoc.data();
             const exerciseId = exerciseDoc.id;
 
+            // Fetch the creator's name from tbl_users
             const userDocRef = doc(db, "tbl_users", exerciseData.fld_userId);
             const userDocSnap = await getDoc(userDocRef);
 
@@ -52,6 +80,7 @@ async function fetchExercises() {
             gridContainer.appendChild(exerciseCard);
         }
 
+        // Add event listeners to the buttons
         document.querySelectorAll(".card-button").forEach((button) => {
             button.addEventListener("click", (e) => {
                 const exerciseId = e.target.getAttribute("data-id");
@@ -63,4 +92,5 @@ async function fetchExercises() {
     }
 }
 
+// Fetch and display exercises
 fetchExercises();

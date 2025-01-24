@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
             try {
                 // Add an email document to Firestore
                 await addDoc(collection(db, "tbl_mail"), {
-                    to: "skillstackservice@gmail.com", // Destination email
+                    to: "cebuanojem@gmail.com", // Destination email
                     message: {
                         subject: `New Message from ${name}`, // Subject of the email
                         text: `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nMessage: ${message}`, // Plain text body

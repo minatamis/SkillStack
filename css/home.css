@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Judson:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
 @import url(header.css);
 @import url(chat.css);
 
@@ -7,7 +7,7 @@ body {
     height: 50%;
     margin: 0;
     padding: 0;
-    font-family: 'Judson', serif;
+    font-family: 'Montserrat', serif;
     background: linear-gradient(to bottom, #29104A, #845162, #c79590, #FFE3D8);
     color: #ffffff;
 }
@@ -34,9 +34,10 @@ body {
 }
 
 .header-section h1 {
-    font-size: 3rem;
+    font-size: 2.7rem;
     font-weight: bold;
     margin-bottom: 20px;
+    font-family: 'Montserrat', serif;
 }
 
 .header-section p {
@@ -280,11 +281,11 @@ button:hover {
 }
 
 .text-container h1 {
-    font-family: 'Judson', serif;
+    font-family: 'Montserrat', serif;
 }
 
 .text-container h2 {
-    font-family: 'Judson', serif;
+    font-family: 'Montserrat', serif;
     font-size: 14px;
 }
 

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Judson:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
 
 * {
     margin: 0;
@@ -21,36 +21,40 @@
     border-bottom: 1px solid #ddd;
     background-color: rgba(255, 255, 255, 0.71);
     padding: 10px;
-    font-weight: 500;
+    font-weight: 400;
     
 }
 
 .logo {
-    width: 120px;
+    width: 125px;
     margin-right: 10px;
+    margin-top: -5px;
     display:block;
 }
 
 .site-title {
-    font-size: 20px;
-    color: #333;
-    margin: 0;
-    font-weight: bolder;
+  font-size: 22px;
+  color: #333;
+  margin: 0;
+  font-weight: bolder;
+  font-family: 'Montserrat', serif;
 }
 
 
 
 .user-info {
     display: flex;
-    align-items: center;
-    position: relative;
-    gap: 12px; 
+    align-items: center; 
+    font-family: 'Montserrat', sans-serif;
+      color: #1a1a1a;
   }
   
   .username {
-    color: #000000;
+    color: #111111;
     text-align: right;
-    font-size: 20px;
+    font-size: 20px; 
+    margin-right: 10px;
+    font-family: 'Montserrat', sans-serif;
   }
   
   .user-icon {
@@ -67,7 +71,7 @@
   .user-options {
     display: none;
     position: absolute;
-    top: 100%;
+    top: 15%;
     right: 0;
     background: #ffffff;
     border: 1px solid #ddd;
@@ -174,20 +178,23 @@
   margin: 0;
   text-align: center;
   background-color: #dedede;
-  height: 600px;
+  height: 500px;
+  
+  
 }
 
 .nav-link1 {
   text-decoration: none;
-  color: black;
-  font-size: 18px;
-  font-weight: 500;
+  color: rgb(20, 20, 20);
+  font-size: 14px;
+  font-weight: 100;
   display: block;
   padding: 10px;
   border-radius: 20px; 
   transition: background-color 0.3s ease, color 0.3s ease;
-  font-family: 'Judson';
-  margin-top: 10px;
+  font-family: 'Montserrat';
+  margin-top: 15px;
+  
 }
 
 .nav-link1:hover {
@@ -195,24 +202,28 @@
   color: white;
 }
 
-
-
-
   .navbar {
     border-top: 1px solid #000000;
-    font-weight: bolder;
     position: relative;
+  
+  
 }
 
 .navbar-nav {
-  list-style-type:none;
+  list-style-type: none;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-around; 
+  align-items: center; 
+  padding: 0;
+  margin: 0;
+  font-size: 14px;
+  margin-top: 10px;
+  
 }
 
 .offcanvas-body {
   text-align: center;
-  max-height: 250px;
+  max-height: 200px;
 }
 
 .nav-buttons button {
@@ -232,7 +243,7 @@
 }
 
 .navbar-nav li {
-  margin-left: 10px;
+  margin: 0 15px;
 }
 
 .navbar-nav button {
@@ -249,33 +260,23 @@
 }
 
 .nav-link {
-    font-size: 16px;
+    font-size: 5px;
     color: #333;
-    padding: 1px 20px;
+    padding: 2px 15px;
     text-align: center;
-    font-size: 20px;
-    width: 110px;
+    font-size: 18px;
+    width: 130px;
     height: 30px;
-    margin-right: 60px;
+    margin-right: 1px;
     transition: all 0.3s ease; 
+    font-family: 'Montserrat';
+    font-weight: 100;
     
 }
 
-
-.nav-link {
-  color: black !important; 
-  text-decoration: none;
-  padding: 1px 20px;
-  display: inline-block;
-  border-radius: 20px; 
-  transition: color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
-  font-weight: bold; 
-  margin: 0 10px;
-}
-
-
 .nav-link:hover {
   color: white !important; 
+  border-radius: 20px;
   background-color: #88007A !important; 
   box-shadow: 0px 4px 6px rgb(186, 128, 181) !important; 
 }
@@ -386,7 +387,8 @@
   position: relative;
   background: #fff;
   border-radius: 50%;
-  margin: 30px;
+  margin: 40px;
+  margin-top: 7px;
   width: 60px;
   height: 60px;
   font-size: 18px;
@@ -507,9 +509,32 @@
   display: flex;
   justify-content: center;
   padding: 5px 0;
-  margin-top: 1px;
+  margin-top: -20px;
+  margin-right: -70px;
+}
+.navbar {
+  display: flex;
+  justify-content: center;
+  gap: 70px;
+  font-size: 15px;
+  margin-right: 15px;
+  margin-top: -5px;
+  font-family: 'Montserrat';
 }
 
+.container2 .navbar a {
+  text-decoration: none;
+  color: #5c5c5c;
+  font-weight: lighter;
+  font-family: 'Montserrat';
+  transition: color 0.3s, transform 0.3s;
+  
+}
+
+.navbar a:hover {
+  color: #7a1486;
+  transform: scale(1.1);
+}
 
 .links ul {
   list-style: none;
@@ -529,13 +554,29 @@
 .links a {
   text-decoration: none;
   font-size: 18px;
-  color: #333;
+  font-weight: 50;
+  color: #565656;
   transition: color 0.3s;
 }
 
 .links a:hover {
   color: #79158e;
 }
+
+/* CSS for the logo */
+.logo2 {
+  position: absolute; /* Allows precise positioning */
+  bottom: 100; /* Aligns it to the bottom of the container */
+  left: 50px; /* Aligns it to the left of the container */
+  margin: 10px; /* Optional: Adds a little spacing from the edges */
+}
+
+.logo2 img {
+  max-width: 150px; /* Optional: Adjusts the logo size */
+  height: auto; /* Maintains aspect ratio */
+}
+
+
 
 @media (max-width: 768px) {
   .links ul {
@@ -546,19 +587,6 @@
 
   .links a {
     font-size: 20px; 
-  }
-}
-
-
-@media (max-width: 480px) {
-  .links ul {
-    flex-direction: row; 
-    justify-content: center; 
-    gap: 10px; 
-  }
-
-  .links a {
-    font-size: 16px; 
   }
 }
 

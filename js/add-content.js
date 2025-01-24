@@ -88,9 +88,9 @@ async function fetchLessonContents() {
         // Sort contents: entries with fld_order go first, followed by those without
         contents.sort((a, b) => {
             if (a.fld_order === undefined && b.fld_order === undefined) return 0;
-            if (a.fld_order === undefined) return 1; // No fld_order goes last
-            if (b.fld_order === undefined) return -1; // No fld_order goes last
-            return a.fld_order - b.fld_order; // Ascending order
+            if (a.fld_order === undefined) return 1;
+            if (b.fld_order === undefined) return -1;
+            return a.fld_order - b.fld_order;
         });
 
         // Display sorted contents

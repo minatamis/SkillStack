@@ -18,31 +18,42 @@ const auth = getAuth();
 const db = getFirestore();
 
 onAuthStateChanged(auth, (user) => {
-    const loggedInUserId = localStorage.getItem('loggedInUserId'); // Retrieve user ID from local storage
-    if (user && loggedInUserId) { // Ensure both a logged-in user and valid ID are present
+  const loggedInUserId = localStorage.getItem('loggedInUserId'); // Retrieve user ID from local storage
+  if (user && loggedInUserId) { // Ensure both a logged-in user and valid ID are present
       console.log(user); // Debug: Log user object
       const docRef = doc(db, "tbl_users", loggedInUserId); // Reference to the Firestore document
       getDoc(docRef)
-        .then((docSnap) => {
-          if (docSnap.exists()) {
-            const userData = docSnap.data(); // Extract user data from Firestore
-            const isTeacher = userData.fld_isTeacher; // Determine user status
-            
-            // Update user information in the header
-            document.getElementById('loggedUserFName').innerText = userData.fld_firstName;
-            document.getElementById('loggedUserLName').innerText = userData.fld_lastName;
-            document.getElementById('stat').innerText = isTeacher ? "Instructor" : "Student";
-          } else {
-            console.error("No document found matching the provided user ID.");
-          }
-        })
-        .catch((error) => {
-          console.error("Error fetching document:", error);
-        });
-    } else {
+          .then((docSnap) => {
+              if (docSnap.exists()) {
+                  const userData = docSnap.data(); // Extract user data from Firestore
+                  const isTeacher = userData.fld_isTeacher; // Determine user status
+                  
+                  // Update user information in the header
+                  document.getElementById('loggedUserFName').innerText = userData.fld_firstName;
+                  document.getElementById('loggedUserLName').innerText = userData.fld_lastName;
+                  document.getElementById('stat').innerText = isTeacher ? "Instructor" : "Student";
+
+                  // Update the user icon image based on the user type
+                  const userIcon = document.getElementById('userIcon');
+                  if (isTeacher) {
+                      userIcon.src = "../assets/images/instructor.png";
+                      userIcon.alt = "Instructor"; // Update the alt text for accessibility
+                  } else {
+                      userIcon.src = "../assets/images/profile.png"; // Default image for non-teachers
+                      userIcon.alt = "Student";
+                  }
+              } else {
+                  console.error("No document found matching the provided user ID.");
+              }
+          })
+          .catch((error) => {
+              console.error("Error fetching document:", error);
+          });
+  } else {
       console.log("No user authenticated or user ID missing in local storage.");
-    }
-  });
+  }
+});
+
   
 
 // Handle profile button click using id="profButton"

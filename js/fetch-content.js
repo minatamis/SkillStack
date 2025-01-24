@@ -102,6 +102,7 @@ async function fetchLessonContent(lessonId, fld_language, userId) {
             );
         
             const statusText = isDone ? "Done" : "Unfinished";
+            const buttonText = isDone ? "View" : "Start Now"; // Set button text based on progress
         
             const card = document.createElement("div");
             card.className = "card";
@@ -117,25 +118,26 @@ async function fetchLessonContent(lessonId, fld_language, userId) {
         
             const button = document.createElement("button");
             button.className = "card-button";
-            button.textContent = "Start Now";
+            button.textContent = buttonText;
         
             if (lessonContent.fld_contentType === "Lecture") {
                 button.addEventListener("click", async () => {
-                    const progressDocId = `${lessonDoc.id}${userId}`;
+                    if (!isDone) {
+                        const progressDocId = `${lessonDoc.id}${userId}`;
         
-                    try {
-                        await setDoc(doc(db, "tbl_progress", progressDocId), {
-                            fld_userId: userId,
-                            fld_contentId: lessonDoc.id,
-                            fld_lastUpdated: new Date().toISOString()
-                        });
-                        console.log(`Progress document created with ID: ${progressDocId}`);
-                    } catch (error) {
-                        console.error("Error creating progress document:", error);
+                        try {
+                            await setDoc(doc(db, "tbl_progress", progressDocId), {
+                                fld_userId: userId,
+                                fld_contentId: lessonDoc.id,
+                                fld_lastUpdated: new Date().toISOString()
+                            });
+                            console.log(`Progress document created with ID: ${progressDocId}`);
+                        } catch (error) {
+                            console.error("Error creating progress document:", error);
+                        }
                     }
         
                     window.open(`../assets/modules/${fld_language}/${lessonContent.fld_fileName}`, "_blank");
-
                 });
             } else if (lessonContent.fld_contentType === "Quiz") {
                 button.addEventListener("click", () => {
@@ -156,6 +158,7 @@ async function fetchLessonContent(lessonId, fld_language, userId) {
         console.error("Error fetching lesson contents:", error);
     }
 }
+
 
 // Progress Bar Elements
 const progressCircle = document.getElementById('progress-circle');

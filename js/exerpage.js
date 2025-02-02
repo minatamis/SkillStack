@@ -70,7 +70,7 @@ async function fetchExercises() {
                     <div class="card-details">
                         <img src="../assets/images/interface.jpg" alt="${exerciseData.fld_title}">
                         <p class="text-title">${exerciseData.fld_title}</p>
-                        <p class="text-body">${exerciseData.fld_instruction}</p>
+                        <!--<p class="text-body">${exerciseData.fld_instruction}</p>-->
                         <p class="text-muted">Created by: ${creatorName}</p>
                     </div>
                     <button class="card-button" data-id="${exerciseId}">Start Now</button>

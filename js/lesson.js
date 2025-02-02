@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
         if (titleImage) {
-            const im = language=="Java"?"java":language=="Csharp"?"csharp":language=="Python"?"py":"none";
+            const im = language=="Java"?"java":language=="CSharp"?"yo":language=="Python"?"py":"none";
             titleImage.src = `../assets/images/${im}.png`;
             titleImage.alt = `${language} Tutorial Icon`;
         }

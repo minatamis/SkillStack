@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-import { getFirestore, getDoc, doc, query, collection, where, getDocs, addDoc, serverTimestamp, setDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+import { getFirestore, getDoc, doc, query, collection, where, getDocs, addDoc, serverTimestamp, setDoc, orderBy } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -144,11 +144,14 @@ document.querySelector(".custom-btn").addEventListener("click", async () => {
                 const userAnswer = userAnswers[index]?.answer || "";
                 const isCorrect = userAnswer.trim() === question.fld_answer.trim();
                 return {
-                    ...question,
+                    question: question.fld_question,
+                    correctAnswer: question.fld_answer,
                     userAnswer,
-                    isCorrect
+                    isCorrect,
+                    hint: question.fld_hint
                 };
             });
+            
 
             const totalQuestions = questionsWithAnswers.length;
             const correctAnswersCount = questionsWithAnswers.filter(q => q.isCorrect).length;
@@ -181,3 +184,49 @@ document.querySelector(".custom-btn").addEventListener("click", async () => {
         console.error("Exercise ID or User ID is missing!");
     }
 });
+
+async function fetchExerciseHistory() {
+    const userId = localStorage.getItem('loggedInUserId');
+    const exerciseId = getQueryParam("exerciseId");
+
+    if (!userId || !exerciseId) {
+        console.error("User ID or Exercise ID is missing!");
+        return;
+    }
+
+    try {
+        const scoresQuery = query(
+            collection(db, "tbl_scores"),
+            where("fld_exerciseId", "==", exerciseId),
+            where("fld_userId", "==", userId),
+            orderBy("fld_answeredAt", "desc")
+        );
+
+        const scoresSnap = await getDocs(scoresQuery);
+        const tableBody = document.querySelector("tbody");
+        tableBody.innerHTML = ""; // Clear previous entries
+
+        scoresSnap.forEach((doc) => {
+            const data = doc.data();
+            const { fld_answeredAt, fld_score, fld_totalQuestions } = data;
+            const answeredAt = fld_answeredAt.toDate().toLocaleString(); // Convert timestamp to readable format
+            const evaluation = (fld_score / fld_totalQuestions) * 100 >= 75 ? "Passed" : "Failed";
+
+            const row = `
+                <tr>
+                    <td>${answeredAt}</td>
+                    <td>${fld_score}</td>
+                    <td>${fld_totalQuestions}</td>
+                    <td>${evaluation}</td>
+                </tr>
+            `;
+            tableBody.innerHTML += row;
+        });
+
+    } catch (error) {
+        console.error("Error fetching exercise history:", error);
+    }
+}
+
+// Call the function when the page loads
+fetchExerciseHistory();

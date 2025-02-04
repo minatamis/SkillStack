@@ -78,11 +78,11 @@ async function deleteLesson(lessonId) {
   try {
     const lessonRef = doc(db, "tbl_lessons", lessonId);
     await deleteDoc(lessonRef);
-    alert("Lesson deleted successfully!");
+    swal({title:"Lesson deleted successfully!",icon:"success"});
     fetchLessons();
   } catch (error) {
     console.error("Error deleting lesson:", error);
-    alert("Failed to delete lesson.");
+    swal({title:"Failed to delete lesson.",icon:"error"});
   }
 }
 

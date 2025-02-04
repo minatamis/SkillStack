@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="editor" style="background-color: ${
                     question.isCorrect ? "lightgreen" : "lightcoral"
                 };"> ${question.userAnswer}</div>
-                <p><strong>Question:</strong> ${question.question}</p>
+                <p><strong>Hint:</strong> ${question.question}</p>
                 <p><strong>Correct Answer:</strong> ${question.correctAnswer}</p>
                 <hr>
             `;

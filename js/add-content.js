@@ -188,7 +188,7 @@ window.addCard = async function (type) {
     options.style.display = "none";
 
     if (!lessonId) {
-        alert("Lesson ID is missing. Cannot add new content.");
+        swal({text:"Lesson ID is missing. Cannot add new content.",icon: "warning",});
         return;
     }
 
@@ -251,7 +251,7 @@ function handleFile(file) {
         selectedFile = file;
         dropArea.textContent = `Selected file: ${file.name}`;
     } else {
-        alert("Please upload a valid file. Supported formats: PDF, MP4, AVI, MKV, MOV, WMV, FLV.");
+        swal({text:"Please upload a valid file. Supported formats: PDF, MP4, AVI, MKV, MOV, WMV, FLV.",icon:"warning",});
     }
 }
 
@@ -317,12 +317,12 @@ uploadForm.addEventListener("submit", async (e) => {
     const userId = localStorage.getItem("loggedInUserId") || "guest";
 
     if (!selectedFile) {
-        alert("Please select a file.");
+        swal({text:"Please select a file.",icon:"warning"});
         return;
     }
 
     if (!moduleTitle || !lessonLanguage) {
-        alert("Missing module title or lesson language.");
+        swal({title:"Missing module title or lesson language.",icon:"error"});
         return;
     }
 
@@ -340,16 +340,16 @@ uploadForm.addEventListener("submit", async (e) => {
 
             await addDoc(collection(db, "tbl_lessonContents"), moduleData);
 
-            alert("Lecture uploaded successfully!");
+            swal({title:"Lecture uploaded successfully!",icon:"success"});
             uploadForm.reset();
             dropArea.textContent = "Drag and drop your file here or click to select";
             popup.classList.add("hidden");
         } else {
-            alert("Error uploading file to server.");
+            swal({title:"Error uploading file to server.",icon:"error"});
         }
     } catch (error) {
         console.error("Error uploading module:", error);
-        alert(`Error uploading lecture: ${error.message}`);
+        swal({text:`Error uploading lecture: ${error.message}`,icon:"error"});
     }
 });
 
@@ -439,7 +439,7 @@ const saveButton = document.querySelector(".btn-save");
 
 saveButton.addEventListener("click", async () => {
     if (!lessonId) {
-        alert("Lesson ID is missing. Cannot save order.");
+        swal({text:"Lesson ID is missing. Cannot save order.",icon:"warning"});
         return;
     }
 
@@ -460,9 +460,9 @@ saveButton.addEventListener("click", async () => {
         // Wait for all updates to complete
         await Promise.all(updates);
 
-        alert("Card order saved successfully!");
+        swal({title:"Card order saved successfully!",icon:"success"});
     } catch (error) {
         console.error("Error saving card order:", error);
-        alert(`Error saving card order: ${error.message}`);
+        swal({text:`Error saving card order: ${error.message}`,icon:"error"});
     }
 });

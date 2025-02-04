@@ -90,12 +90,12 @@ saveButton.addEventListener("click", async function (e) {
     const userId = localStorage.getItem("loggedInUserId");
 
     if (!userId) {
-        alert("User not logged in!");
+        swal({title:"User not logged in!",icon:"error"});
         return;
     }
 
     if (!title || !instructions) {
-        alert("Title and instructions are required!");
+        swal({title:"Title and instructions are required!",icon:"error"});
         return;
     }
 
@@ -145,7 +145,7 @@ saveButton.addEventListener("click", async function (e) {
         }
     } catch (error) {
         console.error("Error saving exercise:", error);
-        alert("Failed to save exercise. Please try again.");
+        swal({title:"Failed to save exercise. Please try again.",icon:"error"});
     }
 });
 

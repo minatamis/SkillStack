@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-import { getFirestore, doc, getDoc, addDoc, collection, setDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+import { getFirestore, doc, getDoc, addDoc, collection, setDoc, where, query, getDocs } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -31,8 +31,8 @@ function startTimer(duration, contentId) {
                 clearInterval(timerInterval);
                 timerElement.textContent = "00:00";
 
-                // Alert the user and save data
-                alert("Time's up!");
+                // swal the user and save data
+                swal("Time's up!");
                 const editorContent = ace.edit("editor").getValue();
 
                 try {
@@ -92,6 +92,7 @@ async function fetchContent() {
         document.querySelector(".activity-description p").innerHTML = `<strong>Objective:</strong> ${contentData.fld_question}`;
 
         startTimer(contentData.fld_timer, contentId);
+        fetchHistory(contentId);
     } catch (error) {
         console.error("Error fetching content:", error);
     }
@@ -149,6 +150,54 @@ async function saveCompactAnswer(editorContent, contentId, remainingTime) {
         console.error("Error saving answer and progress:", error);
     }
 }
+
+async function fetchHistory(contentId) {
+    try {
+        const userId = localStorage.getItem("loggedInUserId");
+        if (!userId || !contentId) {
+            console.error("User ID or Content ID is missing!");
+            return;
+        }
+
+        const answersQuery = query(
+            collection(db, "tbl_compactAnswers"),
+            where("fld_contentId", "==", contentId),
+            where("fld_userId", "==", userId)
+        );
+
+        const answersSnap = await getDocs(answersQuery);
+        const tableBody = document.querySelector("tbody");
+        tableBody.innerHTML = "";
+
+        let answers = [];
+        answersSnap.forEach((doc) => {
+            answers.push(doc.data());
+        });
+
+        // Sort answers by remaining time in descending order
+        answers.sort((a, b) => {
+            const timeA = a.fld_remainingTime.split(":").map(Number);
+            const timeB = b.fld_remainingTime.split(":").map(Number);
+            return timeB[0] - timeA[0] || timeB[1] - timeA[1]; // Compare minutes first, then seconds
+        });
+
+        answers.forEach((data) => {
+            const evaluation = data.fld_checkStatus ? "Correct" : "Incorrect";
+
+            const row = `
+                <tr>
+                    <td>${data.fld_remainingTime}</td>
+                    <td>${data.fld_answer}</td>
+                    <td>${evaluation}</td>
+                </tr>
+            `;
+            tableBody.innerHTML += row;
+        });
+    } catch (error) {
+        console.error("Error fetching history:", error);
+    }
+}
+
 
 
 // Attach event listener to Submit button

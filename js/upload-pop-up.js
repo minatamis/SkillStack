@@ -74,7 +74,7 @@ function handleFile(file) {
         selectedFile = file;
         dropArea.textContent = `Selected file: ${file.name}`;
     } else {
-        alert("Please upload a valid PDF file.");
+        swal({text:"Please upload a valid PDF file.",icon:"warning"});
     }
 }
 
@@ -86,12 +86,12 @@ uploadForm.addEventListener("submit", async (e) => {
     const userId = localStorage.getItem("loggedInUserId") || "guest";
 
     if (!selectedFile) {
-        alert("Please select a PDF file.");
+        swal({text:"Please select a PDF file.",icon:"warning"});
         return;
     }
 
     if (!moduleTitle || !language) {
-        alert("Please fill in all fields.");
+        swal({text:"Please fill in all fields.",icon:"warning"});
         return;
     }
 
@@ -109,16 +109,16 @@ uploadForm.addEventListener("submit", async (e) => {
 
             await addDoc(collection(db, "tbl_modules"), moduleData);
 
-            alert("Module uploaded successfully!");
+            swal({title:"Module uploaded successfully!",icon:"success"});
             uploadForm.reset();
             dropArea.textContent = "Drag and drop your PDF file here or click to select";
             popup.style.display = "none";
         } else {
-            alert("Error uploading file to server.");
+            swal({title:"Error uploading file to server.",icon:"error"});
         }
     } catch (error) {
         console.error("Error uploading module:", error);
-        alert(`Error uploading module: ${error.message}`);
+        swal({text:`Error uploading module: ${error.message}`,icon:"error"});
     }
 });
 

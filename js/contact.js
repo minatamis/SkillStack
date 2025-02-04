@@ -77,11 +77,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 });
 
-                alert("Your message has been sent successfully!");
+                swal({title:"Your message has been sent successfully!",icon:"success"});
                 contactForm.reset();
             } catch (error) {
                 console.error("Error sending message:", error);
-                alert("Failed to send your message. Please try again.");
+                swal({title:"Failed to send your message. Please try again.",icon:"error"});
             }
         });
     }

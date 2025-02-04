@@ -192,10 +192,10 @@ async function updateQuizData(exerciseId) {
             console.log("tbl_lessonContents updated successfully!");
         }
 
-        alert("Quiz data saved successfully!");
+        alert({title:"Quiz data saved successfully!",icon:"success"});
         window.location.href = "dashboard-instructor.html";
     } catch (error) {
-        alert(error);
+        alert({text:error,icon:"error"});
         console.error("Error updating quiz data:", error);
     }
 }

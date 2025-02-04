@@ -42,7 +42,7 @@ createBtn.addEventListener("click", async (e) => {
     const userId = localStorage.getItem('loggedInUserId');
 
     if (!lessonTitle || !language) {
-        alert("Please fill out all fields.");
+        swal({title:"Please fill out all fields.",icon:"warning"});
         return;
     }
 
@@ -55,12 +55,12 @@ createBtn.addEventListener("click", async (e) => {
             fld_createdTime: serverTimestamp() // Use Firebase server timestamp
         });
 
-        alert("Lesson created successfully!");
+        swal({title:"Lesson created successfully!",icon:"success"});
 
         // Redirect to addlesson.html with the document ID as a query parameter
         window.location.href = `addlesson.html?lessonId=${docRef.id}`;
     } catch (error) {
         console.error("Error creating lesson:", error);
-        alert("An error occurred while creating the lesson. Please try again.");
+        swal({text:"An error occurred while creating the lesson. Please try again.",icon:"error"});
     }
 });

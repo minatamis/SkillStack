@@ -44,11 +44,11 @@ async function loadActivity() {
             editor.setValue(data.fld_answer || "");
         } else {
             console.error("No document found with ID:", contentId);
-            alert("Activity not found.");
+            swal({title:"Activity not found.",icon:"error"});
         }
     } catch (e) {
         console.error("Error fetching document: ", e);
-        alert("Failed to load activity.");
+        swal({title:"Failed to load activity.",icon:"error"});
     }
 }
 
@@ -75,10 +75,10 @@ async function saveActivity(event) {
         });
 
         console.log("Document updated with ID: ", contentId);
-        alert("Activity updated successfully!");
+        swal({title:"Activity updated successfully!",icon:"success"});
     } catch (e) {
         console.error("Error updating document: ", e);
-        alert("Failed to update activity.");
+        swal({title:"Failed to update activity.",icon:"error"});
     }
 }
 
@@ -91,6 +91,7 @@ async function loadAnswers() {
 
     try {
         const answersTableBody = document.querySelector("table tbody");
+        answersTableBody.innerHTML = ""; // Clear previous entries
 
         // Fetch answers from tbl_compactAnswers
         const compactAnswersRef = collection(db, "tbl_compactAnswers");
@@ -99,32 +100,63 @@ async function loadAnswers() {
 
         for (const answerDoc of querySnapshot.docs) {
             const answerData = answerDoc.data();
+            const answerId = answerDoc.id;
 
             // Fetch student name from tbl_users
             const userRef = doc(db, "tbl_users", answerData.fld_userId);
             const userSnap = await getDoc(userRef);
-
             const studentName = userSnap.exists()
                 ? `${userSnap.data().fld_firstName || ""} ${userSnap.data().fld_lastName || ""}`
                 : "Unknown";
 
             // Create table row
             const row = document.createElement("tr");
-
             row.innerHTML = `
                 <td>${studentName}</td>
                 <td>${answerData.fld_answer || ""}</td>
                 <td>${answerData.fld_remainingTime || "0:0"}</td>
-                <td>${answerData.fld_checkStatus ? "Correct" : "Incorrect"}</td>
+                <td id="eval-${answerId}">${answerData.fld_checkStatus ? "Correct" : "Incorrect"}</td>
+                <td>
+                    <button class="update-eval" data-id="${answerId}" data-status="${answerData.fld_checkStatus}">
+                        Change
+                    </button>
+                </td>
             `;
 
             answersTableBody.appendChild(row);
         }
+
+        // Attach event listeners to update buttons
+        document.querySelectorAll(".update-eval").forEach(button => {
+            button.addEventListener("click", async (event) => {
+                const answerId = event.target.dataset.id;
+                const currentStatus = event.target.dataset.status === "true"; // Convert to boolean
+                await updateEvaluation(answerId, !currentStatus); // Toggle status
+            });
+        });
+
     } catch (e) {
         console.error("Error fetching answers: ", e);
-        alert("Failed to load answers.");
+        swal({ title: "Failed to load answers.", icon: "error" });
     }
 }
+
+async function updateEvaluation(answerId, newStatus) {
+    try {
+        const answerRef = doc(db, "tbl_compactAnswers", answerId);
+        await updateDoc(answerRef, { fld_checkStatus: newStatus });
+
+        // Update the table dynamically without reloading
+        document.getElementById(`eval-${answerId}`).textContent = newStatus ? "Correct" : "Incorrect";
+
+        console.log(`Evaluation updated for ${answerId}`);
+        swal({ title: "Evaluation Updated!", icon: "success" });
+    } catch (e) {
+        console.error("Error updating evaluation: ", e);
+        swal({ title: "Failed to update evaluation.", icon: "error" });
+    }
+}
+
 
 // Attach event listener to the form
 const form = document.querySelector("form");

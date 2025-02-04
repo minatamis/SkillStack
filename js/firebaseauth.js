@@ -105,7 +105,7 @@ signIn.addEventListener('click', (event) => {
             if (user.emailVerified) {
                 showMessage('Login successful', 'signInMessage');
                 localStorage.setItem('loggedInUserId', user.uid);
-                window.location.href = 'html/home.html';
+                window.location.href = 'html/home.html?notif=true';
             } else {
                 showMessage('Please verify your email before logging in.', 'signInMessage');
             }
